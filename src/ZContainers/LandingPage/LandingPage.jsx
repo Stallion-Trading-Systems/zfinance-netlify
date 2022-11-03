@@ -8,17 +8,13 @@ import logo from "../../assets/logo.svg"
 import { Sidebar, SidebarItem } from "react-responsive-sidebar"
 import "./LandingPage.css"
 import { items } from "../../ZComponents/items.js";
+import LandingCard from "./LandingCard.jsx";
+import imggraph from "../../ZComponents/assets/landingpage.png"
+import FooterP from "../Footer/FooterP.jsx";
 
 
 const LandingPage = () => {
     const navigate = useNavigate();
-    const user = localStorage.getItem("user");
-    const userobj = JSON.parse(localStorage.getItem('user'));
-    if (user === null) {
-        setTimeout(() => {
-            navigate("/signin");
-        }, 1000)
-    }
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
@@ -35,10 +31,10 @@ const LandingPage = () => {
         e.preventDefault();
         setIsActive(false);
     };
-    
+
     return (
         <>
-            {user && (<div className="white-bg-css">
+            <div className="white-bg-css">
                 <Sidebar
                     className="side-bar z-s-i-css"
                     content={items}
@@ -79,14 +75,44 @@ const LandingPage = () => {
                     </div>
 
                     <div onClick={() => setOpenlogout(false)} className="container con-abs">
-                        <div className="row ">
-                            <div className="container mb-5">
+                        <div className="row">
+                            <div className="container mb-5 p-5 pt-0">
+                                <div className="row">
+                                    <div className="col-8">
+                                        <div className="row" style={{marginBottom:"70px"}}>
+                                        <LandingCard 
+                                        title="Start tracking your equity value"
+                                        des="Add your equity details now to unlock the portfolio graph and start tracking your equity value including the amount vested."
+                                        btntxt="add your equity"
+                                        link="/addgrant"
+                                        />
+                                        </div>
+                                        <div className="row" style={{marginBottom:"70px"}}>
+                                        <LandingCard 
+                                        title="Need to liquidate your holdings?"
+                                        des="We help startup employees sell their exiting stock to istituional investors. Best suited for those looking for early liquidity"
+                                        btntxt="liquidate"
+                                        link="/"
+                                        />
+                                        </div><div className="row" style={{marginBottom:"70px"}}>
+                                        <LandingCard 
+                                        title="Start tracking your equity value"
+                                        des="Add your equity details now to unlock the portfolio graph and start tracking your equity value including the amount vested."
+                                        btntxt="add your equity"
+                                        link="/addgrant"
+                                        />
+                                        </div>
+                                    </div>
+                                    <div className="col-4">
+                                        <img src={imggraph} />
+                                    </div>
+                                </div>
                             </div>
+                            <FooterP/>
                         </div>
                     </div>
                 </Sidebar>
-            </div>)}
-            {/* (<>You are not authorised to access this page<button onClick={logOut}>logout</button></>)} */}
+            </div>
         </>
     );
 };
