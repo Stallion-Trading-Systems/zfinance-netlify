@@ -39,10 +39,18 @@ input:focus{
 
 .new-input-css{
   box-sizing: border-box;
-
+  font-family: 'PP Cirka';
+font-style: normal;
+font-size: 20px;
 width: 300px;
+padding: 5px;
 height: 40px;
-font-size: 25px;
 background: #FFFFFF;
 border: 1px solid #000000;
+}
+
+input[type=date]::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+input[type=date]::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+input[type=date]::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
+    color: transparent;
 }

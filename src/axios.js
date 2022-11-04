@@ -85,3 +85,8 @@ export const updatePrice = async (sharedata) => {
     let res = await API.post("/admin/updatebidaskprice", sharedata)
     return res;
 }
+
+export const addGrant = async (grantdata) => {
+    let res = await API.post("/finance/add", grantdata)
+    return res;
+}

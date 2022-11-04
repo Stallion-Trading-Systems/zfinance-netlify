@@ -96,10 +96,10 @@ const LandingPage = () => {
                                         />
                                         </div><div className="row" style={{marginBottom:"70px"}}>
                                         <LandingCard 
-                                        title="Start tracking your equity value"
-                                        des="Add your equity details now to unlock the portfolio graph and start tracking your equity value including the amount vested."
-                                        btntxt="add your equity"
-                                        link="/addgrant"
+                                        title="Financing to exercise your options?"
+                                        des="We help startup employees get the cash to own their stock options."
+                                        btntxt="explore financing"
+                                        link="/"
                                         />
                                         </div>
                                     </div>

@@ -10,13 +10,15 @@ import "./addgrants.css"
 import { items } from "../../ZComponents/items.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
-
+import * as api from "../../axios.js"
 
 const AddGrants = () => {
     const navigate = useNavigate();
-
+    const user = localStorage.getItem("user");
+    const userobj = JSON.parse(localStorage.getItem('user'));
     const [openlogout, setOpenlogout] = useState(false);
     const [page, setPage] = useState(1);
+    const [details,setDetails]=useState({email:userobj.email});
     const [isActive, setIsActive] = useState(false);
     const handleClick = (e) => {
         e.preventDefault();
@@ -32,6 +34,12 @@ const AddGrants = () => {
         localStorage.removeItem("user");
         navigate("/signin");
     };
+
+    const addGrant=async(e)=>{
+        let res=await api.addGrant(details);
+
+        console.log(res);
+    }
 
     return (
         <>
@@ -85,7 +93,10 @@ const AddGrants = () => {
                                                 <div style={{ position: "relative", top: "50%" }} className="row p-5">
                                                     <div className="col-6">
                                                         <h3 className="pp-chirka mb-5" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Where do you have equity?</h3>
-                                                        <input type="text" className="new-input-css mb-5 ml-3" />
+                                                        <form id="page-1">
+                                                        <input type="text" onChange={(e)=>{setDetails({...details,"c_name":e.target.value})}} className="new-input-css mb-5 ml-3" required/>
+
+                                                        </form>
                                                         <div className="row mb-4 ml-3 ">
                                                             <div className="col-1">
                                                                 <FontAwesomeIcon icon={faLock} color="green" />
@@ -94,7 +105,7 @@ const AddGrants = () => {
                                                                 <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "700", fontSize: "18px", lineHeight: "100%" }}>We will never sell your information. We only use your inputs to calculate accurate insights for your financial situation.</p>
                                                             </div>
                                                         </div>
-                                                        <NavLink to="" style={{ textDecoration: "none" }} onClick={() => { setPage(x => (x + 1)) }} ><Button name="continue" /></NavLink>
+                                                        <NavLink to="" style={{ textDecoration: "none" }} onClick={() => { setPage(x => (x + 1));console.log(details); }} ><Button name="continue" /></NavLink>
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,19 +115,19 @@ const AddGrants = () => {
                                                 <div className="container">
                                                     <div className="row">
                                                         <div className="col-10">
-                                                            <h3 className="pp-chirka mb-5" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Select the grants you have at _____.</h3>
+                                                            <h3 className="pp-chirka mb-5" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Select the grants you have at {details.c_name}.</h3>
                                                             <p style={{ fontFamily: "Roboto", fontSize: "normal", fontWeight: "300", fontSize: "25px", lineHeight: "100%" }}>To estimate the cost to exercise your options and potential gain, please enter your grant details. You may have one or more of these types of grants and each have different tax implications. Make sure to add the different graants separately. Don’t worry, we’ll do the calculations for you.</p>
                                                             <div className="container mt-5">
                                                                 <div className="row g-5 gl-5 ">
                                                                     <div className="col-6">
                                                                         <label className="granttype">
-                                                                            <input className="input-type" value="first" style={{ display: "none" }} type="radio" name="typegrant" />
+                                                                            <input className="input-type" onChange={(e)=>{setDetails({...details,"grant_type":e.target.value})}} value="first" style={{ display: "none" }} type="radio" name="typegrant" />
                                                                             <img className="img-type" src={logo} style={{ cursor: "pointer", height: "200px", width: "200px" }} />
                                                                         </label>
                                                                     </div>
                                                                     <div className="col-6">
                                                                         <label className="granttype">
-                                                                            <input className="input-type" value="second" style={{ display: "none" }} type="radio" name="typegrant" />
+                                                                            <input className="input-type" onChange={(e)=>{setDetails({...details,"grant_type":e.target.value})}} value="second" style={{ display: "none" }} type="radio" name="typegrant" />
                                                                             <img className="img-type" src={logo} style={{ cursor: "pointer", height: "200px", width: "200px" }} />
                                                                         </label>
                                                                     </div>
@@ -125,7 +136,7 @@ const AddGrants = () => {
 
                                                             </div>
                                                         </div>
-                                                        <NavLink to="" style={{ textDecoration: "none", marginTop: "70px" }} onClick={() => { setPage(x => (x + 1)) }} ><Button name="continue" /></NavLink>
+                                                        <NavLink to="" style={{ textDecoration: "none", marginTop: "70px" }} onClick={() => { setPage(x => (x + 1));console.log(details); }} ><Button name="continue" /></NavLink>
 
                                                     </div>
                                                 </div>
@@ -136,7 +147,7 @@ const AddGrants = () => {
                                                 <div className="container">
                                                     <div className="row">
                                                         <div className="col-10">
-                                                            <h3 className="pp-chirka mb-4" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Please add your grants at ___.</h3>
+                                                            <h3 className="pp-chirka mb-4" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Please add your grants at {details.c_name}.</h3>
                                                             <p style={{ fontFamily: "Roboto", fontSize: "normal", fontWeight: "300", fontSize: "25px", lineHeight: "100%" }}>If you are unsure, you can edit this information later.</p>
                                                             <div>
                                                                 <div style={{ backgroundColor: "#FEFCF7" }} className="container p-5 mt-5">
@@ -146,29 +157,29 @@ const AddGrants = () => {
                                                                                 <div className="row g-5" >
                                                                                     <div className="col-6">
                                                                                         <p>Number*</p>
-                                                                                        <input type="number" />
+                                                                                        <input onChange={(e)=>{setDetails({...details,"num":e.target.value})}} type="number" />
                                                                                     </div>
                                                                                     <div className="col-6">
                                                                                         <p>Strike Price*</p>
-                                                                                        <input type="number" />
+                                                                                        <input onChange={(e)=>{setDetails({...details,"strike_price":e.target.value})}} type="number" />
                                                                                     </div>
 
                                                                                 </div>
                                                                                 <div className="row g-5 mt-2" >
                                                                                     <div className="col-6">
                                                                                         <p>Vesting Details*</p>
-                                                                                        <input type="text" />
+                                                                                        <input onChange={(e)=>{setDetails({...details,"vesting_details":e.target.value})}} type="text" />
                                                                                     </div>
                                                                                     <div className="col-6">
                                                                                         <p>Vesting Start Date*</p>
-                                                                                        <input type="date" />
+                                                                                        <input onChange={(e)=>{setDetails({...details,"vesting_start_date":e.target.value})}} type="date" />
                                                                                     </div>
 
                                                                                 </div>
                                                                                 <div className="row g-5 mt-2" >
                                                                                     <div className="col-6">
                                                                                         <p>Deadline after leaving*</p>
-                                                                                        <input type="text" />
+                                                                                        <input onChange={(e)=>{setDetails({...details,"deadline":e.target.value})}} type="text" />
                                                                                     </div>
                                                                                     <div className="col-6">
                                                                                     </div>
@@ -186,7 +197,7 @@ const AddGrants = () => {
                                                                         <div className="row g-5 mt-2" >
                                                                                     <div className="col">
                                                                                         <p>Pre- exercised options</p>
-                                                                                        <input type="text" />
+                                                                                        <input onChange={(e)=>{setDetails({...details,"pre_exercise_option":e.target.value})}} type="text" />
                                                                                     </div>
 
                                                                                 </div>
@@ -197,7 +208,7 @@ const AddGrants = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <NavLink to="" style={{ textDecoration: "none", marginTop: "70px" }} onClick={() => { setPage(x => (x + 1)) }} ><Button name="continue" /></NavLink>
+                                                        <NavLink to="" style={{ textDecoration: "none", marginTop: "70px" }} onClick={() => { setPage(x => (x + 1)); console.log(details); }} ><Button name="continue" /></NavLink>
 
                                                     </div>
                                                 </div>
@@ -208,7 +219,7 @@ const AddGrants = () => {
                                                 <div className="container">
                                                     <div className="row">
                                                         <div className="col-11">
-                                                            <h3 className="pp-chirka mb-5" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Select the grants you have at _____.</h3>
+                                                            <h3 className="pp-chirka mb-5" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Select the grants you have at {details.c_name}.</h3>
                                                             <p style={{ fontFamily: "Roboto", fontSize: "normal", fontWeight: "300", fontSize: "25px", lineHeight: "100%" }}>If you are unsure, you can edit this information later..</p>
                                                             <div style={{ backgroundColor: "#FEFCF7" }} className="container p-5 mt-5">
                                                                 <div className="row g-5">
@@ -229,7 +240,7 @@ const AddGrants = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <NavLink to="" style={{ textDecoration: "none", marginTop: "70px" }} onClick={() => { setPage(x => (x + 1)) }} ><Button name="continue" /></NavLink>
+                                                        <NavLink to="" style={{ textDecoration: "none", marginTop: "70px" }} onClick={(e) => { setPage(x => (x + 1));addGrant(e);console.log(details); }} ><Button name="continue" /></NavLink>
 
                                                     </div>
                                                 </div>
