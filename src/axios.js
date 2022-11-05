@@ -90,3 +90,8 @@ export const addGrant = async (grantdata) => {
     let res = await API.post("/finance/add", grantdata)
     return res;
 }
+
+export const getcData = async (cDetails) => {
+    let res = await API.post("/finance/getshareinfo", cDetails)
+    return res;
+}
