@@ -7,6 +7,7 @@ const Button = (props) => {
     setIsActive((current) => !current);
   };
   const x = props.widthv;
+  const back=props.back;
   const defaultClick = (e) => {
     setIsActive(false);
   };
@@ -20,8 +21,9 @@ const Button = (props) => {
           onPointerUp={handleClick}
           className={isActive ? "butt butt-ac" : "butt"}
         >
+          {back&&<i class="bi bi-arrow-up-left"></i>}
           {props.name}
-          <i class="bi bi-arrow-up-right"></i>
+          {!back&&<i class="bi bi-arrow-up-right"></i>}
         </button>
       </div>
     </div>

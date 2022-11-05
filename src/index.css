@@ -50,6 +50,10 @@ background: #FFFFFF;
 border: 1px solid #000000;
 }
 
+.input-error-css{
+  border: 2px solid red;
+}
+
 .new-input-css-2{
   box-sizing: border-box;
   font-family: 'PP Cirka';
