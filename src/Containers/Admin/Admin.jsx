@@ -18,13 +18,13 @@ const Admin = () => {
     const userobj = JSON.parse(localStorage.getItem('user'));
     if (user === null) {
         setTimeout(() => {
-            navigate("/signin");
+            navigate("/auth");
         }, 1000)
     }
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
-        navigate("/signin");
+        navigate("/auth");
     };
 
     const [openlogout, setOpenlogout] = useState(false);

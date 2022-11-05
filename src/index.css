@@ -6,6 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-width: 99960px;
 }
 
 code {
@@ -45,6 +46,18 @@ font-size: 20px;
 width: 300px;
 padding: 5px;
 height: 40px;
+background: #FFFFFF;
+border: 1px solid #000000;
+}
+
+.new-input-css-2{
+  box-sizing: border-box;
+  font-family: 'PP Cirka';
+font-style: normal;
+font-size: 18px;
+width: 200px;
+padding: 5px;
+height: 30px;
 background: #FFFFFF;
 border: 1px solid #000000;
 }

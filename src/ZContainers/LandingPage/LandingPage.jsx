@@ -15,10 +15,17 @@ import FooterP from "../Footer/FooterP.jsx";
 
 const LandingPage = () => {
     const navigate = useNavigate();
+    const user = localStorage.getItem("user");
+    const userobj = JSON.parse(localStorage.getItem('user'));
+    if (user === null) {
+        setTimeout(() => {
+            navigate("/auth");
+        }, 1000)
+    }
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
-        navigate("/signin");
+        navigate("/auth");
     };
 
     const [openlogout, setOpenlogout] = useState(false);

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import Button from "../../Components/Button/Button";
-import TitleButton from "../../Components/TitleButton/TitleButton";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import monkey from "../../assets/monkey.svg"
 import logo from "../../assets/logo.svg"
-import { Sidebar, SidebarItem } from "react-responsive-sidebar"
+import { Sidebar } from "react-responsive-sidebar"
 import "./addgrants.css"
 import { items } from "../../ZComponents/items.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +17,7 @@ const AddGrants = () => {
     const userobj = JSON.parse(localStorage.getItem('user'));
     const [openlogout, setOpenlogout] = useState(false);
     const [page, setPage] = useState(1);
-    const [details,setDetails]=useState({email:userobj.email});
+    const [details, setDetails] = useState({ email: userobj.email });
     const [isActive, setIsActive] = useState(false);
     const handleClick = (e) => {
         e.preventDefault();
@@ -29,14 +28,19 @@ const AddGrants = () => {
         setIsActive(false);
     };
 
+    if (user === null) {
+        setTimeout(() => {
+            navigate("/auth");
+        }, 1000)
+    }
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
-        navigate("/signin");
+        navigate("/auth");
     };
 
-    const addGrant=async(e)=>{
-        let res=await api.addGrant(details);
+    const addGrant = async (e) => {
+        let res = await api.addGrant(details);
 
         console.log(res);
     }
@@ -94,7 +98,7 @@ const AddGrants = () => {
                                                     <div className="col-6">
                                                         <h3 className="pp-chirka mb-5" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Where do you have equity?</h3>
                                                         <form id="page-1">
-                                                        <input type="text" onChange={(e)=>{setDetails({...details,"c_name":e.target.value})}} className="new-input-css mb-5 ml-3" required/>
+                                                            <input type="text" onChange={(e) => { setDetails({ ...details, "c_name": e.target.value }) }} className="new-input-css mb-5 ml-3" required />
 
                                                         </form>
                                                         <div className="row mb-4 ml-3 ">
@@ -105,7 +109,7 @@ const AddGrants = () => {
                                                                 <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "700", fontSize: "18px", lineHeight: "100%" }}>We will never sell your information. We only use your inputs to calculate accurate insights for your financial situation.</p>
                                                             </div>
                                                         </div>
-                                                        <NavLink to="" style={{ textDecoration: "none" }} onClick={() => { setPage(x => (x + 1));console.log(details); }} ><Button name="continue" /></NavLink>
+                                                        <NavLink to="" style={{ textDecoration: "none" }} onClick={() => { setPage(x => (x + 1)); console.log(details); }} ><Button name="continue" /></NavLink>
                                                     </div>
                                                 </div>
                                             </div>
@@ -121,13 +125,13 @@ const AddGrants = () => {
                                                                 <div className="row g-5 gl-5 ">
                                                                     <div className="col-6">
                                                                         <label className="granttype">
-                                                                            <input className="input-type" onChange={(e)=>{setDetails({...details,"grant_type":e.target.value})}} value="first" style={{ display: "none" }} type="radio" name="typegrant" />
+                                                                            <input className="input-type" onChange={(e) => { setDetails({ ...details, "grant_type": e.target.value }) }} value="first" style={{ display: "none" }} type="radio" name="typegrant" />
                                                                             <img className="img-type" src={logo} style={{ cursor: "pointer", height: "200px", width: "200px" }} />
                                                                         </label>
                                                                     </div>
                                                                     <div className="col-6">
                                                                         <label className="granttype">
-                                                                            <input className="input-type" onChange={(e)=>{setDetails({...details,"grant_type":e.target.value})}} value="second" style={{ display: "none" }} type="radio" name="typegrant" />
+                                                                            <input className="input-type" onChange={(e) => { setDetails({ ...details, "grant_type": e.target.value }) }} value="second" style={{ display: "none" }} type="radio" name="typegrant" />
                                                                             <img className="img-type" src={logo} style={{ cursor: "pointer", height: "200px", width: "200px" }} />
                                                                         </label>
                                                                     </div>
@@ -136,7 +140,7 @@ const AddGrants = () => {
 
                                                             </div>
                                                         </div>
-                                                        <NavLink to="" style={{ textDecoration: "none", marginTop: "70px" }} onClick={() => { setPage(x => (x + 1));console.log(details); }} ><Button name="continue" /></NavLink>
+                                                        <NavLink to="" style={{ textDecoration: "none", marginTop: "70px" }} onClick={() => { setPage(x => (x + 1)); console.log(details); }} ><Button name="continue" /></NavLink>
 
                                                     </div>
                                                 </div>
@@ -157,29 +161,29 @@ const AddGrants = () => {
                                                                                 <div className="row g-5" >
                                                                                     <div className="col-6">
                                                                                         <p>Number*</p>
-                                                                                        <input onChange={(e)=>{setDetails({...details,"num":e.target.value})}} type="number" />
+                                                                                        <input className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "num": e.target.value }) }} type="number" />
                                                                                     </div>
                                                                                     <div className="col-6">
                                                                                         <p>Strike Price*</p>
-                                                                                        <input onChange={(e)=>{setDetails({...details,"strike_price":e.target.value})}} type="number" />
+                                                                                        <input className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "strike_price": e.target.value }) }} type="number" />
                                                                                     </div>
 
                                                                                 </div>
                                                                                 <div className="row g-5 mt-2" >
                                                                                     <div className="col-6">
                                                                                         <p>Vesting Details*</p>
-                                                                                        <input onChange={(e)=>{setDetails({...details,"vesting_details":e.target.value})}} type="text" />
+                                                                                        <input className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "vesting_details": e.target.value }) }} type="text" />
                                                                                     </div>
                                                                                     <div className="col-6">
                                                                                         <p>Vesting Start Date*</p>
-                                                                                        <input onChange={(e)=>{setDetails({...details,"vesting_start_date":e.target.value})}} type="date" />
+                                                                                        <input className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "vesting_start_date": e.target.value }) }} type="date" />
                                                                                     </div>
 
                                                                                 </div>
                                                                                 <div className="row g-5 mt-2" >
                                                                                     <div className="col-6">
-                                                                                        <p>Deadline after leaving*</p>
-                                                                                        <input onChange={(e)=>{setDetails({...details,"deadline":e.target.value})}} type="text" />
+                                                                                        <p>Deadline after leaving</p>
+                                                                                        <input className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "deadline": e.target.value }) }} type="text" />
                                                                                     </div>
                                                                                     <div className="col-6">
                                                                                     </div>
@@ -190,17 +194,17 @@ const AddGrants = () => {
                                                                         </div>
                                                                         <div className="col-1">
                                                                             <div class="d-flex" style={{ height: "340px" }}>
-                                                                                <div style={{width:"3px",color:"#000"}} class="vr"></div>
+                                                                                <div style={{ width: "3px", color: "#000" }} class="vr"></div>
                                                                             </div>
                                                                         </div>
                                                                         <div className="col-4">
-                                                                        <div className="row g-5 mt-2" >
-                                                                                    <div className="col">
-                                                                                        <p>Pre- exercised options</p>
-                                                                                        <input onChange={(e)=>{setDetails({...details,"pre_exercise_option":e.target.value})}} type="text" />
-                                                                                    </div>
-
+                                                                            <div className="row g-5 mt-2" >
+                                                                                <div className="col">
+                                                                                    <p>Pre- exercised options</p>
+                                                                                    <input className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "pre_exercise_option": e.target.value }) }} type="text" />
                                                                                 </div>
+
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div>
@@ -240,7 +244,7 @@ const AddGrants = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <NavLink to="" style={{ textDecoration: "none", marginTop: "70px" }} onClick={(e) => { setPage(x => (x + 1));addGrant(e);console.log(details); }} ><Button name="continue" /></NavLink>
+                                                        <NavLink to="" style={{ textDecoration: "none", marginTop: "70px" }} onClick={(e) => { setPage(x => (x + 1)); addGrant(e); console.log(details); }} ><Button name="continue" /></NavLink>
 
                                                     </div>
                                                 </div>
