@@ -14,7 +14,7 @@ const Portfolio = () => {
   return (
     <div>
         <div className="mt-5 p-5">
-        <PostfolioChart data={cdetails}/>
+        <PostfolioChart data={cdetails} vd="480" num="150" vs="243" />
         </div>
     </div>
   )
