@@ -7,7 +7,8 @@ import {
   CartesianGrid,
   Tooltip,
   Line,
-  ComposedChart
+  ComposedChart,
+  Scatter
 } from "recharts";
 const month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const datac = [
@@ -53,17 +54,15 @@ export default function portfolioChart(props) {
   let data = props.data
   let vd=props.vd
   let vs=parseInt(props.vs)
-  let totalp=parseInt(vd.substring(0,2));
-  if(vd.substring(2,3)=='1'){
+  let totalp=parseInt(vd?.substring(0,2));
+  if(vd?.substring(2,3)=='1'){
     vs+=12;
   }
-  let period=parseInt(vd.substring(0,2));
-  let cliff=parseInt(vd.substring(2,3));
-  console.log(cliff);
-  if(vd.substring(2,3)=='1'){
+  let period=parseInt(vd?.substring(0,2));
+  let cliff=parseInt(vd?.substring(2,3));
+  if(vd?.substring(2,3)=='1'){
     period-=12;
   }
-  console.log(vs);
   let num=props.num
   var newdata=[]
   let aajdate=new Date().getFullYear() 
@@ -74,8 +73,8 @@ export default function portfolioChart(props) {
   aajdate+=aajmonth
   for (let i = 0; i < data?.length; i++) {
     let currdate = data[i].date;
-    let m = currdate.substring(5, 7)
-    let y = currdate.substring(2, 4)
+    let m = currdate?.substring(5, 7)
+    let y = currdate?.substring(2, 4)
     let d = month[m - 1] + " " + y;
     let nn=m+y;
     data[i].md = d;
@@ -85,6 +84,7 @@ export default function portfolioChart(props) {
     data[i].key=yint
     data[i].n=aajdate-yint+1;
   }
+  // console.log(props);
   let count=0;
   for(let i=0;i<data?.length;i++){
     if(i==data?.length-1){
@@ -125,7 +125,8 @@ export default function portfolioChart(props) {
     }
   }
   count=0;
-  // while(newdata?.length>0&&newdata[0].n>47){newdata.shift()}
+  // console.log(newdata);
+  
   for(let i=0;i<newdata.length;i++){
     let curr_month_no=newdata.length-i-1
     let bmonth=curr_month_no%12
@@ -174,14 +175,41 @@ export default function portfolioChart(props) {
     newdata.shift()
     else break;
   }
-  // while(newdata?.length>0&&newdata[newdata.length-1].key<vs+period){
-  //   newdata.push(newdata[newdata.length-1])
-  //   newdata[newdata.length-1].key=newdata[newdata.length-1].key+1
-  //   if(count>totalp)count=totalp
-  // }
-  // vs+=period
+  let currentyearkey
+  let finalprice
+  if(newdata.length)
+  {currentyearkey=newdata[newdata.length-1].key
+  finalprice=newdata[newdata.length-1].price}
+  let finalorprice
+  if(data)
+  {
+    finalorprice=data[data.length-1]?.price
+  }
+  let finalyearkey=vs+period
 
-  console.log(newdata);
+  for(let i=currentyearkey;i<=finalyearkey+2;i++){
+    let imonth=i%12
+    let iyear=Math.floor(i/12)
+
+    let imd=month[imonth]+" "+iyear
+    // console.log(imd);
+    count++
+    let ivp=finalorprice*count/totalp*num
+    if(ivp>finalprice)
+    ivp=finalprice
+    
+    newdata.push({key:i,vp:ivp,price:finalprice,name:i,n:i,month:imonth,year:iyear,md:imd})
+
+  }
+  console.log(aajdate);
+  for(let i=0;i<newdata.length;i++){
+    console.log(newdata[i].key);
+    if(newdata[i].key==aajdate+1){
+      newdata[i].vpt=newdata[i].vp
+      break;
+    }
+  }
+  // console.log(newdata);
   return (
     <ComposedChart
       width={900}
@@ -220,6 +248,7 @@ export default function portfolioChart(props) {
         fill="#C9F0B1"
       />
       <Line type="monotone" dataKey="vp" stroke="#8884d8" strokeDasharray="5 5" />
+      <Scatter type="monotone" dataKey="vpt" fill="#8884d8" shape="dot"/>
     </ComposedChart>
   );
 }

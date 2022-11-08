@@ -95,3 +95,8 @@ export const getcData = async (cDetails) => {
     let res = await API.post("/finance/getshareinfo", cDetails)
     return res;
 }
+
+export const getChartData = async (cDetails) => {
+    let res = await API.post("/finance/getvestinginfo", cDetails)
+    return res;
+}

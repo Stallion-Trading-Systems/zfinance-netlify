@@ -19,9 +19,14 @@ const AddGrants = () => {
     const navigate = useNavigate();
     const user = localStorage.getItem("user");
     const userobj = JSON.parse(localStorage.getItem('user'));
+    if (user === null) {
+        setTimeout(() => {
+            navigate("/auth");
+        }, 1000)
+    }
     const [openlogout, setOpenlogout] = useState(false);
     const [page, setPage] = useState(1);
-    const [details, setDetails] = useState({ email: userobj.email });
+    const [details, setDetails] = useState({ email: userobj?.email });
     const [isActive, setIsActive] = useState(false);
     const [error, setError] = useState({ c_name: false, num: false, strike_price: false, vesting_details: false, vesting_start_date: false })
     const handleClick = (e) => {
@@ -33,11 +38,7 @@ const AddGrants = () => {
         setIsActive(false);
     };
 
-    if (user === null) {
-        setTimeout(() => {
-            navigate("/auth");
-        }, 1000)
-    }
+    
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
@@ -48,6 +49,7 @@ const AddGrants = () => {
         let res = await api.addGrant(details);
 
         console.log(res);
+        navigate("/portfolio")
     }
     const page1check = (e) => {
         e.preventDefault()
@@ -105,7 +107,8 @@ const AddGrants = () => {
       }));
     return (
         <>
-            <div className="white-bg-css">
+            {user&&<>
+                <div className="white-bg-css">
                 <Sidebar
                     className="side-bar z-s-i-css"
                     content={items}
@@ -150,7 +153,7 @@ const AddGrants = () => {
                             <div className="container mb-5 p-5 pt-0">
                                 <div className="row p-5 pl-0 pt-0">
                                     <div className="col-10">
-                                    <LinearProgressWithLabel value={(page-1)/4*100} />
+                                    <LinearProgressWithLabel value={(page)/4*100} />
                                     {/* <BorderLinearProgress variant="determinate" value={page/4*100} /> */}
                                     </div>
                                     <div className="col-1"></div>
@@ -381,7 +384,7 @@ const AddGrants = () => {
                                                                 <NavLink to="" style={{ textDecoration: "none" }} onClick={() => { setPage(x => (x - 1)); console.log(details); }} ><Button name="back" back={true} /></NavLink>
                                                             </div>
                                                             <div className="col-2">
-                                                                <NavLink to="" style={{ textDecoration: "none" }} onClick={() => { setPage(x => (x + 1)); console.log(details); }} ><Button name="continue" /></NavLink>
+                                                                <NavLink to="" style={{ textDecoration: "none" }} onClick={(e) => { addGrant(e);  console.log(details); }} ><Button name="continue" /></NavLink>
                                                             </div>
                                                         </div>
 
@@ -397,6 +400,7 @@ const AddGrants = () => {
                     </div>
                 </Sidebar>
             </div>
+            </>}
         </>
     );
 };

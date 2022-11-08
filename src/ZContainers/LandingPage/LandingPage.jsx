@@ -41,7 +41,8 @@ const LandingPage = () => {
 
     return (
         <>
-            <div className="white-bg-css">
+            {user&&<>
+                <div className="white-bg-css">
                 <Sidebar
                     className="side-bar z-s-i-css"
                     content={items}
@@ -120,6 +121,7 @@ const LandingPage = () => {
                     </div>
                 </Sidebar>
             </div>
+            </>}
         </>
     );
 };

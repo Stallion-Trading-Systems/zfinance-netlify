@@ -19,7 +19,7 @@ function App() {
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/addgrant" element={<AddGrants />} />
           <Route exact path="/auth" element={<Signin/>}/>
-          <Route exact path="/chart" element={<Portfolio/>}/>
+          <Route exact path="/portfolio" element={<Portfolio/>}/>
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </BrowserRouter>
