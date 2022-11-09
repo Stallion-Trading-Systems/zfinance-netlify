@@ -24,11 +24,20 @@ const AddGrants = () => {
             navigate("/auth");
         }, 1000)
     }
+    let date=new Date()
+    let year=date.getFullYear()
+    year-=2000
+    let month=date.getMonth()
+    month+=1;
+    year=12*year
+    year+=month
     const [openlogout, setOpenlogout] = useState(false);
     const [page, setPage] = useState(1);
     const [details, setDetails] = useState({ email: userobj?.email });
     const [isActive, setIsActive] = useState(false);
-    const [error, setError] = useState({ c_name: false, num: false, strike_price: false, vesting_details: false, vesting_start_date: false })
+    let vestingvalue=0;
+    let totalvalue=1;
+    const [error, setError] = useState({ c_name: false, num: false, strike_price: false, vesting_details: false, vesting_start_date: false,fmp:false })
     const handleClick = (e) => {
         e.preventDefault();
         setIsActive((current) => !current);
@@ -38,7 +47,33 @@ const AddGrants = () => {
         setIsActive(false);
     };
 
-    
+    if(details?.fmp&&details?.num){
+        totalvalue=parseInt(details?.fmp)*parseInt(details?.num)
+        if(details?.vesting_details&&details?.vesting_start_date){
+            let smonth=details?.vesting_start_date.getMonth()+1;
+            let syear=details?.vesting_start_date.getFullYear()
+            syear-=2000
+            syear*=12
+            syear+=smonth
+            let period=year-syear+1
+
+            let cliff=(details?.vesting_details.substring(2,3)=="1")?1:0
+            let m=parseInt(details?.vesting_details.substring(0,2))
+            if(cliff){
+                if(period<12){
+                    vestingvalue=0
+                }
+                else{
+                    vestingvalue=details?.fmp*details?.num*period/m
+                }
+            }
+            else{
+                vestingvalue=details?.fmp*details?.num*period/m
+            }
+        }
+        if(vestingvalue>totalvalue)vestingvalue=totalvalue
+        // console.log(vestingvalue,totalvalue);
+    }
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
@@ -71,8 +106,8 @@ const AddGrants = () => {
     }
     const page3check = async (e) => {
         e.preventDefault()
-        if (!details?.num || !details?.strike_price || !details?.vesting_start_date || !details?.vesting_details) {
-            setError({ ...error, num: (!details?.num) ? true : false, strike_price: (!details?.strike_price) ? true : false, vesting_details: (!details?.vesting_details) ? true : false, vesting_start_date: (!details?.vesting_start_date) ? true : false })
+        if (!details?.num || !details?.strike_price || !details?.vesting_start_date || !details?.vesting_details || !details?.fmp) {
+            setError({ ...error, num: (!details?.num) ? true : false, strike_price: (!details?.strike_price) ? true : false, vesting_details: (!details?.vesting_details) ? true : false, vesting_start_date: (!details?.vesting_start_date) ? true : false, fmp: (!details?.fmp) ? true : false })
             console.log(error, details);
             return;
         }
@@ -291,6 +326,11 @@ const AddGrants = () => {
                                                                                         <input value={details.deadline} className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "deadline": e.target.value }) }} type="text" />
                                                                                     </div>
                                                                                     <div className="col-6">
+                                                                                    <div className="col-6">
+                                                                                        <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>FMP*</p>
+                                                                                        <input value={details.fmp} className={(error?.fmp) ? "new-input-css-2 ml-3 input-error-css" : "new-input-css-2 mb-5 ml-3"} onChange={(e) => { setError({ ...error, fmp: false }); setDetails({ ...details, "fmp": e.target.value }) }} type="number" />
+                                                                                        {error?.fmp && <p className="mb-5" style={{ color: "red" }}>*please enter FMP</p>}
+                                                                                    </div>
                                                                                     </div>
 
                                                                                 </div>
@@ -314,7 +354,7 @@ const AddGrants = () => {
                                                                                 <div className="col-6"><p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>Unvested</p></div>
                                                                             </div>
                                                                             <div className="row">
-                                                                            <div className="col-10"><BorderLinearProgress variant="determinate" value={50} /></div>
+                                                                            <div className="col-10"><BorderLinearProgress variant="determinate" value={vestingvalue/totalvalue*100} /></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -369,7 +409,7 @@ const AddGrants = () => {
                                                                         <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}>{details.strike_price}</p>
                                                                     </div>
                                                                     <div className="col">
-                                                                        <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}><BorderLinearProgress variant="determinate" value={50} /></p>
+                                                                        <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}><BorderLinearProgress variant="determinate" value={vestingvalue/totalvalue*100} /></p>
                                                                     </div>
                                                                     <div className="col-2">
                                                                         <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}><NavLink to="" style={{ textDecoration: "none", color: "black" }} onClick={() => { setPage(x => (x - 1)); console.log(details); }} ><FontAwesomeIcon icon={faEdit} /></NavLink></p>
