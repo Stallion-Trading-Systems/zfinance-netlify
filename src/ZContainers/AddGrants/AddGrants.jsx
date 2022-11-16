@@ -35,6 +35,8 @@ const AddGrants = () => {
     const [page, setPage] = useState(1);
     const [details, setDetails] = useState({ email: userobj?.email });
     const [isActive, setIsActive] = useState(false);
+    const [p2,setp2]=useState(false);
+    const [p3,setp3]=useState(false);
     let vestingvalue=0;
     let totalvalue=1;
     const [error, setError] = useState({ c_name: false, num: false, strike_price: false, vesting_details: false, vesting_start_date: false,fmp:false })
@@ -110,6 +112,28 @@ const AddGrants = () => {
             setError({ ...error, num: (!details?.num) ? true : false, strike_price: (!details?.strike_price) ? true : false, vesting_details: (!details?.vesting_details) ? true : false, vesting_start_date: (!details?.vesting_start_date) ? true : false, fmp: (!details?.fmp) ? true : false })
             console.log(error, details);
             return;
+        }
+        let date=new Date()
+        let year=date.getFullYear()
+        year-=2000;
+        year*=12
+        year+=date.getMonth()
+        console.log(year);
+        let syear=details?.vesting_start_date.getFullYear()
+        syear-=2000;
+        syear*=12
+        syear+=details?.vesting_start_date.getMonth() 
+        syear=year-syear
+        console.log(syear);
+        setp3(false)
+        setp2(false)
+        if(syear>=24&&syear<48){
+            setp2(true)
+            console.log("p2");
+        }
+        else if(syear<24){
+            setp3(true)
+            console.log("p3");
         }
         setPage(x => (x + 1));
         console.log(details);
@@ -383,6 +407,16 @@ const AddGrants = () => {
                                                         <div className="col-11">
                                                             <h3 className="pp-chirka mb-5" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Select the grants you have at {details.c_name}.</h3>
                                                             <p style={{ fontFamily: "Roboto", fontSize: "normal", fontWeight: "300", fontSize: "25px", lineHeight: "100%" }}>If you are unsure, you can edit this information later..</p>
+                                                            {p2&&<>
+                                                                <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "23px", lineHeight: "100%" }}>Working at a start-up is like an investment, with its own risk and reward. And with every decsion comes a trade-off. As your ESOPs get vested over the next few years, the main decision for you is whether to double down on equity in return for greater cash comp or choose other alternative assets with better returns. <br/><br/>Given you are in the middle of your vesting cycle, some critical trade-offs you must think carefully about:<br/> <br/>&nbsp;1. Optimal exercise schedule <br/>&nbsp;2. Implicit cost of choosing equity over cash <br/>&nbsp;3. Equity planning under different circumstances</p>
+                                                            
+                                                            </>}
+                                                            {p3&&<>
+                                                                <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "250", fontSize: "23px", lineHeight: "100%" }}>
+                                                                As you are at the start of your vesting journey, there are some critical trade-offs that must be thought about before signing off on the dotted line.<br/><br/> The best way to look at ESOP vesting is like an SIP, with every monthly/yearly vest being nothing but your company setting aside_______ i.e. your opportunity cost is the difference between FMV and strike price.<br/><br/> Your main job to make an informed decision on whether the asset growth will outompete other alternatives, generating alpha, or would you be better off investing that money elsewhere
+                                                                    </p>
+                                                            
+                                                            </>}
                                                             <div style={{ backgroundColor: "#FEFCF7" }} className="container p-5 mt-5">
                                                                 <div className="row g-5">
                                                                     <div className="col-2">

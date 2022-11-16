@@ -50,8 +50,6 @@ const Portfolio = () => {
     }
     chartdata()
   }, [])
-
-  
   return (
     <>
       {user && <>

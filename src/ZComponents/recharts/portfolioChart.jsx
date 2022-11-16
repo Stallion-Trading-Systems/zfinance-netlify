@@ -215,39 +215,41 @@ export default function portfolioChart(props) {
     console.log(variables?.time_to_ipo);
     if (newdata.length) {
       console.log(parseInt(aajdate) + parseInt(variables?.time_to_ipo));
-      for (let currkey = finalyearkey + 1; currkey < (parseInt(aajdate) + parseInt(variables?.time_to_ipo))-2; currkey++) {
-        console.log(currkey);
-        let i = currkey+2
+      for (let currkey = finalyearkey + 1; currkey < (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2; currkey++) {
+        // console.log(currkey);
+        let i = currkey + 2
         let imonth = i % 12
         let iyear = Math.floor(i / 12)
         let imd = month[imonth] + " " + iyear
         newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.vp, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
       }
     }
-    let i=parseInt(aajdate) + parseInt(variables?.time_to_ipo)
-  let imonth = i % 12
-        let iyear = Math.floor(i / 12)
-        let imd = month[imonth] + " " + iyear
-  newdata.push({ key: (parseInt(aajdate) + parseInt(variables?.time_to_ipo))-2, vp: newdata[newdata.length - 1]?.vp, price:variables?.ipo_price*num , name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
+    let i = parseInt(aajdate) + parseInt(variables?.time_to_ipo)
+    // console.log("i", i);
+    // console.log(newdata);
+    let imonth = i % 12
+    let iyear = Math.floor(i / 12)
+    let imd = month[imonth] + " " + iyear
+    newdata.push({ key: (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2, vp: newdata[newdata.length - 1]?.vp, price: variables?.ipo_price * num, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
 
-  for(let currkey=parseInt(aajdate) + parseInt(variables?.time_to_ipo)+1;currkey<parseInt(aajdate) + parseInt(variables?.time_to_ipo)+parseInt(variables?.lock_in)-2;currkey++){
-    let i = currkey+2
-        let imonth = i % 12
-        let iyear = Math.floor(i / 12)
-        let imd = month[imonth] + " " + iyear
-    newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.vp, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
+    for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) + 1; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) - 2; currkey++) {
+      let i = currkey + 2
+      let imonth = i % 12
+      let iyear = Math.floor(i / 12)
+      let imd = month[imonth] + " " + iyear
+      newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.vp, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
 
-  }
-  for(let currkey=parseInt(aajdate) + parseInt(variables?.time_to_ipo)+parseInt(variables?.lock_in)-2;currkey<parseInt(aajdate) + parseInt(variables?.time_to_ipo)+parseInt(variables?.lock_in)+3;currkey++){
-    let i = currkey+2
-        let imonth = i % 12
-        let iyear = Math.floor(i / 12)
-        let imd = month[imonth] + " " + iyear
-    newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.price, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
+    }
+    for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) - 2; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) + 3; currkey++) {
+      let i = currkey + 2
+      let imonth = i % 12
+      let iyear = Math.floor(i / 12)
+      let imd = month[imonth] + " " + iyear
+      newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.price, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
 
+    }
   }
-  }
-  
+
   // console.log(newdata);
   return (
     <ComposedChart
