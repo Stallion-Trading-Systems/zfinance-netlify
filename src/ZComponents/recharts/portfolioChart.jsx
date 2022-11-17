@@ -189,7 +189,7 @@ export default function portfolioChart(props) {
   }
   let finalyearkey = vs + period
 
-  for (let i = currentyearkey; i <= finalyearkey + 2; i++) {
+  for (let i = currentyearkey; i <= finalyearkey - 2; i++) {
     let imonth = i % 12
     let iyear = Math.floor(i / 12)
 
@@ -210,43 +210,59 @@ export default function portfolioChart(props) {
     }
   }
   console.log(newdata);
+  console.log(finalyearkey - 2);
   if (variables?.time_to_ipo && variables?.ipo_price && variables?.lock_in) {
+    if ((parseInt(aajdate) + parseInt(variables?.time_to_ipo)) <= (finalyearkey - 2)) {
+      console.log("ok");
+      if (newdata?.length){
+        for(let i=0;i<newdata?.length;i++){
+          if(newdata[i]?.key>=(parseInt(aajdate) + parseInt(variables?.time_to_ipo))){
+            // newdata.push({ key: newdata[i]?.key, vp: newdata[i]?.vp*variables?.ipo_price * num/newdata[i]?.price, price: variables?.ipo_price * num, name: newdata[i]?.name, n: newdata[i]?.n + 1, month: newdata[i]?.month, year: newdata[i]?.year, md: newdata[i]?.imd })
+            newdata[i].vp=newdata[i]?.vp*variables?.ipo_price * num/newdata[i]?.price
+            newdata[i].price=variables?.ipo_price * num
+          }
+        }
+      }
+    }
+    else {
+      if (newdata.length) {
+        for (let currkey = finalyearkey + 1; currkey < (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2; currkey++) {
+          // console.log(currkey);
+          let i = currkey + 2
+          let imonth = i % 12
+          let iyear = Math.floor(i / 12)
+          let imd = month[imonth] + " " + iyear
+          newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.vp, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
+        }
+      }
+      let i = parseInt(aajdate) + parseInt(variables?.time_to_ipo)
+      // console.log("i", i);
+      // console.log(newdata);
+      let imonth = i % 12
+      let iyear = Math.floor(i / 12)
+      let imd = month[imonth] + " " + iyear
+      if (variables?.lock_in == 0) {
+        newdata.push({ key: (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2, vp: variables?.ipo_price * num, price: variables?.ipo_price * num, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
+      }
+      else
+        newdata.push({ key: (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2, vp: newdata[newdata.length - 1]?.vp, price: variables?.ipo_price * num, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
 
-    console.log(variables?.time_to_ipo);
-    if (newdata.length) {
-      console.log(parseInt(aajdate) + parseInt(variables?.time_to_ipo));
-      for (let currkey = finalyearkey + 1; currkey < (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2; currkey++) {
-        // console.log(currkey);
+      for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) - 1; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) - 2; currkey++) {
         let i = currkey + 2
         let imonth = i % 12
         let iyear = Math.floor(i / 12)
         let imd = month[imonth] + " " + iyear
         newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.vp, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
       }
-    }
-    let i = parseInt(aajdate) + parseInt(variables?.time_to_ipo)
-    // console.log("i", i);
-    // console.log(newdata);
-    let imonth = i % 12
-    let iyear = Math.floor(i / 12)
-    let imd = month[imonth] + " " + iyear
-    newdata.push({ key: (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2, vp: newdata[newdata.length - 1]?.vp, price: variables?.ipo_price * num, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
+      for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) - 2; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) + 3; currkey++) {
+        let i = currkey + 2
+        if (variables?.lock_in == 0) i = currkey + 3
+        let imonth = i % 12
+        let iyear = Math.floor(i / 12)
+        let imd = month[imonth] + " " + iyear
+        newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.price, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
 
-    for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) + 1; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) - 2; currkey++) {
-      let i = currkey + 2
-      let imonth = i % 12
-      let iyear = Math.floor(i / 12)
-      let imd = month[imonth] + " " + iyear
-      newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.vp, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
-
-    }
-    for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) - 2; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) + 3; currkey++) {
-      let i = currkey + 2
-      let imonth = i % 12
-      let iyear = Math.floor(i / 12)
-      let imd = month[imonth] + " " + iyear
-      newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.price, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
-
+      }
     }
   }
 
