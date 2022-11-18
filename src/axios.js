@@ -100,3 +100,8 @@ export const getChartData = async (cDetails) => {
     let res = await API.post("/finance/getvestinginfo", cDetails)
     return res;
 }
+
+export const getSensexData=async ()=>{
+    let res= await API.get("/sensex/get")
+    return res
+}

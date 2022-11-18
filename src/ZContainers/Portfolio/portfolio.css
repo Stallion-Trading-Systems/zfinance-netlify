@@ -1,0 +1,14 @@
+.drop-down-portfolio {
+    position: absolute;
+    width: 170px;
+    color: white;
+    height: 50px;
+    background: #6CA683;
+    border-radius: 25px;
+    border-color: #6CA683;
+    padding: 5px;
+    text-align: center;
+    -webkit-appearance: none;
+}
+
+  

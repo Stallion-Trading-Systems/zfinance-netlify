@@ -54,6 +54,7 @@ export default function portfolioChart(props) {
   let data = props.data
   let vd = props.vd
   let variables = props.variables
+  let sensex=props.sensex
 
   let vs = parseInt(props.vs)
   let totalp = parseInt(vd?.substring(0, 2));
@@ -200,7 +201,7 @@ export default function portfolioChart(props) {
     if (ivp > finalprice)
       ivp = finalprice
 
-    newdata.push({ key: i, vp: ivp, price: finalprice, name: i, n: i, month: imonth, year: iyear, md: imd })
+    newdata.push({ key: i+1, vp: ivp, price: finalprice, name: i, n: i, month: imonth, year: iyear, md: imd })
 
   }
   for (let i = 0; i < newdata.length; i++) {
@@ -209,17 +210,17 @@ export default function portfolioChart(props) {
       break;
     }
   }
-  console.log(newdata);
-  console.log(finalyearkey - 2);
+  // console.log(newdata);
+  // console.log(finalyearkey - 2);
   if (variables?.time_to_ipo && variables?.ipo_price && variables?.lock_in) {
     if ((parseInt(aajdate) + parseInt(variables?.time_to_ipo)) <= (finalyearkey - 2)) {
-      console.log("ok");
+      // console.log("ok");
       if (newdata?.length){
         for(let i=0;i<newdata?.length;i++){
           if(newdata[i]?.key>=(parseInt(aajdate) + parseInt(variables?.time_to_ipo))){
             // newdata.push({ key: newdata[i]?.key, vp: newdata[i]?.vp*variables?.ipo_price * num/newdata[i]?.price, price: variables?.ipo_price * num, name: newdata[i]?.name, n: newdata[i]?.n + 1, month: newdata[i]?.month, year: newdata[i]?.year, md: newdata[i]?.imd })
             newdata[i].vp=newdata[i]?.vp*variables?.ipo_price * num/newdata[i]?.price
-            newdata[i].price=variables?.ipo_price * num
+            newdata[i].price=variables?.ipo_price * num 
           }
         }
       }
@@ -265,9 +266,18 @@ export default function portfolioChart(props) {
       }
     }
   }
-
-  // console.log(newdata);
+  if(props?.type=="sensex"){
+    for(let i=0;i<newdata.length;i++){
+      for(let j=0;j<sensex?.length;j++){
+        if(newdata[i].key==sensex[j]?.key){
+          newdata[i].sensex=sensex[j]?.close_price*100
+        }
+      }
+    }
+  }
+  console.log(newdata);
   return (
+    
     <ComposedChart
       width={800}
       height={400}
@@ -305,6 +315,7 @@ export default function portfolioChart(props) {
         fill="#C9F0B1"
       />
       <Line type="monotone" dataKey="vp" stroke="#8884d8" strokeDasharray="5 5" />
+      <Line type="monotone" dataKey="sensex" stroke="#8884d8" strokeDasharray="5 5" />
       <Scatter type="monotone" dataKey="vpt" fill="#8884d8" shape="dot" />
     </ComposedChart>
   );

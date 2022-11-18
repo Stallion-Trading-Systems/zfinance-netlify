@@ -6,6 +6,8 @@ import { Sidebar } from "react-responsive-sidebar"
 import Button from '../../Components/Button/Button.jsx'
 import monkey from "../../assets/monkey.svg"
 import { items } from '../../ZComponents/items.js'
+import "./portfolio.css"
+import { FormControl, InputLabel, NativeSelect } from '@mui/material'
 
 const Portfolio = () => {
   const [cdetails, setcDetails] = useState()
@@ -15,7 +17,8 @@ const Portfolio = () => {
   const userobj = JSON.parse(localStorage.getItem('user'));
   const [openlogout, setOpenlogout] = useState(false);
   const [isActive, setIsActive] = useState(false);
-
+  const [sensex,setSensex]=useState();
+  const [selectt,setSelectt]=useState("nifty");
   if (user === null) {
     setTimeout(() => {
       navigate("/auth");
@@ -48,6 +51,12 @@ const Portfolio = () => {
       setChartDetails(res.data.message)
 
     }
+    async function sensexdata(){
+      let res=await api.getSensexData()
+      setSensex(res.data.data)
+      console.log(res.data.data);
+    }
+    sensexdata()
     chartdata()
   }, [])
   return (
@@ -143,8 +152,21 @@ const Portfolio = () => {
                     </div>
                     <div className="row p-5">
                       <div style={{ backgroundColor: "#FEFCF7" }} className="col-10 p-5">
-                        {chartdetails && <PostfolioChart data={cdetails} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={chartdetails?.vs} />}
 
+                        <div className="row mb-5">
+                          <div className="col-9 "></div>
+
+                          <div className="col-2">
+                            <select onChange={(e)=>{setSelectt(e.target.value)}} style={{ color: "white", fontSize: "20px" }}
+                                className='drop-down-portfolio' name="cars" id="cars">
+                              <option value="nifty">Nifty 50</option>
+                              <option value="sensex">Sensex</option>
+                            </select></div>
+                        </div>
+
+                        <div className="row mt-5">
+                          {chartdetails && <PostfolioChart data={cdetails} type={selectt} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={chartdetails?.vs} />}
+                        </div>
                       </div>
                       <div className="col-4"></div>
                     </div>
