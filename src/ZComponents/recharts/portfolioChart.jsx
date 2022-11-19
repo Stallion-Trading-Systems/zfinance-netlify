@@ -55,6 +55,7 @@ export default function portfolioChart(props) {
   let vd = props.vd
   let variables = props.variables
   let sensex=props.sensex
+  let cd=props.cd
 
   let vs = parseInt(props.vs)
   let totalp = parseInt(vd?.substring(0, 2));
@@ -62,6 +63,7 @@ export default function portfolioChart(props) {
     vs += 12;
   }
   let period = parseInt(vd?.substring(0, 2));
+  let totalperiod=period
   let cliff = parseInt(vd?.substring(2, 3));
   if (vd?.substring(2, 3) == '1') {
     period -= 12;
@@ -267,10 +269,16 @@ export default function portfolioChart(props) {
     }
   }
   if(props?.type=="sensex"){
+    let c=cd?.strike_price/totalperiod
+    let onebyn=0
     for(let i=0;i<newdata.length;i++){
+      if(newdata[i].vp==0)continue;
       for(let j=0;j<sensex?.length;j++){
         if(newdata[i].key==sensex[j]?.key){
-          newdata[i].sensex=sensex[j]?.close_price*100
+          onebyn+=(1/sensex[j]?.close_price)
+          let finalsensex=onebyn*sensex[j]?.close_price*num*c
+          newdata[i].sensex=Math.ceil(finalsensex)
+
         }
       }
     }

@@ -165,7 +165,7 @@ const Portfolio = () => {
                         </div>
 
                         <div className="row mt-5">
-                          {chartdetails && <PostfolioChart data={cdetails} type={selectt} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={chartdetails?.vs} />}
+                          {chartdetails && <PostfolioChart data={cdetails} type={selectt} cd={chartdetails} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={chartdetails?.vs} />}
                         </div>
                       </div>
                       <div className="col-4"></div>
