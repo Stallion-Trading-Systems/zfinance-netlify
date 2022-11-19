@@ -1,0 +1,21 @@
+.ppchirka-32px{
+    font-family: 'PP Cirka';
+font-style: normal;
+font-weight: 700;
+font-size: 32px;
+line-height: 100%;
+}
+
+.ppchirka-25px{
+    font-family: 'PP Cirka';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 100%;
+    /* or 25px */
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}

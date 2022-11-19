@@ -10,6 +10,7 @@ import LandingPage from "./ZContainers/LandingPage/LandingPage.jsx";
 import AddGrants from "./ZContainers/AddGrants/AddGrants.jsx";
 import Signin from "./Components/auth/Signin.jsx";
 import Portfolio from "./ZContainers/Portfolio/Portfolio.jsx";
+import Report from "./ZContainers/Advisory/Report.jsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/addgrant" element={<AddGrants />} />
           <Route exact path="/auth" element={<Signin/>}/>
           <Route exact path="/portfolio" element={<Portfolio/>}/>
+          <Route exact path="/advisory/report" element={<Report/>}/>
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </BrowserRouter>
