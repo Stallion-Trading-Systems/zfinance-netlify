@@ -105,3 +105,8 @@ export const getSensexData=async ()=>{
     let res= await API.get("/sensex/get")
     return res
 }
+
+export const checkCname = async (cDetails) => {
+    let res = await API.post("/finance/check", cDetails)
+    return res;
+}

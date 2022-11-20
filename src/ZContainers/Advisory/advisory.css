@@ -15,6 +15,15 @@ line-height: 100%;
     /* or 25px */
 }
 
+.ppchirka-22px{
+    font-family: 'PP Cirka';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 100%;
+    /* or 25px */
+}
+
 table {
     table-layout: fixed;
     width: 100%;
@@ -28,4 +37,85 @@ table, th, td {
     border-top:none;
     border-bottom: none;
 
+}
+
+.wrapper {
+    display: inline-flex;
+    background: #fff;
+    width: 240px;
+    height: 37px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.wrapper .option-b {
+    background: #fff;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    cursor: pointer;
+    padding: 0 10px;
+    border: 1px solid #000;
+    /* border-top-left-radius: 4px; */
+    /* border-bottom-left-radius: 4px; */
+    border-right-style: none;
+    transition: all 0.3s ease;
+}
+
+.wrapper .option-s {
+    background: #fff;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    /* border-top-right-radius: 4px; */
+    /* border-bottom-right-radius: 4px; */
+    justify-content: space-evenly;
+    cursor: pointer;
+    padding: 0 10px;
+    border: 1px solid #000;
+    border-left-style: none;
+    transition: all 0.3s ease;
+}
+
+.input-display-none {
+    display: none;
+}
+
+#option-1:checked:checked~.option-1,
+#option-2:checked:checked~.option-2 {
+    border-color: #000;
+    background: #71AD25;
+}
+
+/* 
+.wrapper .option span {
+    font-size: 20px;
+    color: #808080;
+} */
+
+#option-1:checked:checked~.option-1 span,
+#option-2:checked:checked~.option-2 span {
+    color: #FFF;
+    font-weight: bold;
+}
+
+.cell-green{
+    position: absolute;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background: #9FFFA9;
+    border-radius: 8px;
+}
+
+.cell-red{
+    position: absolute;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background: #FD9D9D;
+    border-radius: 8px;
 }

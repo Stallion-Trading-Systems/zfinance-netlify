@@ -10,7 +10,7 @@ import "./portfolio.css"
 import { FormControl, InputLabel, NativeSelect } from '@mui/material'
 
 const Portfolio = () => {
-  const [cdetails, setcDetails] = useState()
+  const [cdetails, setcDetails] = useState([])
   const [chartdetails, setChartDetails] = useState()
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
@@ -19,6 +19,7 @@ const Portfolio = () => {
   const [isActive, setIsActive] = useState(false);
   const [sensex,setSensex]=useState();
   const [selectt,setSelectt]=useState("nifty");
+  const [checkc,setcheckc]=useState(false)
   if (user === null) {
     setTimeout(() => {
       navigate("/auth");
@@ -40,25 +41,50 @@ const Portfolio = () => {
     navigate("/auth");
   };
   useEffect(() => {
-    async function f() {
-      let res = await api.getcData({ c_name: "ola" })
-      setcDetails(res.data.obj)
-    }
-    f()
+    
+    
+    
     async function chartdata() {
       let res = await api.getChartData({ email: userobj?.email })
       // console.log(res.data.message);
+     
       setChartDetails(res.data.message)
+      setcDetails([{
+        name: "Series_A",
+        date: "05-11-2000",
+        price: chartdetails?.fmp
+    }])
+      // console.log(chartdetails);
 
     }
     async function sensexdata(){
       let res=await api.getSensexData()
       setSensex(res.data.data)
-      console.log(res.data.data);
     }
-    sensexdata()
+    async function f() {
+      let res2=await api.checkCname({ c_name: chartdetails?.c_name })
+             
+            if (res2.data.message == "No") {
+                {
+                    setcDetails([{
+                        name: "Series_A",
+                        date: "05-11-2000",
+                        price: chartdetails?.fmp
+                    }])
+                }
+            }
+            else 
+            {
+                let res = await api.getcData({ c_name: chartdetails?.c_name })
+                setcDetails(res.data.obj)
+            }
+    }
+    
     chartdata()
-  }, [])
+    f()
+    sensexdata()
+  }, [chartdetails?.c_name])
+  // console.log(cdetails);
   return (
     <>
       {user && <>
@@ -109,7 +135,7 @@ const Portfolio = () => {
                     <div className="row p-5 pt-0 ">
                       <div className="col-10">
                         <h3 className="pp-chirka" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%", textDecorationLine: "underline" }}>Portfolio</h3>
-                        <h3 className="pp-chirka mt-3" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>c name</h3>
+                        <h3 className="pp-chirka mt-3" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>{chartdetails?.c_name}</h3>
 
                       </div>
                       <div className="row mt-3">
@@ -125,10 +151,18 @@ const Portfolio = () => {
                           <p className="pp-chirka mt-4" style={{ fontSize: "normal", fontWeight: "700", fontSize: "22px", lineHeight: "100%" }}>Vesting Start</p>
                           <input className='new-input-css-2' style={{ width: "150px" }} type="text" value={chartdetails?.vesting_start_date} disabled />
                         </div>
+                        {!checkc&&
                         <div className="col-3">
-                          <p className="pp-chirka mt-4" style={{ fontSize: "normal", fontWeight: "700", fontSize: "22px", lineHeight: "100%" }}>Latest Price</p>
-                          <input className='new-input-css-2' style={{ width: "150px" }} type="number" value={chartdetails?.fmp} disabled />
-                        </div>
+                        <p className="pp-chirka mt-4" style={{ fontSize: "normal", fontWeight: "700", fontSize: "22px", lineHeight: "100%" }}>Latest Price</p>
+                        <input className='new-input-css-2' style={{ width: "150px" }} type="number" value={chartdetails?.fmp} disabled />
+                      </div>
+                        }
+                        {checkc&&cdetails&&
+                        <div className="col-3">
+                        <p className="pp-chirka mt-4" style={{ fontSize: "normal", fontWeight: "700", fontSize: "22px", lineHeight: "100%" }}>Latest Price</p>
+                        <input className='new-input-css-2' style={{ width: "150px" }} type="number" value={cdetails[cdetails.length-1].price} disabled />
+                      </div>
+                        }
                       </div>
                       <div className="row">
                         <p className="pp-chirka mt-5" style={{ fontSize: "normal", fontWeight: "700", fontSize: "25px", lineHeight: "100%" }}>Variables</p>

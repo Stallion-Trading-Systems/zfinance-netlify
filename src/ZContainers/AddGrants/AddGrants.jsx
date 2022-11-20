@@ -16,6 +16,7 @@ import { styled } from '@mui/material/styles';
 import { Box, LinearProgress, linearProgressClasses, Typography } from "@mui/material";
 import { searchFilter } from "../../ZComponents/Search/Filter.js";
 import "../../ZComponents/Search/search.css"
+import Loading from "../../Components/Loading/Loading.jsx";
 
 const AddGrants = () => {
     const navigate = useNavigate();
@@ -833,6 +834,7 @@ const AddGrants = () => {
     const [isActive, setIsActive] = useState(false);
     const [p2, setp2] = useState(false);
     const [p3, setp3] = useState(false);
+    const [fmp,setFmp]=useState(true)
     let vestingvalue = 0;
     let totalvalue = 1;
     const [error, setError] = useState({ c_name: false, num: false, strike_price: false, vesting_details: false, vesting_start_date: false, fmp: false })
@@ -845,8 +847,8 @@ const AddGrants = () => {
         setIsActive(false);
     };
 
-    if (details?.fmp && details?.num) {
-        totalvalue = parseInt(details?.fmp) * parseInt(details?.num)
+    if (details?.num&&details?.vesting_details && details?.vesting_start_date) {
+        totalvalue = 1000*parseInt(details?.num)
         if (details?.vesting_details && details?.vesting_start_date) {
             let smonth = details?.vesting_start_date.getMonth() + 1;
             let syear = details?.vesting_start_date.getFullYear()
@@ -862,11 +864,11 @@ const AddGrants = () => {
                     vestingvalue = 0
                 }
                 else {
-                    vestingvalue = details?.fmp * details?.num * period / m
+                    vestingvalue =1000*details?.num * period / m
                 }
             }
             else {
-                vestingvalue = details?.fmp * details?.num * period / m
+                vestingvalue =1000*details?.num * period / m
             }
         }
         if (vestingvalue > totalvalue) vestingvalue = totalvalue
@@ -881,7 +883,21 @@ const AddGrants = () => {
     const [searchValue, setSearchValue] = useState("");
     const [selectedItem, setSelectedItem] = useState(null);
     const dropdownRef = useRef(null);
-
+    useEffect(()=>{
+        async function checkCname(){
+            let res=await api.checkCname({"c_name":details?.c_name})
+            console.log(res.data.message);
+            if(res.data.message=="YES"){
+                setFmp(false)
+                setError({ ...error, fmp: false }); 
+                setDetails({ ...details, "fmp": " " })
+            }
+            else{
+                setFmp(true)
+            }
+        }
+        checkCname()
+    },[details?.c_name])
     // click away listener
     useEffect(() => {
         document.addEventListener("mousedown", handleClick2, false);
@@ -889,10 +905,12 @@ const AddGrants = () => {
     }, []);
 
     const handleClick2 = (e) => {
-        if (dropdownRef.current.contains(e.target)) {
-            return;
+        if(page==1){
+            if (dropdownRef.current.contains(e.target)) {
+                return;
+            }
+            setVisible(false);
         }
-        setVisible(false);
     };
 
     const handleChange2 = (e) => {
@@ -916,10 +934,21 @@ const AddGrants = () => {
         console.log(e.target.value);
     };
     const addGrant = async (e) => {
+        setPage(x => (x + 1));
         let res = await api.addGrant(details);
 
         console.log(res);
-        navigate("/portfolio")
+        if(p2){
+            navigate("/portfolio/p2")
+        }
+        else if(p3){
+            navigate("/portfolio/p3")
+        }
+        else{
+            if(p2){
+                navigate("/portfolio/p1")
+            }
+        }
     }
     const page1check = (e) => {
         e.preventDefault()
@@ -941,11 +970,23 @@ const AddGrants = () => {
     }
     const page3check = async (e) => {
         e.preventDefault()
-        if (!details?.num || !details?.strike_price || !details?.vesting_start_date || !details?.vesting_details || !details?.fmp) {
-            setError({ ...error, num: (!details?.num) ? true : false, strike_price: (!details?.strike_price) ? true : false, vesting_details: (!details?.vesting_details) ? true : false, vesting_start_date: (!details?.vesting_start_date) ? true : false, fmp: (!details?.fmp) ? true : false })
-            console.log(error, details);
-            return;
+        if(fmp){
+            if (!details?.num || !details?.strike_price || !details?.vesting_start_date || !details?.vesting_details||!details?.fmp) {
+            
+                setError({ ...error, num: (!details?.num) ? true : false, strike_price: (!details?.strike_price) ? true : false, vesting_details: (!details?.vesting_details) ? true : false, vesting_start_date: (!details?.vesting_start_date) ? true : false, fmp:  (!details?.fmp) ? true:false })
+                console.log(error, details);
+                return;
+            }
         }
+        else{
+            if (!details?.num || !details?.strike_price || !details?.vesting_start_date || !details?.vesting_details) {
+            
+                setError({ ...error, num: (!details?.num) ? true : false, strike_price: (!details?.strike_price) ? true : false, vesting_details: (!details?.vesting_details) ? true : false, vesting_start_date: (!details?.vesting_start_date) ? true : false, fmp: (!details?.fmp) ? true:false })
+                console.log(error, details);
+                return;
+            }
+        }
+        
         let date = new Date()
         let year = date.getFullYear()
         year -= 2000;
@@ -1062,7 +1103,7 @@ const AddGrants = () => {
                                                                 <div className="container mb-5">
                                                                     <div tabIndex="0" className="input_container">
                                                                         <input
-                                                                            className="input"
+                                                                            className={(error?.c_name) ? "new-input-css ml-3 input-error-css" : "new-input-css ml-3"}
                                                                             type="text"
                                                                             placeholder="Search Company"
                                                                             value={details.c_name}
@@ -1074,14 +1115,9 @@ const AddGrants = () => {
                                                                             }}
                                                                         />
                                                                     </div>
-                                                                    <div ref={dropdownRef} className={`dropdown ${visible ? "v" : ""}`}>
+                                                                    <div ref={dropdownRef} className={`mt-0 pt-0 dropdown ${visible ? "v" : ""}`}>
                                                                         {visible && (
                                                                             <ul>
-                                                                                {!list && (
-                                                                                    <li key="zxc" className="dropdown_item">
-                                                                                        no result
-                                                                                    </li>
-                                                                                )}
                                                                                 {/* you can remove the searchFilter if you get results from Filtered API like Google search */}
                                                                                 {list &&
                                                                                     searchFilter(searchValue, list).map((x) => (
@@ -1220,13 +1256,15 @@ const AddGrants = () => {
                                                                                             <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>Deadline after leaving</p>
                                                                                             <input value={details.deadline} className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "deadline": e.target.value }) }} type="text" />
                                                                                         </div>
+                                                                                        {fmp&&
                                                                                         <div className="col-6">
-                                                                                            <div className="col-6">
-                                                                                                <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>FMP*</p>
-                                                                                                <input value={details.fmp} className={(error?.fmp) ? "new-input-css-2 ml-3 input-error-css" : "new-input-css-2 mb-5 ml-3"} onChange={(e) => { setError({ ...error, fmp: false }); setDetails({ ...details, "fmp": e.target.value }) }} type="number" />
-                                                                                                {error?.fmp && <p className="mb-5" style={{ color: "red" }}>*please enter FMP</p>}
-                                                                                            </div>
+                                                                                        <div className="col-6">
+                                                                                            <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>FMP*</p>
+                                                                                            <input value={details.fmp} className={(error?.fmp) ? "new-input-css-2 ml-3 input-error-css" : "new-input-css-2 mb-5 ml-3"} onChange={(e) => { setError({ ...error, fmp: false }); setDetails({ ...details, "fmp": e.target.value }) }} type="number" />
+                                                                                            {error?.fmp && <p className="mb-5" style={{ color: "red" }}>*please enter FMP</p>}
                                                                                         </div>
+                                                                                    </div>
+                                                                                        }
 
                                                                                     </div>
                                                                                 </div>
@@ -1337,7 +1375,11 @@ const AddGrants = () => {
                                                     </div>
                                                 </div>
                                             }
-                                            {page == 5 && <>done</>}
+                                            {page == 5 && <>
+                                            
+                                            <Loading/>
+
+                                            </>}
                                         </div>
                                     </div>
                                 </div>

@@ -173,7 +173,7 @@ export default function portfolioChart(props) {
         newdata[i].vp = newdata[i].price * count / totalp
     }
   }
-  while (newdata?.length > 0 && newdata[1].vp == 0) {
+  while (newdata?.length > 0 && newdata[1]?.vp == 0) {
     if (cliff == 1 && newdata[12].vp == 0)
       newdata.shift()
     else if (cliff == 0 && newdata[1].vp == 0)
@@ -322,8 +322,8 @@ export default function portfolioChart(props) {
         stroke="lightgreen"
         fill="#C9F0B1"
       />
-      <Line type="monotone" dataKey="vp" stroke="#8884d8" strokeDasharray="5 5" />
-      <Line type="monotone" dataKey="sensex" stroke="#8884d8" strokeDasharray="5 5" />
+      <Line type="monotone" dataKey="vp" stroke="#8884d8" strokeDasharray="5 5" dot={false} />
+      <Line type="monotone" dataKey="sensex" stroke="#8884d8" strokeDasharray="5 5" dot={false} />
       <Scatter type="monotone" dataKey="vpt" fill="#8884d8" shape="dot" />
     </ComposedChart>
   );

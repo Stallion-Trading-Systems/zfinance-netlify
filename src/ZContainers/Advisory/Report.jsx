@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import PostfolioChart from '../../ZComponents/recharts/portfolioChart.jsx'
-import * as api from "../../axios.js"
 import { useNavigate } from 'react-router'
 import { Sidebar } from "react-responsive-sidebar"
 import Button from '../../Components/Button/Button.jsx'
 import monkey from "../../assets/monkey.svg"
 import { items } from '../../ZComponents/items.js'
 import "./advisory.css"
-import { FormControl, InputLabel, NativeSelect } from '@mui/material'
+import * as api from "../../axios.js"
 
 const Report = () => {
     const navigate = useNavigate();
@@ -15,6 +13,7 @@ const Report = () => {
     const userobj = JSON.parse(localStorage.getItem('user'));
     const [openlogout, setOpenlogout] = useState(false);
     const [isActive, setIsActive] = useState(false);
+    const [vestingdetails, setVestingDetails] = useState()
     if (user === null) {
         setTimeout(() => {
             navigate("/auth");
@@ -34,6 +33,23 @@ const Report = () => {
         localStorage.removeItem("user");
         navigate("/auth");
     };
+    let date=new Date().toDateString().substring(4)
+    let dateoriginal=new Date()
+    useEffect(() => {
+
+
+
+        async function vestingdata() {
+            let res = await api.getChartData({ email: userobj?.email })
+            console.log(res.data.message);
+
+            setVestingDetails(res.data.message)
+            // console.log(chartdetails);
+
+        }
+
+        vestingdata()
+    }, [])
     return (
         <>
             {user && <>
@@ -93,81 +109,159 @@ const Report = () => {
                                                 <div className="container">
                                                     <div className="row">
                                                         <div className="col">
-                                                            <table class="table table-bordered">
+                                                            <table class="table table-borderless">
                                                                 <thead>
                                                                     <tr >
                                                                         <th style={{ border: "0px" }} scope='col'>Plans</th>
-                                                                        <th style={{backgroundColor:"#fbf7ec"}}  scope="col">Exercise & hold</th>
+                                                                        <th style={{ backgroundColor: "#fbf7ec" }} scope="col">Exercise & hold</th>
                                                                         <th scope="col">Secondary sale</th>
-                                                                        <th style={{backgroundColor:"#fbf7ec"}} scope="col">Exercise at exit</th>
+                                                                        <th style={{ backgroundColor: "#fbf7ec" }} scope="col">Exercise at exit</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr className='no-tbb' >
                                                                         <td style={{ border: "0px" }}>Rationale</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec", borderTop:"none", borderBottom:"none"}}>Given you plan to leave the firm in near future, exercising now might suit you the best. For analsyt coverage and our recommendation, Visit here for zadvisory</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}>Given your need for liquidity, the best option is to sell your holdings on a secondary marketplace.<br /> Visit here for marketplace</td>
                                                                         <td></td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}></td>
+                                                                    </tr>
+                                                                    <tr className='no-tbb' >
+                                                                        <td style={{ border: "0px" }}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}><hr /></td>
+                                                                        <td><hr /></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}><hr /></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style={{ border: "0px" }}>Summary</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}></td>
                                                                         <td></td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style={{ border: "0px" }}># of options used</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}></td>
-                                                                        <td></td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>{vestingdetails?.num}</td>
+                                                                        <td>{vestingdetails?.num}</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>{vestingdetails?.num}</td>
+                                                                    </tr>
+                                                                    <tr className='no-tbb' >
+                                                                        <td style={{ border: "0px" }}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}><hr /></td>
+                                                                        <td><hr /></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}><hr /></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style={{ border: "0px" }}>Date of exercise</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}>Anytime</td>
-                                                                        <td>Anytime after exercise</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}>$today+time to IPO or N/A</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>{date}</td>
+                                                                        <td>{date}</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>N/A</td>
+                                                                    </tr>
+                                                                    <tr className='no-tbb' >
+                                                                        <td style={{ border: "0px" }}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}><hr /></td>
+                                                                        <td><hr /></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}><hr /></td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td style={{ border: "0px" }}>Bottom out risk  <i class="bi bi-info-circle"></i></td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}>LOW</td>
-                                                                        <td>LOW</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}>EXTREMELY HIGH</td>
+                                                                        <td style={{ border: "0px" }}>Liquidity risk  <i class="bi bi-info-circle"></i></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }} ><p className='cell-green'>LOW</p></td>
+                                                                        <td><p className='cell-red'>EXTREMELY HIGH</p></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}><p className='cell-red'>HIGH</p></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style={{ border: "0px" }}>Your exercise costs</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}></td>
                                                                         <td> </td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}> </td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}> </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style={{ border: "0px" }}>Latest share price</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}>$FMV</td>
-                                                                        <td> $FMV</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}> $FMV</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>{vestingdetails?.fmp}</td>
+                                                                        <td> {vestingdetails?.fmp}</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}> {vestingdetails?.fmp}</td>
+                                                                    </tr>
+                                                                    <tr className='no-tbb' >
+                                                                        <td style={{ border: "0px" }}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}><hr /></td>
+                                                                        <td><hr /></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}><hr /></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style={{ border: "0px" }}>Exercise cost  <i class="bi bi-info-circle"></i></td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}>$OPTIONS X STRIKE</td>
-                                                                        <td> $OPTIONS X STRIKE</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}> $OPTIONS X STRIKE</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>{vestingdetails?.strike_price*vestingdetails?.num}</td>
+                                                                        <td>{vestingdetails?.strike_price*vestingdetails?.num}</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>{vestingdetails?.strike_price*vestingdetails?.num}</td>
+                                                                    </tr>
+                                                                    <tr className='no-tbb' >
+                                                                        <td style={{ border: "0px" }}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}><hr /></td>
+                                                                        <td><hr /></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}><hr /></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style={{ border: "0px" }}>Taxes  <i class="bi bi-info-circle"></i></td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}>$ exer cost x .3</td>
-                                                                        <td> $ exer cost x .3</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}>$ exer cost x .3</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>{Math.ceil((vestingdetails?.fmp-vestingdetails?.strike_price*vestingdetails?.num)*0.3)}</td>
+                                                                        <td>{Math.ceil((vestingdetails?.fmp-vestingdetails?.strike_price*vestingdetails?.num)*0.3)}</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>{Math.ceil((vestingdetails?.fmp-vestingdetails?.strike_price*vestingdetails?.num)*0.3)}</td>
+                                                                    </tr>
+                                                                    <tr className='no-tbb' >
+                                                                        <td style={{ border: "0px" }}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}><hr /></td>
+                                                                        <td><hr /></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}><hr /></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style={{ border: "0px" }}>Total exercise costs <i class="bi bi-info-circle"></i></td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}>$OPTIONS X STRIKE + TAX</td>
-                                                                        <td></td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>{vestingdetails?.strike_price*vestingdetails?.num+Math.ceil((vestingdetails?.fmp-vestingdetails?.strike_price*vestingdetails?.num)*0.3)}</td>
+                                                                        <td>{vestingdetails?.strike_price*vestingdetails?.num+Math.ceil((vestingdetails?.fmp-vestingdetails?.strike_price*vestingdetails?.num)*0.3)}</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}>{vestingdetails?.strike_price*vestingdetails?.num+Math.ceil((vestingdetails?.fmp-vestingdetails?.strike_price*vestingdetails?.num)*0.3)}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td style={{ border: "0px" }}>Your returns <i class="bi bi-info-circle"></i></td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}> </td>
+                                                                        <td style={{ border: "0px" }}>Your returns</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}> </td>
                                                                         <td> </td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}> </td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}> </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style={{ border: "0px" }}>Exit Price</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}> </td>
+                                                                        <td> </td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}> </td>
+                                                                    </tr>
+                                                                    <tr className='no-tbb' >
+                                                                        <td style={{ border: "0px" }}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}><hr /></td>
+                                                                        <td><hr /></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}><hr /></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style={{ border: "0px" }}>Exercise Cost</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}> </td>
+                                                                        <td> </td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}> </td>
+                                                                    </tr>
+                                                                    <tr className='no-tbb' >
+                                                                        <td style={{ border: "0px" }}></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}><hr /></td>
+                                                                        <td><hr /></td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}><hr /></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style={{ border: "0px" }}>Net returns discounted to present value</td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}> </td>
+                                                                        <td> </td>
+                                                                        <td style={{ backgroundColor: "#fbf7ec" }}> </td>
+                                                                    </tr>
+                                                                    <tr className=''>
+                                                                        <td style={{ border: "0px" }}></td>
+                                                                        <td> </td>
+                                                                        <td> </td>
+                                                                        <td > </td>
+                                                                    </tr>
+                                                                    <tr className=''>
+                                                                        <td style={{ border: "0px" }}></td>
+                                                                        <td> <Button name="go to zadvisory" /></td>
+                                                                        <td> </td>
+                                                                        <td > </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
