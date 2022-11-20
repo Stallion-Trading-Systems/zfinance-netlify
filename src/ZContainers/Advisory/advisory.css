@@ -19,3 +19,13 @@ table {
     table-layout: fixed;
     width: 100%;
 }
+
+table, th, td {
+    border-collapse: collapse;
+}
+
+.no-tbb{
+    border-top:none;
+    border-bottom: none;
+
+}

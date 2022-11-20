@@ -41,7 +41,7 @@ const Portfolio = () => {
   };
   useEffect(() => {
     async function f() {
-      let res = await api.getcData({ c_name: "swiggy" })
+      let res = await api.getcData({ c_name: "ola" })
       setcDetails(res.data.obj)
     }
     f()

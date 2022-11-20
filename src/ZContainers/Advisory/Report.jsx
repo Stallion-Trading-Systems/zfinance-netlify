@@ -103,9 +103,9 @@ const Report = () => {
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr >
+                                                                    <tr className='no-tbb' >
                                                                         <td style={{ border: "0px" }}>Rationale</td>
-                                                                        <td style={{backgroundColor:"#fbf7ec"}}>Given you plan to leave the firm in near future, exercising now might suit you the best. For analsyt coverage and our recommendation, Visit here for zadvisory</td>
+                                                                        <td style={{backgroundColor:"#fbf7ec", borderTop:"none", borderBottom:"none"}}>Given you plan to leave the firm in near future, exercising now might suit you the best. For analsyt coverage and our recommendation, Visit here for zadvisory</td>
                                                                         <td></td>
                                                                         <td style={{backgroundColor:"#fbf7ec"}}></td>
                                                                     </tr>
@@ -158,13 +158,13 @@ const Report = () => {
                                                                         <td style={{backgroundColor:"#fbf7ec"}}>$ exer cost x .3</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td style={{ border: "0px" }}>Total exercise costs<i class="bi bi-info-circle"></i></td>
+                                                                        <td style={{ border: "0px" }}>Total exercise costs <i class="bi bi-info-circle"></i></td>
                                                                         <td style={{backgroundColor:"#fbf7ec"}}>$OPTIONS X STRIKE + TAX</td>
                                                                         <td></td>
                                                                         <td style={{backgroundColor:"#fbf7ec"}}></td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td style={{ border: "0px" }}>Your returns<i class="bi bi-info-circle"></i></td>
+                                                                        <td style={{ border: "0px" }}>Your returns <i class="bi bi-info-circle"></i></td>
                                                                         <td style={{backgroundColor:"#fbf7ec"}}> </td>
                                                                         <td> </td>
                                                                         <td style={{backgroundColor:"#fbf7ec"}}> </td>
