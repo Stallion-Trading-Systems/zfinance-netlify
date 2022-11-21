@@ -110,3 +110,8 @@ export const checkCname = async (cDetails) => {
     let res = await API.post("/finance/check", cDetails)
     return res;
 }
+
+export const checkbid = async (cDetails) => {
+    let res = await API.post("/finance/getbidprice", cDetails)
+    return res;
+}

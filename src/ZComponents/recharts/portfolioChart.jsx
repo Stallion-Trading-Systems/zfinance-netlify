@@ -283,7 +283,18 @@ export default function portfolioChart(props) {
       }
     }
   }
-  console.log(newdata);
+  console.log(newdata);//100,000,000,000
+  const DataFormater = (number) => {
+    let s=number.toString()
+    let ans=""
+    for(let i=s.length-1;i>=0;i--){
+      if(s.length-i-1!=0&&(s.length-i-1)%3==0)
+      ans=","+ans
+      ans=s[i]+ans
+    }
+    return ans
+
+  }
   return (
     
     <ComposedChart
@@ -294,12 +305,13 @@ export default function portfolioChart(props) {
         top: 0,
         right: 0,
         left: 50,
-        bottom: 0
+        bottom: 25
       }}
     >
       {/* <CartesianGrid strokeDasharray="3 3" /> */}
-      <XAxis dataKey="md" />
-      <YAxis />
+      <XAxis label={{ value: 'Timeline', position:"insideBottom",offset:-20 }} minTickGap={10}  dataKey="md" />
+      <YAxis label={{ value: 'Total Equity Value',position:"left", angle: -90,offset:20}} tickFormatter={DataFormater} />
+      {/* domain={['dataMin', dataMax => (Math.ceil((dataMax * 1.1)))]}, */}
       <Tooltip />
       {/* <Area
         type="monotone"

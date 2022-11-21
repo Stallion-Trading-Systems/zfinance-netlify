@@ -141,7 +141,7 @@ const PortfolioMain = () => {
                                             </div>
                                         </div>
                                         <div className="row p-5 pt-0">
-                                            <div style={{ backgroundColor: "#FEFCF7" }} className="col-10 p-5">
+                                            <div style={{ backgroundColor: "#FEFCF7" }} className="col-11 p-5">
 
                                                 <div className="row mt-5">
                                                     {chartdetails && <PostfolioChart data={cdetails} type={selectt} cd={chartdetails} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={chartdetails?.vs} />}

@@ -1,9 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from '../../Components/Button/Button.jsx'
+import * as api from "../../axios.js"
+import { useState } from 'react'
 
 const Table2 = (props) => {
     let vestingdetails=props.vestingdetails
     let date=new Date().toDateString().substring(4)
+    const [exitPrice,setExitPrice]=useState(vestingdetails?.fmp)
+    let c_name=vestingdetails?.c_name
+    useEffect(() => {
+        async function checkBid(){
+            let res=await api.checkbid({c_name:c_name})
+            if(res?.data.message!="No price found"){
+                setExitPrice(res.data.message?.buy_price)
+            }
+            // console.log(res);
+        }
+        
+        async function getFmp(){
+            let res2=await api.checkCname({ c_name: c_name }) 
+            if (res2.data.message != "No"){ 
+                let res22 = await api.getcData({ c_name: c_name })
+                setExitPrice(res22.data.obj[res22.data.obj?.length-1]?.price)
+                console.log(res22);
+            }
+
+
+        }
+        getFmp()
+        checkBid()
+    }, [c_name])
     return (
         <div>
             <div className="container">
@@ -130,9 +156,9 @@ const Table2 = (props) => {
                                 </tr>
                                 <tr>
                                     <td style={{ border: "0px" }}>Exit Price</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}> </td>
-                                    <td> </td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}> </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{exitPrice} </td>
+                                    <td>{exitPrice}  </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{exitPrice}  </td>
                                 </tr>
                                 <tr className='no-tbb' >
                                     <td style={{ border: "0px" }}></td>
@@ -142,9 +168,9 @@ const Table2 = (props) => {
                                 </tr>
                                 <tr>
                                     <td style={{ border: "0px" }}>Exercise Cost</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}> </td>
-                                    <td> </td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}> </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp - vestingdetails?.strike_price * vestingdetails?.num) * 0.3)} </td>
+                                    <td>{vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp - vestingdetails?.strike_price * vestingdetails?.num) * 0.3)} </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp - vestingdetails?.strike_price * vestingdetails?.num) * 0.3)} </td>
                                 </tr>
                                 <tr className='no-tbb' >
                                     <td style={{ border: "0px" }}></td>
@@ -154,9 +180,9 @@ const Table2 = (props) => {
                                 </tr>
                                 <tr>
                                     <td style={{ border: "0px" }}>Net returns discounted to present value</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}> </td>
-                                    <td> </td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}> </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{exitPrice-(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))} </td>
+                                    <td>{exitPrice-(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))} </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{exitPrice-(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))} </td>
                                 </tr>
                                 <tr className=''>
                                     <td style={{ border: "0px" }}></td>

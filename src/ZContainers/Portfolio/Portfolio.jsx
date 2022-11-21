@@ -185,7 +185,7 @@ const Portfolio = () => {
                       </div>
                     </div>
                     <div className="row p-5">
-                      <div style={{ backgroundColor: "#FEFCF7" }} className="col-10 p-5">
+                      <div style={{ backgroundColor: "#FEFCF7" }} className="col-11 p-5">
 
                         <div className="row mb-5">
                           <div className="col-9 "></div>
