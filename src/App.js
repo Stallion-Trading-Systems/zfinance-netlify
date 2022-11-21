@@ -25,6 +25,7 @@ function App() {
           <Route exact path="/portfolio" element={<Portfolio/>}/>
           <Route exact path="/portfolio/:type" element={<PortfolioMain/>}/>
           <Route exact path="/advisory/report" element={<Report/>}/>
+          <Route exact path="/advisory/report/:period/:capital/:liquidity" element={<Report/>}/>
           <Route exact path="/advisory" element={<Advisory/>}/>
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>

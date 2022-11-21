@@ -119,3 +119,66 @@ table, th, td {
     background: #FD9D9D;
     border-radius: 8px;
 }
+
+.wrapper1 {
+    display: inline-flex;
+    background: #fff;
+    width: 240px;
+    height: 37px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.wrapper1 .option-b1 {
+    background: #fff;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    cursor: pointer;
+    padding: 0 10px;
+    border: 1px solid #000;
+    /* border-top-left-radius: 4px; */
+    /* border-bottom-left-radius: 4px; */
+    border-right-style: none;
+    transition: all 0.3s ease;
+}
+
+.wrapper1 .option-s1 {
+    background: #fff;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    /* border-top-right-radius: 4px; */
+    /* border-bottom-right-radius: 4px; */
+    justify-content: space-evenly;
+    cursor: pointer;
+    padding: 0 10px;
+    border: 1px solid #000;
+    border-left-style: none;
+    transition: all 0.3s ease;
+}
+
+.input-display-none1 {
+    display: none;
+}
+
+#option-11:checked:checked~.option-11,
+#option-21:checked:checked~.option-21{
+    border-color: #000;
+    background: #71AD25;
+}
+
+/* 
+.wrapper .option span {
+    font-size: 20px;
+    color: #808080;
+} */
+
+#option-11:checked:checked~.option-11 span,
+#option-21:checked:checked~.option-21 span {
+    color: #FFF;
+    font-weight: bold;
+}

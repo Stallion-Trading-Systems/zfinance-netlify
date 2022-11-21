@@ -6,6 +6,7 @@ import monkey from "../../assets/monkey.svg"
 import { items } from '../../ZComponents/items.js'
 import "./advisory.css"
 import * as api from "../../axios.js"
+import { NavLink } from 'react-router-dom'
 
 const Advisory = () => {
     const navigate = useNavigate();
@@ -13,8 +14,11 @@ const Advisory = () => {
     const userobj = JSON.parse(localStorage.getItem('user'));
     const [openlogout, setOpenlogout] = useState(false);
     const [isActive, setIsActive] = useState(false);
-    const [boolType,setboolType]=useState("yes")
-    const [dataDetails,setDataDetails]=useState()
+    const [boolType, setboolType] = useState("yes")
+    const [capboolType, setcapboolType] = useState("yes")
+    const [dataDetails, setDataDetails] = useState()
+    const [period,setPeriod]=useState(2);
+
     if (user === null) {
         setTimeout(() => {
             navigate("/auth");
@@ -36,14 +40,19 @@ const Advisory = () => {
     };
     useEffect(() => {
         async function getdata() {
-          let res = await api.getChartData({ email: userobj?.email })
-          // console.log(res.data.message);
-          setDataDetails(res.data.message)
+            let res = await api.getChartData({ email: userobj?.email })
+            // console.log(res.data.message);
+            setDataDetails(res.data.message)
 
-          console.log(res.data.message);
+            console.log(res.data.message);
         }
         getdata()
-      }, [])
+    }, [])
+    const reportnavigate=()=>{
+        let capital=capboolType=="yes"?1:0
+        let liquidity=boolType=="yes"?1:0
+        navigate(`/advisory/report/${period}/${capital}/${liquidity}`);
+    }
     return (
         <>
             {user && <>
@@ -98,7 +107,7 @@ const Advisory = () => {
                                             </div>
                                             <div className="row mt-2">
                                                 <div className="col ml-5">
-                                                    <select className='new-input-css' style={{width:"170px"}} name="company" id="company">
+                                                    <select className='new-input-css' style={{ width: "170px" }} name="company" id="company">
                                                         <option value="razorpay">Razorpay</option>
                                                     </select>
                                                 </div>
@@ -106,36 +115,54 @@ const Advisory = () => {
                                             <div className="row mt-5">
                                                 <div className="col ml-5">
                                                     <p className='ppchirka-22px'>How long do you plan to stay?</p>
-                                                    <input className='new-input-css' type="number" />
+                                                    <select className='new-input-css' style={{ width: "200px" }} onChange={(e)=>{setPeriod(e.target.value)}} name="period" id="period">
+                                                        <option checked={period==2} value={2}>2 Years or more</option>
+                                                        <option checked={period==1} value={1}>Less than 2 Years</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div className="row mt-5">
                                                 <div className="col ml-r">
                                                     <p className='ppchirka-22px'>
-                                                    Do you have capital to cover the exercise costs of around <span style={{color:"#71AD25"}}>Rs {dataDetails?.strike_price*dataDetails?.num}</span>?
+                                                        Do you have capital to cover the exercise costs of around <span style={{ color: "#71AD25" }}>Rs {dataDetails?.strike_price * dataDetails?.num}</span>?
                                                     </p>
-                                                    <input className='new-input-css' style={{width:"100px"}} type="number" />
+                                                    <div className="row">
+                                                        <div className="col-2">
+                                                            <div className='d-flex justify-content-center align-items-center'>
+                                                                <div className='wrapper1 '>
+                                                                    <input checked={capboolType == "yes"} className='input-display-none1' onChange={(e) => { setcapboolType(e.target.value) }} type="radio" name="yess" value="yes" id="option-11" />
+                                                                    <input checked={capboolType == "no"} className='input-display-none1' onChange={(e) => { setcapboolType(e.target.value) }} type="radio" name="noo" value="no" id="option-21" />
+                                                                    <label for="option-11" className="option1 option-b1 option-11">
+                                                                        <span>Yes</span>
+                                                                    </label>
+                                                                    <label for="option-21" className="option1 option-s1 option-21">
+                                                                        <span>No</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="row mt-5">
                                                 <div className="col">
                                                     <p className='ppchirka-22px'>
-                                                    Do you have a liquidity need like student education, home purchase, etc?
+                                                        Do you have a liquidity need like student education, home purchase, etc?
                                                     </p>
                                                     <div className="row">
                                                         <div className="col-2">
-                                                        <div className='d-flex justify-content-center align-items-center'>
-                                                        <div className='wrapper '>
-                                                            <input checked={boolType == "yes"} className='input-display-none' onChange={(e) => { setboolType(e.target.value) }} type="radio" name="yes" value="yes" id="option-1" />
-                                                            <input checked={boolType == "no"} className='input-display-none' onChange={(e) => { setboolType(e.target.value) }} type="radio" name="no" value="no" id="option-2" />
-                                                            <label for="option-1" className="option option-b option-1">
-                                                                <span>Yes</span>
-                                                            </label>
-                                                            <label for="option-2" className="option option-s option-2">
-                                                                <span>No</span>
-                                                            </label>
-                                                        </div> 
-                                                    </div>
+                                                            <div className='d-flex justify-content-center align-items-center'>
+                                                                <div className='wrapper '>
+                                                                    <input checked={boolType == "yes"} className='input-display-none' onChange={(e) => { setboolType(e.target.value) }} type="radio" name="yes" value="yes" id="option-1" />
+                                                                    <input checked={boolType == "no"} className='input-display-none' onChange={(e) => { setboolType(e.target.value) }} type="radio" name="no" value="no" id="option-2" />
+                                                                    <label for="option-1" className="option option-b option-1">
+                                                                        <span>Yes</span>
+                                                                    </label>
+                                                                    <label for="option-2" className="option option-s option-2">
+                                                                        <span>No</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -143,7 +170,7 @@ const Advisory = () => {
                                             <div className="row mt-5">
                                                 <div className="col-3"></div>
                                                 <div className="col">
-                                                    <Button name="explore options"/>
+                                                    <button className='remove-btn-default' style={{borderColor:"none", backgroundColor:"white",outline:"none"}} onClick={reportnavigate}><Button name="explore options" /></button>
                                                 </div>
                                             </div>
                                         </div>
