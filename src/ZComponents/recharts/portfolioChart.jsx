@@ -56,6 +56,7 @@ export default function portfolioChart(props) {
   let variables = props.variables
   let sensex=props.sensex
   let cd=props.cd
+  console.log(sensex);
 
   let vs = parseInt(props.vs)
   let totalp = parseInt(vd?.substring(0, 2));
@@ -174,7 +175,7 @@ export default function portfolioChart(props) {
     }
   }
   while (newdata?.length > 0 && newdata[1]?.vp == 0) {
-    if (cliff == 1 && newdata[12].vp == 0)
+    if (cliff == 1 && newdata[12]?.vp == 0)
       newdata.shift()
     else if (cliff == 0 && newdata[1].vp == 0)
       newdata.shift()
@@ -268,8 +269,9 @@ export default function portfolioChart(props) {
       }
     }
   }
+  let c=cd?.strike_price/totalperiod
   if(props?.type=="sensex"){
-    let c=cd?.strike_price/totalperiod
+    
     let onebyn=0
     for(let i=0;i<newdata.length;i++){
       if(newdata[i].vp==0)continue;
@@ -277,10 +279,30 @@ export default function portfolioChart(props) {
         if(newdata[i].key==sensex[j]?.key){
           onebyn+=(1/sensex[j]?.close_price)
           let finalsensex=onebyn*sensex[j]?.close_price*num*c
-          newdata[i].sensex=Math.ceil(finalsensex)
-
+          newdata[i].sensex=Math.floor(finalsensex)
         }
       }
+    }
+    let i;
+    for(i=1;i<newdata.length;i++){
+      if(newdata[i-1]?.sensex){
+        if(!newdata[i]?.sensex){
+          newdata[i-1].psensex=[newdata[i-1]?.sensex,newdata[i-1]?.sensex]
+          newdata[i-1].highsensex=newdata[i-1]?.sensex
+          newdata[i-1].lowsensex=newdata[i-1]?.sensex
+          newdata[i].highsensex=(Math.round(((newdata[i-1]?.sensex*1.0167+(c*num)) + Number.EPSILON) * 100) / 100)
+          newdata[i].lowsensex=(Math.round(((newdata[i-1]?.sensex*1.0167+(c*num)) + Number.EPSILON) * 100) / 100)
+          newdata[i].psensex=[newdata[i]?.highsensex,newdata[i]?.lowsensex]
+          break;
+        }
+      }
+    }
+    i++
+    for(;i<newdata.length;i++){
+      newdata[i].highsensex=(Math.round(((newdata[i-1]?.highsensex*1.0167+(c*num)) + Number.EPSILON) * 100) / 100)
+      newdata[i].lowsensex=(Math.round(((newdata[i-1]?.lowsensex*1.0056+(c*num)) + Number.EPSILON) * 100) / 100)
+      newdata[i].psensex=[newdata[i].highsensex,newdata[i].lowsensex]
+      
     }
   }
   console.log(newdata);//100,000,000,000
@@ -330,13 +352,19 @@ export default function portfolioChart(props) {
       <Area
         type="monotone"
         dataKey="price"
-        stackId="1"
+        stackId="2"
         stroke="lightgreen"
         fill="#C9F0B1"
+      />
+      <Area
+        dataKey="psensex"
+        stroke="#B8B8B8"
+        fill="#B8B8B8"
       />
       <Line type="monotone" dataKey="vp" stroke="#8884d8" strokeDasharray="5 5" dot={false} />
       <Line type="monotone" dataKey="sensex" stroke="#8884d8" strokeDasharray="5 5" dot={false} />
       <Scatter type="monotone" dataKey="vpt" fill="#8884d8" shape="dot" />
+      
     </ComposedChart>
   );
 }
