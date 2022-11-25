@@ -317,6 +317,23 @@ export default function portfolioChart(props) {
     return ans
 
   }
+  const CustomTooltip = ({ active, payload, label }) => {
+    console.log(payload[0]?.payload);
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+          <p style={{maxWidth:"250px",backgroundColor:"rgba(255, 255, 255, 0.5)", padding:"10px",fontSize:"12px"}} className="label">Your vested equity value 
+          in <strong>{label}</strong> should be <strong>₹{payload[0]?.payload?.vp}</strong>, however, if you’d 
+          have invested the monthly vested sum in <strong>{props?.type}</strong> index fund, it 
+          should have reaped approx. 
+          <strong>₹{payload[0]?.payload?.highsensex||payload[0]?.payload?.sensex}</strong> value
+          </p>
+        </div>
+      );
+    }
+  
+    return null;
+  };
   return (
     
     <ComposedChart
@@ -334,7 +351,7 @@ export default function portfolioChart(props) {
       <XAxis label={{ value: 'Timeline', position:"insideBottom",offset:-20 }} minTickGap={10}  dataKey="md" />
       <YAxis label={{ value: 'Total Equity Value',position:"left", angle: -90,offset:20}} tickFormatter={DataFormater} />
       {/* domain={['dataMin', dataMax => (Math.ceil((dataMax * 1.1)))]}, */}
-      <Tooltip />
+      <Tooltip content={<CustomTooltip />} />
       {/* <Area
         type="monotone"
         dataKey="uv"
@@ -361,8 +378,8 @@ export default function portfolioChart(props) {
         stroke="#B8B8B8"
         fill="#B8B8B8"
       />
-      <Line type="monotone" dataKey="vp" stroke="#8884d8" strokeDasharray="5 5" dot={false} />
-      <Line type="monotone" dataKey="sensex" stroke="#8884d8" strokeDasharray="5 5" dot={false} />
+      <Line type="monotone" dataKey="vp" strokeWidth="3" stroke="#8884d8" strokeDasharray="5 10" dot={false} />
+      <Line type="monotone" dataKey="sensex" strokeWidth="3" stroke="orange" strokeDasharray="5 10" dot={false} />
       <Scatter type="monotone" dataKey="vpt" fill="#8884d8" shape="dot" />
       
     </ComposedChart>
