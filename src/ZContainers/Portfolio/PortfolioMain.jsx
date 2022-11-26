@@ -141,30 +141,28 @@ const PortfolioMain = () => {
                                             </div>
                                         </div>
                                         <div className="row p-5 pt-0">
-                                            <div style={{ backgroundColor: "#FEFCF7" }} className="col-11 p-5">
+                                            <div  >
 
-                                                <div className="row mt-5">
-                                                    {chartdetails && <PostfolioChart data={cdetails} type={selectt} cd={chartdetails} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={chartdetails?.vs} />}
+                                                <div>
+                                                    {chartdetails && <PostfolioChart ptype={true} data={cdetails} type={selectt} cd={chartdetails} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={chartdetails?.vs} />}
                                                 </div>
                                             </div>
 
                                             <div className="col-4"></div>
                                         </div>
-                                        <div className="row mt-3 p-5 pt-0">
-                                            <div className="col-6 ppchirka-25px">Total equity value</div>
-                                            <div className="col-6 ppchirka-25px">Vested equity value</div>
-                                        </div>
+                                        
+                                        
                                         <div className="row mb-5">
                                             <div className="col-10">
                                             {type=="p2"&&
-                                            <p className='ppchirka-25px' style={{fontWeight:"300"}}>
-                                                While vested equity value wil eventually converge to the total equity value as seen from the graph, this should not be considered as net wealth, especially in the case of illiquid companies. There are a lot of other variables that eventually define how much you actually make like:<br/><br/> &nbsp; 1. Time to IPO <br/>&nbsp; 2. Companies acceptance towards secondaries <br/>&nbsp; 3. Company fundamentals <br/>&nbsp; 4.Lock-ins <br/><br/>And some other extraneous variables. Select an option below to play out different scenarios.
+                                            <p className='ppchirka-25px' style={{fontWeight:"300", fontSize:"21px"}}>
+                                                While vested equity value wil eventually converge to the total equity value as seen from the graph, this should not be considered as net wealth, especially in the case of illiquid companies. There are a lot of other variables that eventually define how much you actually make like:<br/><br/> &nbsp; 1. Time to IPO <br/>&nbsp; 2. Companies acceptance towards secondaries <br/>&nbsp; 3. Company fundamentals <br/>&nbsp; 4. Lock-ins <br/><br/>And some other extraneous variables. Select an option below to play out different scenarios.
 
                                             </p>
                                             }
                                             {type=="p3"&&
-                                            <p className='ppchirka-25px' style={{fontWeight:"300"}}>
-                                                Your main job at the start of vesting/ negotiating a new salary is whether to push harder for equity or cash. While vested equity value wil eventually converge to the total equity value as seen from the graph, this should not be considered as net wealth, especially in the case of illiquid companies. There are a lot of other variables that eventually define how much you actually make like:<br/><br/> &nbsp; 1. Time to IPO <br/>&nbsp; 2. Companies acceptance towards secondaries <br/>&nbsp; 3. Company fundamentals <br/>&nbsp; 4.Lock-ins <br/><br/>And some other extraneous variables. Select an option below to play out different scenarios.
+                                            <p className='ppchirka-25px' style={{fontWeight:"300", fontSize:"21px"}}>
+                                                Your main job at the start of vesting/ negotiating a new salary is whether to push harder for equity or cash. While vested equity value wil eventually converge to the total equity value as seen from the graph, this should not be considered as net wealth, especially in the case of illiquid companies. There are a lot of other variables that eventually define how much you actually make like:<br/><br/> &nbsp; 1. Time to IPO <br/>&nbsp; 2. Companies acceptance towards secondaries <br/>&nbsp; 3. Company fundamentals <br/>&nbsp; 4. Lock-ins <br/><br/>And some other extraneous variables. Select an option below to play out different scenarios.
                                             </p>
                                             }
                                             </div>

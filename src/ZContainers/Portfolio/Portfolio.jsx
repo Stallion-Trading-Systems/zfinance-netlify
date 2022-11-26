@@ -185,7 +185,7 @@ const Portfolio = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="row p-5">
+                    <div className="row ">
                       <div style={{ backgroundColor: "#FEFCF7" }} className="col-11 p-5">
 
                         <div className="row mb-5">
@@ -203,7 +203,7 @@ const Portfolio = () => {
                             </select></div>
                         </div>
 
-                        <div className="row mt-5">
+                        <div style={{marginTop:"90px"}} className="row">
                           {chartdetails && <PostfolioChart data={cdetails} type={selectt} cd={chartdetails} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={chartdetails?.vs} />}
                         </div>
                       </div>

@@ -1,6 +1,6 @@
 .drop-down-portfolio {
     position: absolute;
-    width: 170px;
+    width: 230px;
     color: white;
     height: 50px;
     background: #6CA683;
@@ -9,6 +9,44 @@
     padding: 5px;
     text-align: center;
     -webkit-appearance: none;
+    padding: 0.5em 3.5em 0.5em 1em;
 }
-
+select.drop-down-portfolio {
+    background-image:
+      linear-gradient(45deg, transparent 50%, white 50%),
+      linear-gradient(135deg, white 50%, transparent 50%),
+      linear-gradient(to right, #ccc, #ccc);
+    background-position:
+      calc(100% - 20px) calc(1em + 2px),
+      calc(100% - 15px) calc(1em + 2px),
+      calc(100% - 2.5em) 0.5em;
+    background-size:
+      5px 5px,
+      5px 5px,
+      1px 1.5em;
+    background-repeat: no-repeat;
+  }
   
+  /* select.drop-down-portfolio:focus {
+    background-image:
+      linear-gradient(45deg, green 50%, transparent 50%),
+      linear-gradient(135deg, transparent 50%, green 50%),
+      linear-gradient(to right, #ccc, #ccc);
+    background-position:
+      calc(100% - 15px) 1em,
+      calc(100% - 20px) 1em,
+      calc(100% - 2.5em) 0.5em;
+    background-size:
+      5px 5px,
+      5px 5px,
+      1px 1.5em;
+    background-repeat: no-repeat;
+    border-color: green;
+    outline: 0;
+  } */
+.green-label-total {
+    font-size: 12px;
+    min-width: 33px;
+    background: #C9F0B1;
+    border-radius: 30px;
+}

@@ -6,9 +6,10 @@ import monkey from "../../assets/monkey.svg"
 import logo from "../../assets/logo.svg"
 import { Sidebar } from "react-responsive-sidebar"
 import "./addgrants.css"
+import Tooltip from '@mui/material/Tooltip';
 import { items } from "../../ZComponents/items.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faEdit, faPen, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import * as api from "../../axios.js"
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -834,7 +835,7 @@ const AddGrants = () => {
     const [isActive, setIsActive] = useState(false);
     const [p2, setp2] = useState(false);
     const [p3, setp3] = useState(false);
-    const [fmp,setFmp]=useState(true)
+    const [fmp, setFmp] = useState(true)
     let vestingvalue = 0;
     let totalvalue = 1;
     const [error, setError] = useState({ c_name: false, num: false, strike_price: false, vesting_details: false, vesting_start_date: false, fmp: false })
@@ -847,8 +848,8 @@ const AddGrants = () => {
         setIsActive(false);
     };
 
-    if (details?.num&&details?.vesting_details && details?.vesting_start_date) {
-        totalvalue = 1000*parseInt(details?.num)
+    if (details?.num && details?.vesting_details && details?.vesting_start_date) {
+        totalvalue = 1000 * parseInt(details?.num)
         if (details?.vesting_details && details?.vesting_start_date) {
             let smonth = details?.vesting_start_date.getMonth() + 1;
             let syear = details?.vesting_start_date.getFullYear()
@@ -864,11 +865,11 @@ const AddGrants = () => {
                     vestingvalue = 0
                 }
                 else {
-                    vestingvalue =1000*details?.num * period / m
+                    vestingvalue = 1000 * details?.num * period / m
                 }
             }
             else {
-                vestingvalue =1000*details?.num * period / m
+                vestingvalue = 1000 * details?.num * period / m
             }
         }
         if (vestingvalue > totalvalue) vestingvalue = totalvalue
@@ -883,21 +884,21 @@ const AddGrants = () => {
     const [searchValue, setSearchValue] = useState("");
     const [selectedItem, setSelectedItem] = useState(null);
     const dropdownRef = useRef(null);
-    useEffect(()=>{
-        async function checkCname(){
-            let res=await api.checkCname({"c_name":details?.c_name})
+    useEffect(() => {
+        async function checkCname() {
+            let res = await api.checkCname({ "c_name": details?.c_name })
             console.log(res.data.message);
-            if(res.data.message=="YES"){
+            if (res.data.message == "YES") {
                 setFmp(false)
-                setError({ ...error, fmp: false }); 
+                setError({ ...error, fmp: false });
                 setDetails({ ...details, "fmp": " " })
             }
-            else{
+            else {
                 setFmp(true)
             }
         }
         checkCname()
-    },[details?.c_name])
+    }, [details?.c_name])
     // click away listener
     useEffect(() => {
         document.addEventListener("mousedown", handleClick2, false);
@@ -905,7 +906,7 @@ const AddGrants = () => {
     }, []);
 
     const handleClick2 = (e) => {
-        if(page==1){
+        if (page == 1) {
             if (dropdownRef.current.contains(e.target)) {
                 return;
             }
@@ -915,7 +916,7 @@ const AddGrants = () => {
 
     const handleChange2 = (e) => {
         setSearchValue(e.target.value);
-        setError({ ...error, c_name: false }); 
+        setError({ ...error, c_name: false });
         setDetails({ ...details, "c_name": e.target.value });
         if (!visible) {
             setVisible(true);
@@ -925,7 +926,7 @@ const AddGrants = () => {
     const selectItem = (item) => {
         setSearchValue(item.name);
         setSelectedItem(item.id);
-        setError({ ...error, c_name: false }); 
+        setError({ ...error, c_name: false });
         setDetails({ ...details, "c_name": item.name });
         setVisible(false);
     };
@@ -938,14 +939,14 @@ const AddGrants = () => {
         let res = await api.addGrant(details);
 
         console.log(res);
-        if(p2){
+        if (p2) {
             navigate("/portfolio/p2")
         }
-        else if(p3){
+        else if (p3) {
             navigate("/portfolio/p3")
         }
-        else{
-            if(p2){
+        else {
+            if (p2) {
                 navigate("/portfolio/p1")
             }
         }
@@ -956,7 +957,7 @@ const AddGrants = () => {
             setError({ ...error, c_name: true })
             return;
         }
-        setPage(x => (x + 1));
+        setPage(x => (x + 2));
         console.log(details);
     }
     const page2check = (e) => {
@@ -970,23 +971,23 @@ const AddGrants = () => {
     }
     const page3check = async (e) => {
         e.preventDefault()
-        if(fmp){
-            if (!details?.num || !details?.strike_price || !details?.vesting_start_date || !details?.vesting_details||!details?.fmp) {
-            
-                setError({ ...error, num: (!details?.num) ? true : false, strike_price: (!details?.strike_price) ? true : false, vesting_details: (!details?.vesting_details) ? true : false, vesting_start_date: (!details?.vesting_start_date) ? true : false, fmp:  (!details?.fmp) ? true:false })
+        if (fmp) {
+            if (!details?.num || !details?.strike_price || !details?.vesting_start_date || details?.vesting_details == null || !details?.fmp) {
+
+                setError({ ...error, num: (!details?.num) ? true : false, strike_price: (!details?.strike_price) ? true : false, vesting_details: (!details?.vesting_details) ? true : false, vesting_start_date: (!details?.vesting_start_date) ? true : false, fmp: (!details?.fmp) ? true : false })
                 console.log(error, details);
                 return;
             }
         }
-        else{
-            if (!details?.num || !details?.strike_price || !details?.vesting_start_date || !details?.vesting_details) {
-            
-                setError({ ...error, num: (!details?.num) ? true : false, strike_price: (!details?.strike_price) ? true : false, vesting_details: (!details?.vesting_details) ? true : false, vesting_start_date: (!details?.vesting_start_date) ? true : false, fmp: (!details?.fmp) ? true:false })
+        else {
+            if (!details?.num || !details?.strike_price || !details?.vesting_start_date || details?.vesting_details == null) {
+
+                setError({ ...error, num: (!details?.num) ? true : false, strike_price: (!details?.strike_price) ? true : false, vesting_details: (!details?.vesting_details) ? true : false, vesting_start_date: (!details?.vesting_start_date) ? true : false, fmp: (!details?.fmp) ? true : false })
                 console.log(error, details);
                 return;
             }
         }
-        
+
         let date = new Date()
         let year = date.getFullYear()
         year -= 2000;
@@ -1038,6 +1039,17 @@ const AddGrants = () => {
             backgroundColor: theme.palette.mode === 'light' ? '#C9F0B1' : '#308fe8',
         },
     }));
+    const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
+        height: 12,
+        borderRadius: 5,
+        [`&.${linearProgressClasses.colorPrimary}`]: {
+          backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+        },
+        [`& .${linearProgressClasses.bar}`]: {
+          borderRadius: 5,//c9f0b1
+          backgroundColor: theme.palette.mode === 'light' ? '#c9f0b1' : '#308fe8',
+        },
+      }));
     return (
         <>
             {user && <>
@@ -1086,7 +1098,7 @@ const AddGrants = () => {
                                 <div className="container mb-5 p-5 pt-0">
                                     <div className="row p-5 pl-0 pt-0">
                                         <div className="col-10">
-                                            <LinearProgressWithLabel value={(page) / 4 * 100} />
+                                            <BorderLinearProgress2 variant="determinate" value={(page - 1) / 4 * 100} />
                                             {/* <BorderLinearProgress variant="determinate" value={page/4*100} /> */}
                                         </div>
                                         <div className="col-1"></div>
@@ -1180,9 +1192,9 @@ const AddGrants = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="row g-5">
-                                                                <div className="col-2">
+                                                                {/* <div className="col-2">
                                                                     <NavLink to="" style={{ textDecoration: "none" }} onClick={() => { setPage(x => (x - 1)); console.log(details); }} ><Button name="back" back={true} /></NavLink>
-                                                                </div>
+                                                                </div> */}
                                                                 <div className="col-2">
                                                                     <NavLink to="" style={{ textDecoration: "none" }} onClick={(e) => { page2check(e) }} ><Button name="continue" /></NavLink>
                                                                 </div>
@@ -1197,7 +1209,7 @@ const AddGrants = () => {
                                                         <div className="row">
                                                             <div className="col-10">
                                                                 <h3 className="pp-chirka mb-4" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Please add your grants at {details.c_name}.</h3>
-                                                                <p style={{ fontFamily: "Roboto", fontSize: "normal", fontWeight: "300", fontSize: "25px", lineHeight: "100%" }}>If you are unsure, you can edit this information later.</p>
+                                                                <p style={{ fontFamily: "Roboto", fontSize: "normal", fontWeight: "300", fontSize: "20px", lineHeight: "100%" }}>If you are unsure, you can edit this information later.</p>
                                                                 <div>
                                                                     <div style={{ backgroundColor: "#FEFCF7" }} className="container p-5 mt-5">
                                                                         <div className="row">
@@ -1220,13 +1232,13 @@ const AddGrants = () => {
                                                                                         <div className="col-6">
                                                                                             <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>Vesting Details*</p>
                                                                                             <select onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} style={{ height: "39px" }} className={(error?.vesting_details) ? "new-input-css-2 ml-3 input-error-css" : "new-input-css-2 mb-5 ml-3"} name="vd" id="vd">
-                                                                                                <option selected onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value={null} >Select</option>
-                                                                                                <option onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="481">1/48 monthly, 1yr cliff</option>
-                                                                                                <option onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="480">1/48 monthly, no cliff</option>
-                                                                                                <option onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="601">1/60 monthly, 1yr cliff</option>
-                                                                                                <option onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="600">1/60 monthly, no cliff</option>
-                                                                                                <option onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="361">1/36 monthly, 1yr cliff</option>
-                                                                                                <option onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="360">1/36 monthly, no cliff</option>
+                                                                                                <option selected={details?.vesting_details == null} onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value={null} >Select</option>
+                                                                                                <option selected={details?.vesting_details == "481"} onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="481">1/48 monthly, 1yr cliff</option>
+                                                                                                <option selected={details?.vesting_details == "480"} onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="480">1/48 monthly, no cliff</option>
+                                                                                                <option selected={details?.vesting_details == "601"} onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="601">1/60 monthly, 1yr cliff</option>
+                                                                                                <option selected={details?.vesting_details == "600"} onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="600">1/60 monthly, no cliff</option>
+                                                                                                <option selected={details?.vesting_details == "361"} onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="361">1/36 monthly, 1yr cliff</option>
+                                                                                                <option selected={details?.vesting_details == "360"} onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} value="360">1/36 monthly, no cliff</option>
 
                                                                                             </select>
                                                                                             {/* <input value={details.vesting_details} className={(error?.vesting_details) ? "new-input-css-2 ml-3 input-error-css" : "new-input-css-2 mb-5 ml-3"} onChange={(e) => { setError({ ...error, vesting_details: false }); setDetails({ ...details, "vesting_details": e.target.value }) }} type="text" /> */}
@@ -1254,16 +1266,19 @@ const AddGrants = () => {
                                                                                     <div className="row g-5" >
                                                                                         <div className="col-6">
                                                                                             <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>Deadline after leaving</p>
-                                                                                            <input value={details.deadline} className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "deadline": e.target.value }) }} type="text" />
+                                                                                            <input value={details.deadline} className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "deadline": e.target.value }) }} type="number" />
                                                                                         </div>
-                                                                                        {fmp&&
-                                                                                        <div className="col-6">
-                                                                                        <div className="col-6">
-                                                                                            <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>FMP*</p>
-                                                                                            <input value={details.fmp} className={(error?.fmp) ? "new-input-css-2 ml-3 input-error-css" : "new-input-css-2 mb-5 ml-3"} onChange={(e) => { setError({ ...error, fmp: false }); setDetails({ ...details, "fmp": e.target.value }) }} type="number" />
-                                                                                            {error?.fmp && <p className="mb-5" style={{ color: "red" }}>*please enter FMP</p>}
-                                                                                        </div>
-                                                                                    </div>
+                                                                                        {fmp &&
+                                                                                            <div className="col-6">
+                                                                                                <div className="col-6">
+                                                                                                    <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>FMV*  <Tooltip title="Add" placement="right" arrow><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                                                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                                                                                    </svg></Tooltip></p>
+                                                                                                    <input value={details.fmp} className={(error?.fmp) ? "new-input-css-2 ml-3 input-error-css" : "new-input-css-2 mb-5 ml-3"} onChange={(e) => { setError({ ...error, fmp: false }); setDetails({ ...details, "fmp": e.target.value }) }} type="number" />
+                                                                                                    {error?.fmp && <p className="mb-5" style={{ color: "red" }}>*please enter FMV</p>}
+                                                                                                </div>
+                                                                                            </div>
                                                                                         }
 
                                                                                     </div>
@@ -1278,8 +1293,8 @@ const AddGrants = () => {
                                                                             <div className="col-4">
                                                                                 <div className="row g-5 mt-2" >
                                                                                     <div className="col">
-                                                                                        <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>Pre- exercised options</p>
-                                                                                        <input value={details.pre_exercise_option} className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "pre_exercise_option": e.target.value }) }} type="text" />
+                                                                                        {/* <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "19px", lineHeight: "100%" }}>Pre- exercised options</p> */}
+                                                                                        {/* <input value={details.pre_exercise_option} className="new-input-css-2" onChange={(e) => { setDetails({ ...details, "pre_exercise_option": e.target.value }) }} type="text" /> */}
                                                                                     </div>
                                                                                 </div>
                                                                                 <div className="row mt-5">
@@ -1297,9 +1312,9 @@ const AddGrants = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="row g-3">
-                                                                <div className="col-2">
-                                                                    <NavLink to="" style={{ textDecoration: "none" }} onClick={() => { setPage(x => (x - 1)); console.log(details); }} ><Button name="back" back={true} /></NavLink>
-                                                                </div>
+                                                                {/* <div className="col-2">
+                                                                    <NavLink to="" style={{ textDecoration: "none" }} onClick={() => { setPage(x => (x - 2)); console.log(details); }} ><Button name="back" back={true} /></NavLink>
+                                                                </div> */}
                                                                 <div className="col-2">
                                                                     <NavLink to="" style={{ textDecoration: "none" }} onClick={(e) => { page3check(e) }} ><Button name="continue" /></NavLink>
                                                                 </div>
@@ -1315,47 +1330,47 @@ const AddGrants = () => {
                                                         <div className="row">
                                                             <div className="col-11">
                                                                 <h3 className="pp-chirka mb-5" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Select the grants you have at {details.c_name}.</h3>
-                                                                <p style={{ fontFamily: "Roboto", fontSize: "normal", fontWeight: "300", fontSize: "25px", lineHeight: "100%" }}>If you are unsure, you can edit this information later..</p>
+                                                                {/* <p style={{ fontFamily: "Roboto", fontSize: "normal", fontWeight: "300", fontSize: "25px", lineHeight: "100%" }}>If you are unsure, you can edit this information later..</p> */}
                                                                 {p2 && <>
-                                                                    <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "23px", lineHeight: "100%" }}>Working at a start-up is like an investment, with its own risk and reward. And with every decsion comes a trade-off. As your ESOPs get vested over the next few years, the main decision for you is whether to double down on equity in return for greater cash comp or choose other alternative assets with better returns. <br /><br />Given you are in the middle of your vesting cycle, some critical trade-offs you must think carefully about:<br /> <br />&nbsp;1. Optimal exercise schedule <br />&nbsp;2. Implicit cost of choosing equity over cash <br />&nbsp;3. Equity planning under different circumstances</p>
+                                                                    <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "21px", lineHeight: "100%" }}>Working at a start-up is like an investment, with its own risk and reward. And with every decsion comes a trade-off. As your ESOPs get vested over the next few years, the main decision for you is whether to double down on equity in return for greater cash comp or choose other alternative assets with better returns. <br /><br />Given you are in the middle of your vesting cycle, some critical trade-offs you must think carefully about:<br /> <br />&nbsp;1. Optimal exercise schedule <br />&nbsp;2. Implicit cost of choosing equity over cash <br />&nbsp;3. Equity planning under different circumstances</p>
 
                                                                 </>}
                                                                 {p3 && <>
-                                                                    <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "250", fontSize: "23px", lineHeight: "100%" }}>
+                                                                    <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "250", fontSize: "20px", lineHeight: "100%" }}>
                                                                         As you are at the start of your vesting journey, there are some critical trade-offs that must be thought about before signing off on the dotted line.<br /><br /> The best way to look at ESOP vesting is like an SIP, with every monthly/yearly vest being nothing but your company setting aside_______ i.e. your opportunity cost is the difference between FMV and strike price.<br /><br /> Your main job to make an informed decision on whether the asset growth will outompete other alternatives, generating alpha, or would you be better off investing that money elsewhere
                                                                     </p>
 
                                                                 </>}
                                                                 <div style={{ backgroundColor: "#FEFCF7" }} className="container p-5 mt-5">
                                                                     <div className="row g-5">
-                                                                        <div className="col-2">
+                                                                        <div className="col-3">
                                                                             <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "700", fontSize: "25px", lineHeight: "100%" }}>Quantity</p>
                                                                         </div>
-                                                                        <div className="col-2">
-                                                                            <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "700", fontSize: "25px", lineHeight: "100%" }}>Type</p>
-                                                                        </div>
-                                                                        <div className="col-2">
-                                                                            <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "700", fontSize: "25px", lineHeight: "100%" }}>Price</p>
+                                                                        {/* <div className="col-2"> */}
+                                                                        {/* <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "700", fontSize: "25px", lineHeight: "100%" }}>Type</p> */}
+                                                                        {/* </div> */}
+                                                                        <div className="col-3">
+                                                                            <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "700", fontSize: "25px", lineHeight: "100%" }}>Strike Price</p>
                                                                         </div>
                                                                         <div className="col">
                                                                             <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "700", fontSize: "25px", lineHeight: "100%" }}>Vesting</p>
                                                                         </div>
                                                                     </div>
                                                                     <div className="row g-5">
-                                                                        <div className="col-2">
+                                                                        <div className="col-3">
                                                                             <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}>{details.num}</p>
                                                                         </div>
-                                                                        <div className="col-2">
-                                                                            <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}>{details.grant_type}</p>
-                                                                        </div>
-                                                                        <div className="col-2">
+                                                                        {/* <div className="col-2"> */}
+                                                                        {/* <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}>{details.grant_type}</p> */}
+                                                                        {/* </div> */}
+                                                                        <div className="col-3">
                                                                             <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}>{details.strike_price}</p>
                                                                         </div>
                                                                         <div className="col">
                                                                             <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}><BorderLinearProgress variant="determinate" value={vestingvalue / totalvalue * 100} /></p>
                                                                         </div>
                                                                         <div className="col-2">
-                                                                            <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}><NavLink to="" style={{ textDecoration: "none", color: "black" }} onClick={() => { setPage(x => (x - 1)); console.log(details); }} ><FontAwesomeIcon icon={faEdit} /></NavLink></p>
+                                                                            <p style={{ fontSize: "normal", fontWeight: "400", fontSize: "20px", lineHeight: "100%" }}><NavLink to="" style={{ textDecoration: "none", color: "black" }} onClick={() => { setPage(x => (x - 1)); console.log(details); }} ><p><FontAwesomeIcon icon={faPen} /></p></NavLink></p>
                                                                         </div>
                                                                     </div>
                                                                     <div>
@@ -1363,9 +1378,9 @@ const AddGrants = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="row g-5">
-                                                                <div className="col-2">
+                                                                {/* <div className="col-2">
                                                                     <NavLink to="" style={{ textDecoration: "none" }} onClick={() => { setPage(x => (x - 1)); console.log(details); }} ><Button name="back" back={true} /></NavLink>
-                                                                </div>
+                                                                </div> */}
                                                                 <div className="col-2">
                                                                     <NavLink to="" style={{ textDecoration: "none" }} onClick={(e) => { addGrant(e); console.log(details); }} ><Button name="continue" /></NavLink>
                                                                 </div>
@@ -1376,8 +1391,8 @@ const AddGrants = () => {
                                                 </div>
                                             }
                                             {page == 5 && <>
-                                            
-                                            <Loading/>
+
+                                                <Loading />
 
                                             </>}
                                         </div>

@@ -54,8 +54,8 @@ export default function portfolioChart(props) {
   let data = props.data
   let vd = props.vd
   let variables = props.variables
-  let sensex=props.sensex
-  let cd=props.cd
+  let sensex = props.sensex
+  let cd = props.cd
   // console.log(sensex);
 
   let vs = parseInt(props.vs)
@@ -64,7 +64,7 @@ export default function portfolioChart(props) {
     vs += 12;
   }
   let period = parseInt(vd?.substring(0, 2));
-  let totalperiod=period
+  let totalperiod = period
   let cliff = parseInt(vd?.substring(2, 3));
   if (vd?.substring(2, 3) == '1') {
     period -= 12;
@@ -204,11 +204,13 @@ export default function portfolioChart(props) {
     if (ivp > finalprice)
       ivp = finalprice
 
-    newdata.push({ key: i+1, vp: ivp, price: finalprice, name: i, n: i, month: imonth, year: iyear, md: imd })
+    newdata.push({ key: i + 1, vp: ivp, price: finalprice, name: i, n: i, month: imonth, year: iyear, md: imd })
 
   }
+  let vestedfinal
   for (let i = 0; i < newdata.length; i++) {
     if (newdata[i].key == aajdate + 1) {
+      vestedfinal=newdata[i].vp
       newdata[i].vpt = newdata[i].vp
       break;
     }
@@ -218,12 +220,12 @@ export default function portfolioChart(props) {
   if (variables?.time_to_ipo && variables?.ipo_price && variables?.lock_in) {
     if ((parseInt(aajdate) + parseInt(variables?.time_to_ipo)) <= (finalyearkey - 2)) {
       // console.log("ok");
-      if (newdata?.length){
-        for(let i=0;i<newdata?.length;i++){
-          if(newdata[i]?.key>=(parseInt(aajdate) + parseInt(variables?.time_to_ipo))){
+      if (newdata?.length) {
+        for (let i = 0; i < newdata?.length; i++) {
+          if (newdata[i]?.key >= (parseInt(aajdate) + parseInt(variables?.time_to_ipo))) {
             // newdata.push({ key: newdata[i]?.key, vp: newdata[i]?.vp*variables?.ipo_price * num/newdata[i]?.price, price: variables?.ipo_price * num, name: newdata[i]?.name, n: newdata[i]?.n + 1, month: newdata[i]?.month, year: newdata[i]?.year, md: newdata[i]?.imd })
-            newdata[i].vp=newdata[i]?.vp*variables?.ipo_price * num/newdata[i]?.price
-            newdata[i].price=variables?.ipo_price * num 
+            newdata[i].vp = newdata[i]?.vp * variables?.ipo_price * num / newdata[i]?.price
+            newdata[i].price = variables?.ipo_price * num
           }
         }
       }
@@ -269,50 +271,50 @@ export default function portfolioChart(props) {
       }
     }
   }
-  let c=cd?.strike_price/totalperiod
-  if(props?.type!="nifty"){
-    sensex=sensex?.filter(value=>{return value.index_name==props?.type})
-    let onebyn=0
-    for(let i=0;i<newdata.length;i++){
-      if(newdata[i].vp==0)continue;
-      for(let j=0;j<sensex?.length;j++){
-        if(newdata[i].key==sensex[j]?.key){
-          onebyn+=(1/sensex[j]?.close_price)
-          let finalsensex=onebyn*sensex[j]?.close_price*num*c
-          newdata[i].sensex=Math.floor(finalsensex)
+  let c = cd?.strike_price / totalperiod
+  if (props?.type != "nifty") {
+    sensex = sensex?.filter(value => { return value.index_name == props?.type })
+    let onebyn = 0
+    for (let i = 0; i < newdata.length; i++) {
+      if (newdata[i].vp == 0) continue;
+      for (let j = 0; j < sensex?.length; j++) {
+        if (newdata[i].key == sensex[j]?.key) {
+          onebyn += (1 / sensex[j]?.close_price)
+          let finalsensex = onebyn * sensex[j]?.close_price * num * c
+          newdata[i].sensex = Math.floor(finalsensex)
         }
       }
     }
     let i;
-    for(i=1;i<newdata.length;i++){
-      if(newdata[i-1]?.sensex){
-        if(!newdata[i]?.sensex){
-          newdata[i-1].psensex=[newdata[i-1]?.sensex,newdata[i-1]?.sensex]
-          newdata[i-1].highsensex=newdata[i-1]?.sensex
-          newdata[i-1].lowsensex=newdata[i-1]?.sensex
-          newdata[i].highsensex=(Math.round(((newdata[i-1]?.sensex*1.0167+(c*num)) + Number.EPSILON) * 100) / 100)
-          newdata[i].lowsensex=(Math.round(((newdata[i-1]?.sensex*1.0167+(c*num)) + Number.EPSILON) * 100) / 100)
-          newdata[i].psensex=[newdata[i]?.highsensex,newdata[i]?.lowsensex]
+    for (i = 1; i < newdata.length; i++) {
+      if (newdata[i - 1]?.sensex) {
+        if (!newdata[i]?.sensex) {
+          newdata[i - 1].psensex = [newdata[i - 1]?.sensex, newdata[i - 1]?.sensex]
+          newdata[i - 1].highsensex = newdata[i - 1]?.sensex
+          newdata[i - 1].lowsensex = newdata[i - 1]?.sensex
+          newdata[i].highsensex = (Math.round(((newdata[i - 1]?.sensex * 1.0167 + (c * num)) + Number.EPSILON) * 100) / 100)
+          newdata[i].lowsensex = (Math.round(((newdata[i - 1]?.sensex * 1.0167 + (c * num)) + Number.EPSILON) * 100) / 100)
+          newdata[i].psensex = [newdata[i]?.highsensex, newdata[i]?.lowsensex]
           break;
         }
       }
     }
     i++
-    for(;i<newdata.length;i++){
-      newdata[i].highsensex=(Math.round(((newdata[i-1]?.highsensex*1.0167+(c*num)) + Number.EPSILON) * 100) / 100)
-      newdata[i].lowsensex=(Math.round(((newdata[i-1]?.lowsensex*1.0056+(c*num)) + Number.EPSILON) * 100) / 100)
-      newdata[i].psensex=[newdata[i].highsensex,newdata[i].lowsensex]
-      
+    for (; i < newdata.length; i++) {
+      newdata[i].highsensex = (Math.round(((newdata[i - 1]?.highsensex * 1.0167 + (c * num)) + Number.EPSILON) * 100) / 100)
+      newdata[i].lowsensex = (Math.round(((newdata[i - 1]?.lowsensex * 1.0056 + (c * num)) + Number.EPSILON) * 100) / 100)
+      newdata[i].psensex = [newdata[i].highsensex, newdata[i].lowsensex]
+
     }
   }
   // console.log(newdata);//100,000,000,000
   const DataFormater = (number) => {
-    let s=number.toString()
-    let ans=""
-    for(let i=s.length-1;i>=0;i--){
-      if(s.length-i-1!=0&&(s.length-i-1)%3==0)
-      ans=","+ans
-      ans=s[i]+ans
+    let s = number.toString()
+    let ans = ""
+    for (let i = s.length - 1; i >= 0; i--) {
+      if (s.length - i - 1 != 0 && (s.length - i - 1) % 3 == 0)
+        ans = "," + ans
+      ans = s[i] + ans
     }
     return ans
 
@@ -322,37 +324,39 @@ export default function portfolioChart(props) {
     if (active && payload && payload.length) {
       return (
         <div className="custom-tooltip">
-          <p style={{maxWidth:"250px",backgroundColor:"rgba(255, 255, 255, 0.5)", padding:"10px",fontSize:"12px"}} className="label">Your vested equity value 
-          in <strong>{label}</strong> should be <strong>₹{payload[0]?.payload?.vp}</strong>, however, if you’d 
-          have invested the monthly vested sum in <strong>{props?.type}</strong> index fund, it 
-          should have reaped approx. 
-          <strong>₹{payload[0]?.payload?.highsensex||payload[0]?.payload?.sensex}</strong> value
+          <p style={{ maxWidth: "250px", backgroundColor: "rgba(255, 255, 255, 0.5)", padding: "10px", fontSize: "12px" }} className="label">Your vested equity value
+            in <strong>{label}</strong> should be <strong>₹{payload[0]?.payload?.vp}</strong>, however, if you’d
+            have invested the monthly vested sum in <strong>{props?.type}</strong> index fund, it
+            should have reaped approx.
+            <strong>₹{payload[0]?.payload?.highsensex || payload[0]?.payload?.sensex}</strong> value
           </p>
         </div>
       );
     }
-  
+
     return null;
   };
   return (
-    
-    <ComposedChart
-      width={800}
-      height={400}
-      data={newdata}
-      margin={{
-        top: 0,
-        right: 0,
-        left: 50,
-        bottom: 25
-      }}
-    >
-      {/* <CartesianGrid strokeDasharray="3 3" /> */}
-      <XAxis label={{ value: 'Timeline', position:"insideBottom",offset:-20 }} minTickGap={10}  dataKey="md" />
-      <YAxis label={{ value: 'Total Equity Value',position:"left", angle: -90,offset:20}} tickFormatter={DataFormater} />
-      {/* domain={['dataMin', dataMax => (Math.ceil((dataMax * 1.1)))]}, */}
-      <Tooltip content={<CustomTooltip />} />
-      {/* <Area
+    <div>
+      <div style={{ backgroundColor: "#FEFCF7" }} className="col-11 p-5 ">
+        <ComposedChart
+          width={800}
+          height={400}
+
+          data={newdata}
+          margin={{
+            top: 0,
+            right: 0,
+            left: 50,
+            bottom: 25
+          }}
+        >
+          {/* <CartesianGrid strokeDasharray="3 3" /> */}
+          <XAxis label={{ value: 'Timeline', position: "insideBottom", offset: -20 }} minTickGap={10} dataKey="md" />
+          <YAxis label={{ value: 'Total Equity Value', position: "left", angle: -90, offset: 20 }} tickFormatter={DataFormater} />
+          {/* domain={['dataMin', dataMax => (Math.ceil((dataMax * 1.1)))]}, */}
+          <Tooltip content={<CustomTooltip />} />
+          {/* <Area
         type="monotone"
         dataKey="uv"
         stackId="1"
@@ -366,22 +370,34 @@ export default function portfolioChart(props) {
         stroke="#82ca9d"
         fill="#82ca9d"
       /> */}
-      <Area
-        type="monotone"
-        dataKey="price"
-        stackId="2"
-        stroke="lightgreen"
-        fill="#C9F0B1"
-      />
-      <Area
-        dataKey="psensex"
-        stroke="#B8B8B8"
-        fill="#B8B8B8"
-      />
-      <Line type="monotone" dataKey="vp" strokeWidth="3" stroke="#8884d8" strokeDasharray="5 10" dot={false} />
-      <Line type="monotone" dataKey="sensex" strokeWidth="3" stroke="orange" strokeDasharray="5 10" dot={false} />
-      <Scatter type="monotone" dataKey="vpt" fill="#8884d8" shape="dot" />
-      
-    </ComposedChart>
+          <Area
+            type="monotone"
+            dataKey="price"
+            stackId="2"
+            stroke="lightgreen"
+            fill="#C9F0B1"
+          />
+          <Area
+            dataKey="psensex"
+            stroke="#B8B8B8"
+            fill="#B8B8B8"
+          />
+          <Line type="monotone" dataKey="vp" strokeWidth="3" stroke="#8884d8" strokeDasharray="5 10" dot={false} />
+          <Line type="monotone" dataKey="sensex" strokeWidth="3" stroke="orange" strokeDasharray="5 10" dot={false} />
+          <Scatter type="monotone" dataKey="vpt" fill="#8884d8" shape="dot" />
+
+        </ComposedChart>
+      </div>
+      {props.ptype && <div>
+        <div className="row mt-3 p-5 pb-0 pt-0">
+          <div className="col-6 ppchirka-25px">Total equity value <i className='green-label-total'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></div>
+          <div className="col-6 ppchirka-25px">Vested equity value <i style={{ backgroundColor: "#8884d8" }} className='green-label-total'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;<i style={{ backgroundColor: "#8884d8" }} className='green-label-total'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;<i style={{ backgroundColor: "#8884d8" }} className='green-label-total'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></div>
+        </div>
+        <div className="row p-5 pt-2">
+          <div style={{ fontSize: "20px", fontWeight: "500", textAlign: "center" }} className="col-3 ppchirka-25px">{finalprice}</div>
+          <div style={{ fontSize: "20px", fontWeight: "500", textAlign: "center" }} className="col ppchirka-25px">{vestedfinal}</div>
+        </div>
+      </div>}
+    </div>
   );
 }
