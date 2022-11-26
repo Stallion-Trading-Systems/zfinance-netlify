@@ -60,6 +60,7 @@ const Portfolio = () => {
     async function sensexdata(){
       let res=await api.getSensexData()
       setSensex(res.data.data)
+      console.log(res.data.data);
     }
     async function f() {
       let res2=await api.checkCname({ c_name: chartdetails?.c_name })
@@ -195,6 +196,10 @@ const Portfolio = () => {
                                 className='drop-down-portfolio' name="cars" id="cars">
                               <option value="nifty">Nifty 50</option>
                               <option value="sensex">Sensex</option>
+                              <option value="bse_500">BSE 500</option>
+                              <option value="bse_ipo">BSE IPO</option>
+                              <option value="bse_largecap">BSE Large Cap</option>
+                              <option value="bse_smallcap">BSE Small Cap</option>
                             </select></div>
                         </div>
 

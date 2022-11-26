@@ -56,7 +56,7 @@ export default function portfolioChart(props) {
   let variables = props.variables
   let sensex=props.sensex
   let cd=props.cd
-  console.log(sensex);
+  // console.log(sensex);
 
   let vs = parseInt(props.vs)
   let totalp = parseInt(vd?.substring(0, 2));
@@ -270,8 +270,8 @@ export default function portfolioChart(props) {
     }
   }
   let c=cd?.strike_price/totalperiod
-  if(props?.type=="sensex"){
-    
+  if(props?.type!="nifty"){
+    sensex=sensex?.filter(value=>{return value.index_name==props?.type})
     let onebyn=0
     for(let i=0;i<newdata.length;i++){
       if(newdata[i].vp==0)continue;
@@ -305,7 +305,7 @@ export default function portfolioChart(props) {
       
     }
   }
-  console.log(newdata);//100,000,000,000
+  // console.log(newdata);//100,000,000,000
   const DataFormater = (number) => {
     let s=number.toString()
     let ans=""
@@ -318,7 +318,7 @@ export default function portfolioChart(props) {
 
   }
   const CustomTooltip = ({ active, payload, label }) => {
-    console.log(payload[0]?.payload);
+    // console.log(payload[0]?.payload);
     if (active && payload && payload.length) {
       return (
         <div className="custom-tooltip">
