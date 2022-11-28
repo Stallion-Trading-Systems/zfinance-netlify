@@ -25,7 +25,7 @@ const AddGrants = () => {
     const userobj = JSON.parse(localStorage.getItem('user'));
     if (user === null) {
         setTimeout(() => {
-            navigate("/auth");
+            navigate("/signin");
         }, 1000)
     }
     const list = [
@@ -878,7 +878,7 @@ const AddGrants = () => {
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
-        navigate("/auth");
+        navigate("/signin");
     };
     const [visible, setVisible] = useState(false);
     const [searchValue, setSearchValue] = useState("");

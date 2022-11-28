@@ -1,12 +1,12 @@
-.ppchirka-32px{
+.ppchirka-32px {
     font-family: 'PP Cirka';
-font-style: normal;
-font-weight: 700;
-font-size: 32px;
-line-height: 100%;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 100%;
 }
 
-.ppchirka-25px{
+.ppchirka-25px {
     font-family: 'PP Cirka';
     font-style: normal;
     font-weight: 700;
@@ -15,7 +15,7 @@ line-height: 100%;
     /* or 25px */
 }
 
-.ppchirka-22px{
+.ppchirka-22px {
     font-family: 'PP Cirka';
     font-style: normal;
     font-weight: 700;
@@ -29,12 +29,14 @@ table {
     width: 100%;
 }
 
-table, th, td {
+table,
+th,
+td {
     border-collapse: collapse;
 }
 
-.no-tbb{
-    border-top:none;
+.no-tbb {
+    border-top: none;
     border-bottom: none;
 
 }
@@ -102,22 +104,26 @@ table, th, td {
     font-weight: bold;
 }
 
-.cell-green{
-    position: absolute;
+.cell-green {
     padding: 3px;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
     background: #9FFFA9;
-    border-radius: 8px;
+    border-radius: 15px;
+    font-size: 15px;
+    max-width: fit-content;
+    font-family: "Roboto Mono";
 }
 
-.cell-red{
-    position: absolute;
-    padding: 3px;
-    padding-left: 5px;
-    padding-right: 5px;
+.cell-red {
     background: #FD9D9D;
-    border-radius: 8px;
+    max-width: fit-content;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 15px;
+    font-size: 15px;
+    font-family: "Roboto Mono";
 }
 
 .wrapper1 {
@@ -166,7 +172,7 @@ table, th, td {
 }
 
 #option-11:checked:checked~.option-11,
-#option-21:checked:checked~.option-21{
+#option-21:checked:checked~.option-21 {
     border-color: #000;
     background: #71AD25;
 }
@@ -181,4 +187,16 @@ table, th, td {
 #option-21:checked:checked~.option-21 span {
     color: #FFF;
     font-weight: bold;
+}
+
+.table-fields {
+    text-align: center;
+    font-family: 'PP Cirka';
+    font-style: normal;
+    font-size: large;
+}
+
+.bold-underline-advisory-css{
+    text-decoration: underline;
+    font-weight: 600;
 }

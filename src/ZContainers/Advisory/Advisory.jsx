@@ -21,7 +21,7 @@ const Advisory = () => {
 
     if (user === null) {
         setTimeout(() => {
-            navigate("/auth");
+            navigate("/signin");
         }, 1000)
     }
 
@@ -36,7 +36,7 @@ const Advisory = () => {
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
-        navigate("/auth");
+        navigate("/signin");
     };
     useEffect(() => {
         async function getdata() {
@@ -167,13 +167,14 @@ const Advisory = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="row mt-5">
-                                                <div className="col-3"></div>
+                                            
+                                        </div>
+                                        <div className="row mt-5">
+                                                <div className="col-4"></div>
                                                 <div className="col">
                                                     <button className='remove-btn-default' style={{borderColor:"none", backgroundColor:"white",outline:"none"}} onClick={reportnavigate}><Button name="explore options" /></button>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

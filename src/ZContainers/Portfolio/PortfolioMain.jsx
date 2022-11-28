@@ -24,7 +24,7 @@ const PortfolioMain = () => {
     const [selectt, setSelectt] = useState("nifty");
     if (user === null) {
         setTimeout(() => {
-            navigate("/auth");
+            navigate("/signin");
         }, 1000)
     }
 
@@ -40,7 +40,7 @@ const PortfolioMain = () => {
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
-        navigate("/auth");
+        navigate("/signin");
     };
     useEffect(() => {
 

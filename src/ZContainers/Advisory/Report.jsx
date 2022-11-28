@@ -20,11 +20,6 @@ const Report = () => {
     const [vestingdetails, setVestingDetails] = useState()
     const [type,setType]=useState(1)
 
-    if (user === null) {
-        setTimeout(() => {
-            navigate("/auth");
-        }, 1000)
-    }
     let liquidity=params?.liquidity
     let capital=params?.capital
     let period=params?.period
@@ -70,7 +65,7 @@ const Report = () => {
     }, [])
     return (
         <>
-            {user && <>
+             <>
                 <div className="white-bg-css">
                     <Sidebar
                         className="side-bar z-s-i-css"
@@ -118,7 +113,7 @@ const Report = () => {
                                         <div className="row">
                                             <div className="col-10">
                                                 <p className='ppchirka-32px'>
-                                                    Given the answers provided, we feel the best option for you would be to ____, we’ve provided a side-by-side comparison of all the options available for you to be able to make an informed decision
+                                                    Given the answers provided, we feel the best option for you would be to {type==1&&"secondary sale"}{type==2&&"exercise & hold"}{type==3&&"exercise at exit"}, we’ve provided a side-by-side comparison of all the options available for you to be able to make an informed decision
                                                 </p>
                                             </div>
                                         </div>
@@ -141,7 +136,7 @@ const Report = () => {
                         </div>
                     </Sidebar>
                 </div>
-            </>}
+            </>
         </>
 
     )

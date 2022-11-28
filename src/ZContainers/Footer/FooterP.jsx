@@ -31,7 +31,7 @@ const FooterP = () => {
                             <div className='container '>
                                 <div className='row btn-group-css'>
                                     <div className='col-lg-7 col-sm-10 mb-2'>
-                                        <NavLink style={{ textDecoration: "none" }} to="/privacy-policy" target="__blank">
+                                        <a style={{ textDecoration: "none" }} href="https://app.zionn.trade/privacy-policy" target="__blank">
                                             <button
                                                 onPointerLeave={defaultClickP}
                                                 onPointerDown={handleClickP}
@@ -41,7 +41,7 @@ const FooterP = () => {
                                                 privacy policy
                                                 <i class="bi bi-arrow-up-right"></i>
                                             </button>
-                                        </NavLink>
+                                        </a>
                                     </div>
                                     <div className='col-lg-5 col-sm-10 mb-2'>
                                         <a style={{ textDecoration: "none" }} href="https://www.linkedin.com/company/zionn/" target="__blank">

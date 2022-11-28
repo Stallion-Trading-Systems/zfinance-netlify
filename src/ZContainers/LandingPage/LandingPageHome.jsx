@@ -7,27 +7,34 @@ import monkey from "../../assets/monkey.svg"
 import logo from "../../assets/logo.svg"
 import { Sidebar, SidebarItem } from "react-responsive-sidebar"
 import "./LandingPage.css"
-import { items } from "../../ZComponents/items.js";
 import LandingCard from "./LandingCard.jsx";
 import imggraph from "../../ZComponents/assets/landingpage.png"
 import FooterP from "../Footer/FooterP.jsx";
 
 
-const LandingPage = () => {
+const LandingPageHome = () => {
     const navigate = useNavigate();
     const user = localStorage.getItem("user");
     const userobj = JSON.parse(localStorage.getItem('user'));
-    if (user === null) {
+    if(user){
         setTimeout(() => {
-          navigate("/");
-        }, 1000)
-      }
-    let logOut = (e) => {
+            navigate("/home");
+          }, 1000)
+    }
+    let logIn = (e) => {
         e.preventDefault();
-        localStorage.removeItem("user");
         navigate("/signin");
     };
-
+    const items = [
+        <SidebarItem>
+            <div className="">
+                <div>
+                    <NavLink to="/" style={{ textDecoration: 'none' }}><img className="logo-size" src={logo} /></NavLink>
+    
+                </div>
+            </div>
+        </SidebarItem>
+    ];
     const [openlogout, setOpenlogout] = useState(false);
     const [isActive, setIsActive] = useState(false);
     const handleClick = (e) => {
@@ -41,7 +48,7 @@ const LandingPage = () => {
 
     return (
         <>
-            {user&&<>
+            <>
                 <div className="white-bg-css">
                 <Sidebar
                     className="side-bar z-s-i-css"
@@ -58,7 +65,7 @@ const LandingPage = () => {
                         <div className="container">
                             <div className="row">
                                 <div className="col-9"></div>
-                                <div className="col-2 logo-top">
+                                {/* <div className="col-2 logo-top">
                                     <div className={openlogout ? "dropdown-monkey monkey-click" : "dropdown-monkey"}>
                                         <button className="monkey-btn-css" onClick={() => { setOpenlogout(current => !current) }}><img className="logo-top-size " src={monkey} /></button>
                                         <div className={openlogout ? "dropdown-content-monkey monkey-click" : "dropdown-content-monkey"}>
@@ -67,16 +74,16 @@ const LandingPage = () => {
                                                 onPointerLeave={defaultClick}
                                                 onPointerDown={handleClick}
                                                 onPointerUp={handleClick}
-                                                onClick={logOut}
+                                                onClick={logIn}
                                                 className={isActive ? "butt butt-ac logout-btn-css" : "butt logout-btn-css"}
                                             >
-                                                logout&nbsp;
+                                                login&nbsp;
                                                 <i class="bi bi-arrow-up-right"></i>
                                             </button>
                                         </div>
                                     </div>
 
-                                </div>
+                                </div> */}
                                 <div className="col-1"></div>
                             </div>
                         </div>
@@ -121,9 +128,9 @@ const LandingPage = () => {
                     </div>
                 </Sidebar>
             </div>
-            </>}
+            </>
         </>
     );
 };
 
-export default LandingPage;
+export default LandingPageHome;

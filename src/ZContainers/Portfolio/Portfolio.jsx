@@ -22,7 +22,7 @@ const Portfolio = () => {
   const [checkc,setcheckc]=useState(false)
   if (user === null) {
     setTimeout(() => {
-      navigate("/auth");
+      navigate("/signin");
     }, 1000)
   }
 
@@ -38,7 +38,7 @@ const Portfolio = () => {
   let logOut = (e) => {
     e.preventDefault();
     localStorage.removeItem("user");
-    navigate("/auth");
+    navigate("/signin");
   };
   useEffect(() => {
     
