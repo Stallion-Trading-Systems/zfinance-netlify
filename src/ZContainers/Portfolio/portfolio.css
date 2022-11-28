@@ -45,8 +45,9 @@ select.drop-down-portfolio {
     outline: 0;
   } */
 .green-label-total {
-    font-size: 12px;
+    font-size: 8px;
     min-width: 33px;
     background: #C9F0B1;
     border-radius: 30px;
+    margin-bottom: 5px;    
 }

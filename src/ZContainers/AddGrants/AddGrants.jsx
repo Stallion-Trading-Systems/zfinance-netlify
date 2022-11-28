@@ -1043,13 +1043,13 @@ const AddGrants = () => {
         height: 12,
         borderRadius: 5,
         [`&.${linearProgressClasses.colorPrimary}`]: {
-          backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+            backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
         },
         [`& .${linearProgressClasses.bar}`]: {
-          borderRadius: 5,//c9f0b1
-          backgroundColor: theme.palette.mode === 'light' ? '#c9f0b1' : '#308fe8',
+            borderRadius: 5,//c9f0b1
+            backgroundColor: theme.palette.mode === 'light' ? '#c9f0b1' : '#308fe8',
         },
-      }));
+    }));
     return (
         <>
             {user && <>
@@ -1332,13 +1332,30 @@ const AddGrants = () => {
                                                                 <h3 className="pp-chirka mb-5" style={{ fontSize: "normal", fontWeight: "700", fontSize: "32px", lineHeight: "100%" }}>Select the grants you have at {details.c_name}.</h3>
                                                                 {/* <p style={{ fontFamily: "Roboto", fontSize: "normal", fontWeight: "300", fontSize: "25px", lineHeight: "100%" }}>If you are unsure, you can edit this information later..</p> */}
                                                                 {p2 && <>
-                                                                    <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "300", fontSize: "21px", lineHeight: "100%" }}>Working at a start-up is like an investment, with its own risk and reward. And with every decsion comes a trade-off. As your ESOPs get vested over the next few years, the main decision for you is whether to double down on equity in return for greater cash comp or choose other alternative assets with better returns. <br /><br />Given you are in the middle of your vesting cycle, some critical trade-offs you must think carefully about:<br /> <br />&nbsp;1. Optimal exercise schedule <br />&nbsp;2. Implicit cost of choosing equity over cash <br />&nbsp;3. Equity planning under different circumstances</p>
+                                                                    <>
+                                                                        <p className='ppchirka-25px' style={{ fontWeight: "300", fontSize: "21px" }}>
+                                                                            Working at a start-up is like an investment, with its own risk and reward. And with every decsion comes a trade-off. As your ESOPs get vested over the next few years,
+                                                                            <strong style={{ fontWeight: "600" }}> the main decision for you is whether to double down on equity in return for greater cash comp or choose other alternative assets with better returns.</strong>
+                                                                        </p>
+                                                                        <p className='ppchirka-25px' style={{ fontWeight: "300", fontSize: "21px" }}>
+                                                                            Given you are in the middle of your vesting cycle, some critical trade-offs you must think carefully about:
+                                                                            <br />
+                                                                            &nbsp;1. Optimal exercise schedule <br />
+                                                                            &nbsp;2. Implicit cost of choosing equity over cash <br />
+                                                                            &nbsp;3. Equity planning under different circumstances
+                                                                        </p>
+                                                                    </>
 
                                                                 </>}
                                                                 {p3 && <>
-                                                                    <p className="pp-chirka" style={{ fontSize: "normal", fontWeight: "250", fontSize: "20px", lineHeight: "100%" }}>
-                                                                        As you are at the start of your vesting journey, there are some critical trade-offs that must be thought about before signing off on the dotted line.<br /><br /> The best way to look at ESOP vesting is like an SIP, with every monthly/yearly vest being nothing but your company setting aside_______ i.e. your opportunity cost is the difference between FMV and strike price.<br /><br /> Your main job to make an informed decision on whether the asset growth will outompete other alternatives, generating alpha, or would you be better off investing that money elsewhere
+                                                                    <p className='ppchirka-25px' style={{ fontWeight: "300", fontSize: "21px" }}>
+                                                                        As you are at the start of your vesting journey, there are some critical trade-offs that must be thought about before signing off on the dotted line.
+                                                                        <br />
+                                                                        The best way to look at <strong style={{ fontWeight: "600" }}> ESOP vesting is like an SIP, with every monthly/yearly vest being nothing but your deferred “investment” in the company</strong>, with a certain risk profile. It is therefore important to calculate the opportunity cost.
+                                                                        <br />
+                                                                        Your main job to make an informed decision on whether the asset growth will outompete other alternatives, generating alpha, or would you be better off investing that money elsewhere. Continue to see more.
                                                                     </p>
+
 
                                                                 </>}
                                                                 <div style={{ backgroundColor: "#FEFCF7" }} className="container p-5 mt-5">

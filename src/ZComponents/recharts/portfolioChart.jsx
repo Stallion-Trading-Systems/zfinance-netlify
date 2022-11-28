@@ -210,7 +210,7 @@ export default function portfolioChart(props) {
   let vestedfinal
   for (let i = 0; i < newdata.length; i++) {
     if (newdata[i].key == aajdate + 1) {
-      vestedfinal=newdata[i].vp
+      vestedfinal = newdata[i].vp
       newdata[i].vpt = newdata[i].vp
       break;
     }
@@ -323,19 +323,39 @@ export default function portfolioChart(props) {
     // console.log(payload[0]?.payload);
     if (active && payload && payload.length) {
       return (
-        <div className="custom-tooltip">
-          <p style={{ maxWidth: "250px", backgroundColor: "rgba(255, 255, 255, 0.5)", padding: "10px", fontSize: "12px" }} className="label">Your vested equity value
-            in <strong>{label}</strong> should be <strong>₹{payload[0]?.payload?.vp}</strong>, however, if you’d
-            have invested the monthly vested sum in <strong>{props?.type}</strong> index fund, it
-            should have reaped approx.
-            <strong>₹{payload[0]?.payload?.highsensex || payload[0]?.payload?.sensex}</strong> value
-          </p>
-        </div>
+        <>
+          {!props.ptype &&
+            <>
+              <div className="custom-tooltip">
+                <p style={{ maxWidth: "250px", backgroundColor: "rgba(255, 255, 255, 0.5)", padding: "10px", fontSize: "12px" }} className="label">Your vested equity value
+                  in <strong>{label}</strong> should be <strong>₹{payload[0]?.payload?.vp.toFixed(2)}</strong>, however, if you’d
+                  have invested the monthly vested sum in <strong>{props?.type}</strong> index fund, it
+                  should have reaped approx.
+                  <strong>₹{payload[0]?.payload?.highsensex?.toFixed(2) || payload[0]?.payload?.sensex?.toFixed(2)}</strong> value
+                </p>
+              </div>
+            </>
+          }
+          {
+            props.ptype&&
+            <div className="custom-tooltip">
+                <p style={{ maxWidth: "250px", backgroundColor: "rgba(255, 255, 255, 0.5)", padding: "10px", fontSize: "12px" }} className="label">
+                  Total perceived equity value as of <strong>{label}</strong> should be <strong style={{color:"#000"}}>{finalprice.toFixed(2)}</strong>, of which <strong style={{color:"#000"}}>{vestedfinal.toFixed(2)}</strong> should have been vested. color should be right.
+                </p>
+              </div>
+          }
+        </>
+
       );
     }
 
     return null;
   };
+  //commas
+  const numFor = Intl.NumberFormat('en-US');
+  const finalvestedcomma = numFor.format(vestedfinal.toFixed(2));
+  const numFor2 = Intl.NumberFormat('en-US');
+  const finalpricecomma= numFor2.format(finalprice.toFixed(2));
   return (
     <div>
       <div style={{ backgroundColor: "#FEFCF7" }} className="col-11 p-5 ">
@@ -347,13 +367,13 @@ export default function portfolioChart(props) {
           margin={{
             top: 0,
             right: 0,
-            left: 50,
+            left: 70,
             bottom: 25
           }}
         >
           {/* <CartesianGrid strokeDasharray="3 3" /> */}
           <XAxis label={{ value: 'Timeline', position: "insideBottom", offset: -20 }} minTickGap={10} dataKey="md" />
-          <YAxis label={{ value: 'Total Equity Value', position: "left", angle: -90, offset: 20 }} tickFormatter={DataFormater} />
+          <YAxis label={{ value: 'Total Equity Value (in ₹)', position: "insideLeft", angle: -90, dx: -65, dy:70}} tickFormatter={DataFormater} />
           {/* domain={['dataMin', dataMax => (Math.ceil((dataMax * 1.1)))]}, */}
           <Tooltip content={<CustomTooltip />} />
           {/* <Area
@@ -391,11 +411,11 @@ export default function portfolioChart(props) {
       {props.ptype && <div>
         <div className="row mt-3 p-5 pb-0 pt-0">
           <div className="col-6 ppchirka-25px">Total equity value <i className='green-label-total'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></div>
-          <div className="col-6 ppchirka-25px">Vested equity value <i style={{ backgroundColor: "#8884d8" }} className='green-label-total'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;<i style={{ backgroundColor: "#8884d8" }} className='green-label-total'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;<i style={{ backgroundColor: "#8884d8" }} className='green-label-total'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></div>
+          <div className="col-6 ppchirka-25px">Vested equity value <i style={{ backgroundColor: "#8884d8" }} className='green-label-total'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;<i style={{ backgroundColor: "#8884d8" }} className='green-label-total'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;</div>
         </div>
         <div className="row p-5 pt-2">
-          <div style={{ fontSize: "20px", fontWeight: "500", textAlign: "center" }} className="col-3 ppchirka-25px">{finalprice}</div>
-          <div style={{ fontSize: "20px", fontWeight: "500", textAlign: "center" }} className="col ppchirka-25px">{vestedfinal}</div>
+          <div style={{ fontSize: "20px", fontWeight: "500", textAlign: "center" }} className="col-3 ppchirka-25px">₹ {finalpricecomma}</div>
+          <div style={{ fontSize: "20px", fontWeight: "500", textAlign: "center" }} className="col ppchirka-25px">₹ {finalvestedcomma}</div>
         </div>
       </div>}
     </div>

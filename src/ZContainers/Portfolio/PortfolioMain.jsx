@@ -64,8 +64,8 @@ const PortfolioMain = () => {
             setSensex(res.data.data)
         }
         async function f() {
-            let res2=await api.checkCname({ c_name: chartdetails?.c_name })
-             
+            let res2 = await api.checkCname({ c_name: chartdetails?.c_name })
+
             if (res2.data.message == "No") {
                 {
                     setcDetails([{
@@ -75,13 +75,12 @@ const PortfolioMain = () => {
                     }])
                 }
             }
-            else 
-            {
+            else {
                 let res = await api.getcData({ c_name: chartdetails?.c_name })
                 setcDetails(res.data.obj)
             }
         }
-        
+
         chartdata()
         f()
         sensexdata()
@@ -150,27 +149,51 @@ const PortfolioMain = () => {
 
                                             <div className="col-4"></div>
                                         </div>
-                                        
-                                        
+
+
                                         <div className="row mb-5">
                                             <div className="col-10">
-                                            {type=="p2"&&
-                                            <p className='ppchirka-25px' style={{fontWeight:"300", fontSize:"21px"}}>
-                                                While vested equity value wil eventually converge to the total equity value as seen from the graph, this should not be considered as net wealth, especially in the case of illiquid companies. There are a lot of other variables that eventually define how much you actually make like:<br/><br/> &nbsp; 1. Time to IPO <br/>&nbsp; 2. Companies acceptance towards secondaries <br/>&nbsp; 3. Company fundamentals <br/>&nbsp; 4. Lock-ins <br/><br/>And some other extraneous variables. Select an option below to play out different scenarios.
-
-                                            </p>
-                                            }
-                                            {type=="p3"&&
-                                            <p className='ppchirka-25px' style={{fontWeight:"300", fontSize:"21px"}}>
-                                                Your main job at the start of vesting/ negotiating a new salary is whether to push harder for equity or cash. While vested equity value wil eventually converge to the total equity value as seen from the graph, this should not be considered as net wealth, especially in the case of illiquid companies. There are a lot of other variables that eventually define how much you actually make like:<br/><br/> &nbsp; 1. Time to IPO <br/>&nbsp; 2. Companies acceptance towards secondaries <br/>&nbsp; 3. Company fundamentals <br/>&nbsp; 4. Lock-ins <br/><br/>And some other extraneous variables. Select an option below to play out different scenarios.
-                                            </p>
-                                            }
+                                                {type == "p2" &&
+                                                    <>
+                                                        <p className='ppchirka-25px' style={{ fontWeight: "300", fontSize: "21px" }}>
+                                                            While vested equity value wil eventually converge to the total equity value as seen from the graph, this should not be considered as net wealth, especially in the case of illiquid companies. There are a lot of other variables that eventually define how much you actually make like:
+                                                            <br />
+                                                            1. Time to IPO
+                                                            <br />
+                                                            2. Companies acceptance towards secondaries
+                                                            <br />
+                                                            3. Company fundamentals
+                                                            <br />
+                                                            4. Lock-ins
+                                                            <br />
+                                                            And some other extraneous variables. To fully understand the trade-offs, check out our scenario analysis calculator
+                                                        </p>
+                                                    </>
+                                                }
+                                                {type == "p3" &&
+                                                    <>
+                                                        <p className='ppchirka-25px' style={{ fontWeight: "300", fontSize: "21px" }}>
+                                                        Your main job at the start of vesting/ negotiating a new salary is whether to push harder for equity or cash. While vested equity value wil eventually converge to the total equity value as seen from the graph, this should not be considered as net wealth, especially in the case of illiquid companies. 
+                                                            There are a lot of other variables that eventually define how much you actually make like:
+                                                            <br />
+                                                            1. Time to IPO
+                                                            <br />
+                                                            2. Companies acceptance towards secondaries
+                                                            <br />
+                                                            3. Company fundamentals
+                                                            <br />
+                                                            4. Lock-ins
+                                                            <br />
+                                                            And some other extraneous variables. To fully understand the trade-offs, check out our scenario analysis calculator
+                                                        </p>
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                         <div className="row">
                                             <div className="col-3"></div>
                                             <div className="col">
-                                                <NavLink style={{textDecoration:"none"}} to="/portfolio"><Button name="scenario analysis"/></NavLink>
+                                                <NavLink style={{ textDecoration: "none" }} to="/portfolio"><Button name="scenario analysis" /></NavLink>
                                             </div>
                                         </div>
                                     </div>
