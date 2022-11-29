@@ -18,7 +18,7 @@ const Portfolio = () => {
   const [openlogout, setOpenlogout] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [sensex,setSensex]=useState();
-  const [selectt,setSelectt]=useState("nifty");
+  const [selectt,setSelectt]=useState("sensex");
   const [checkc,setcheckc]=useState(false)
   if (user === null) {
     setTimeout(() => {
@@ -194,7 +194,7 @@ const Portfolio = () => {
                           <div className="col-2">
                             <select onChange={(e)=>{setSelectt(e.target.value)}} style={{ color: "white", fontSize: "20px" }}
                                 className='drop-down-portfolio' name="cars" id="cars">
-                              <option value="nifty">Nifty 50</option>
+                              {/* <option value="compare">Compare w/</option> */}
                               <option value="sensex">Sensex</option>
                               <option value="bse_500">BSE 500</option>
                               <option value="bse_ipo">BSE IPO</option>

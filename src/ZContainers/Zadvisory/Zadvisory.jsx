@@ -4,25 +4,21 @@ import { Sidebar } from "react-responsive-sidebar"
 import Button from '../../Components/Button/Button.jsx'
 import monkey from "../../assets/monkey.svg"
 import { items } from '../../ZComponents/items.js'
-import "./advisory.css"
-import * as api from "../../axios.js"
-import Table1 from './Table1.jsx'
-import Table2 from './Table2.jsx'
-import Table3 from './Table3.jsx'
+import "./zadvisory.css"
+import { NavLink } from 'react-router-dom'
 
-const Report = () => {
+const Zadvisory = () => {
     const navigate = useNavigate();
-    const params=useParams()
     const user = localStorage.getItem("user");
     const userobj = JSON.parse(localStorage.getItem('user'));
     const [openlogout, setOpenlogout] = useState(false);
     const [isActive, setIsActive] = useState(false);
-    const [vestingdetails, setVestingDetails] = useState()
-    const [type,setType]=useState(1)
+    if (user === null) {
+        setTimeout(() => {
+            navigate("/signin");
+        }, 1000)
+    }
 
-    let liquidity=params?.liquidity
-    let capital=params?.capital
-    let period=params?.period
     const handleClick = (e) => {
         e.preventDefault();
         setIsActive((current) => !current);
@@ -34,34 +30,12 @@ const Report = () => {
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
-        navigate("/auth");
+        navigate("/signin");
     };
-    let date=new Date().toDateString().substring(4)
-    useEffect(() => {
-        async function vestingdata() {
-            let res = await api.getChartData({ email: userobj?.email })
-            // console.log(res.data.message);
 
-            setVestingDetails(res.data.message)
-            // console.log(chartdetails);
-
-        }
-        vestingdata()
-        setType(1)
-        function typeCheck(){
-            if(liquidity==0&&capital==1){
-                setType(2)
-            }
-            else if(liquidity==0&&capital==0)
-            {
-                setType(3)
-            }
-        }
-        typeCheck()
-    }, [])
     return (
         <>
-             <>
+            {user && <>
                 <div className="white-bg-css">
                     <Sidebar
                         className="side-bar z-s-i-css"
@@ -103,39 +77,32 @@ const Report = () => {
                         </div>
 
                         <div onClick={() => setOpenlogout(false)} className="container con-abs">
-                            <div className="row">
-                                <div>
-                                    <div className="container p-5 pt-0">
-                                        <div className="row">
-                                            <div className="col-10">
-                                                <p className='ppchirka-32px'>
-                                                    Given the answers provided, we feel the best option for you would be to {type==1&&"secondary sale"}{type==2&&"exercise & hold"}{type==3&&"exercise at exit"}, we’ve provided a side-by-side comparison of all the options available for you to be able to make an informed decision
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className="row mb-5 mt-5">
-                                            <div className="col-11">
-                                                {type==1&&<Table1 vestingdetails={vestingdetails}/>}
-                                                {type==2&&<Table2 vestingdetails={vestingdetails}/>}
-                                                {type==3&&<Table3 vestingdetails={vestingdetails}/>}
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-10">
-                                                <p className='ppchirka-25px mb-5'>Speak to one of our team members to understand more about our liquidity program, and decide the best way to move forward</p>
-                                                <a style={{textDecoration:"none"}} target="__blank" href="https://calendly.com/bhanu_zionn/intro"><Button name="book meeting" /></a>
-                                            </div>
-                                        </div>
+                            <div className="container p-5 pt-0">
+                                <div className="row ">
+                                    <div className="col-10">
+                                        <p className='ppchirka-25px' style={{ fontWeight: "700", fontSize: "32px" }}>Not all companies are the same. Not all venture backed companies are worth billions. Neither is every bootstrapped company to be written off.</p>
+                                    </div>
+                                </div>
+                                <div className="row mt-3">
+                                    <div className="col-8">
+                                        <p className='ppchirka-25px' style={{ fontWeight: "300" }}>Speak to our team of analysts to discuss more about your company’s equity value, and if it is worth investing over other alternative assets.</p>
+
+                                    </div>
+                                </div>
+                                <div className="row mt-5">
+                                    <div className="col-3">
+                                        <a style={{ textDecoration: "none" }} target="__blank" href="https://calendly.com/bhanu_zionn/intro"><Button name="book meeting" /></a>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </Sidebar>
                 </div>
-            </>
+            </>}
         </>
 
     )
 }
 
-export default Report
+export default Zadvisory

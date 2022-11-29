@@ -17,6 +17,8 @@ import Signin from "./ZComponents/auth/Signin.jsx";
 import Signup from "./ZComponents/auth/Signup.jsx";
 import ResetPassword from "./ZComponents/auth/forgotpassword/ResetPassword.jsx";
 import ForgotPassword from "./ZComponents/auth/forgotpassword/ForgotPassword.jsx";
+import Zadvisory from "./ZContainers/Zadvisory/Zadvisory.jsx";
+import Marketplace from "./ZContainers/Zadvisory/Marketplace.jsx";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
           <Route exact path="/advisory/report" element={<Report/>}/>
           <Route exact path="/advisory/report/:period/:capital/:liquidity" element={<Report/>}/>
           <Route exact path="/advisory" element={<Advisory/>}/>
+          <Route exact path="/zadvisory" element={<Zadvisory/>}/>
+          <Route exact path="/marketplace" element={<Marketplace/>}/>
           <Route exact path="/auth/resetpassword/:email" element={<ResetPassword/>} />
           <Route exact path="/auth/forgotpassword" element={<ForgotPassword />} />
           <Route path="*" element={<Navigate replace to="/" />} />

@@ -105,17 +105,17 @@ const Advisory = () => {
                                                 <p className='ppchirka-32px'>Help us answer a few questions to rank the most suitable options for you</p>
 
                                             </div>
-                                            <div className="row mt-2">
+                                            {/* <div className="row mt-2">
                                                 <div className="col ml-5">
                                                     <select className='new-input-css' style={{ width: "170px" }} name="company" id="company">
                                                         <option value="razorpay">Razorpay</option>
                                                     </select>
                                                 </div>
-                                            </div>
-                                            <div className="row mt-5">
+                                            </div> */}
+                                            <div className="row mt-2">
                                                 <div className="col ml-5">
                                                     <p className='ppchirka-22px'>How long do you plan to stay?</p>
-                                                    <select className='new-input-css' style={{ width: "200px" }} onChange={(e)=>{setPeriod(e.target.value)}} name="period" id="period">
+                                                    <select className='period-dropdown' style={{ width: "200px" }} onChange={(e)=>{setPeriod(e.target.value)}} name="period" id="period">
                                                         <option checked={period==2} value={2}>2 Years or more</option>
                                                         <option checked={period==1} value={1}>Less than 2 Years</option>
                                                     </select>

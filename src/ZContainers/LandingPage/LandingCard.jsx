@@ -18,6 +18,8 @@ const LandingCard = (props) => {
                     <p
                         style={{fontFamily:"Roboto", fontSize:"normal",fontWeight:"300",fontSize:"25px",lineHeight:"100%"}}
                     >{props.des}</p>
+                    {props.link&&
+                    <>
                     <NavLink className="mt-4" to={props.link} style={{width:"200px",textDecoration:"none"}}>
                     <button
                         onPointerLeave={defaultClick}
@@ -29,7 +31,24 @@ const LandingCard = (props) => {
                         {props.btntxt}
                         <i class="bi bi-arrow-up-right"></i>
                     </button>
-                    </NavLink>
+                    </NavLink></>
+                    }
+                    {
+                        props.href&&<>
+                        <a className="mt-4" href={props.href} target="__blank" style={{width:"200px",textDecoration:"none"}}>
+                    <button
+                        onPointerLeave={defaultClick}
+                        onPointerDown={handleClick}
+                        onPointerUp={handleClick}
+                        className={isActive ? "butt butt-ac" : "butt"}
+                        style={{width:"200px",fontFamily:"Source Code Pro", fontSize:"normal",fontWeight:"600",fontSize:"14px",lineHeight:"100%"}}
+                    >
+                        {props.btntxt}
+                        <i class="bi bi-arrow-up-right"></i>
+                    </button>
+                    </a>
+                        </>
+                    }
                 </div>
             </div>
         </div>

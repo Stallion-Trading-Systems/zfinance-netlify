@@ -7,29 +7,29 @@ export const items = [
     <SidebarItem>
         <div className="">
             <div>
-                <NavLink to="/" style={{ textDecoration: 'none' }}><img className="logo-size" src={logo} /></NavLink>
+                <NavLink to="/home" style={{ textDecoration: 'none' }}><img className="logo-size" src={logo} /></NavLink>
 
             </div>
         </div>
     </SidebarItem>,
     <SidebarItem>
         <div className="sidebar-btn mar-top">
-            <NavLink to="/" style={{ textDecoration: 'none' }}><Button widthv={120} name="holdings" /></NavLink>
+            <NavLink to="/addgrant" style={{ textDecoration: 'none' }}><Button widthv={130} name="calculator" /></NavLink>
         </div>
     </SidebarItem>,
     <SidebarItem>
         <div className="sidebar-btn mar-mid-top mt-3">
-            <NavLink to="/" style={{ textDecoration: 'none' }}><Button widthv={120} name="orders" /></NavLink>
+            <a href="https://app.zionn.trade" target="__blank" style={{ textDecoration: 'none' }}><Button widthv={130} name="sell/buy" /></a>
         </div>
     </SidebarItem>,
     <SidebarItem>
         <div className="sidebar-btn mar-mid-top mt-3">
-            <NavLink to="/" style={{ textDecoration: 'none' }}><Button widthv={120} name="scoops" /></NavLink>
+            <a href="https://app.zionn.trade/scoops" target="__blank" style={{ textDecoration: 'none' }}><Button widthv={130} name="scoops" /></a>
         </div>
     </SidebarItem>,
     <SidebarItem>
         <div className="sidebar-btn mar-mid-top mt-3">
-            <NavLink to="/" style={{ textDecoration: 'none' }}><Button widthv={120} name="help" /></NavLink>
+            <a href="https://calendly.com/bhanu_zionn/intro" target="__blank" style={{ textDecoration: 'none' }}><Button widthv={130} name="help" /></a>
         </div>
     </SidebarItem>,
 ];
