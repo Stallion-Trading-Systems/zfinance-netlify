@@ -217,7 +217,7 @@ export default function portfolioChart(props) {
   }
   // console.log(newdata);
   // console.log(finalyearkey - 2);
-  if (variables?.time_to_ipo && variables?.ipo_price && variables?.lock_in) {
+  if (variables?.time_to_ipo && variables?.ipo_price) {
     if ((parseInt(aajdate) + parseInt(variables?.time_to_ipo)) <= (finalyearkey - 2)) {
       // console.log("ok");
       if (newdata?.length) {
@@ -247,22 +247,18 @@ export default function portfolioChart(props) {
       let imonth = i % 12
       let iyear = Math.floor(i / 12)
       let imd = month[imonth] + " " + iyear
-      if (variables?.lock_in == 0) {
         newdata.push({ key: (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2, vp: variables?.ipo_price * num, price: variables?.ipo_price * num, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
-      }
-      else
-        newdata.push({ key: (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2, vp: newdata[newdata.length - 1]?.vp, price: variables?.ipo_price * num, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
 
-      for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) - 1; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) - 2; currkey++) {
+      for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) - 1; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) - 2; currkey++) {
         let i = currkey + 2
         let imonth = i % 12
         let iyear = Math.floor(i / 12)
         let imd = month[imonth] + " " + iyear
         newdata.push({ key: currkey, vp: newdata[newdata.length - 1]?.vp, price: newdata[newdata.length - 1]?.price, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
       }
-      for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) - 2; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) + parseInt(variables?.lock_in) + 3; currkey++) {
+      for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) - 2; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) + 3; currkey++) {
         let i = currkey + 2
-        if (variables?.lock_in == 0) i = currkey + 3
+        i = currkey + 3
         let imonth = i % 12
         let iyear = Math.floor(i / 12)
         let imd = month[imonth] + " " + iyear
@@ -340,7 +336,7 @@ export default function portfolioChart(props) {
             props.ptype&&
             <div className="custom-tooltip">
                 <p style={{ maxWidth: "250px", backgroundColor: "rgba(255, 255, 255, 0.5)", padding: "10px", fontSize: "12px" }} className="label">
-                  Total perceived equity value as of <strong>{label}</strong> should be <strong style={{color:"#000"}}>{finalprice.toFixed(2)}</strong>, of which <strong style={{color:"#000"}}>{vestedfinal.toFixed(2)}</strong> should have been vested. color should be right.
+                  Total perceived equity value as of <strong>{label}</strong> should be <strong style={{color:"#000"}}>{payload[0]?.payload?.price.toFixed(2)}</strong>, of which <strong style={{color:"#000"}}>{payload[0]?.payload?.vp.toFixed(2)}</strong> should have been vested. color should be right.
                 </p>
               </div>
           }

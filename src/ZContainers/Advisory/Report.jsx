@@ -15,11 +15,11 @@ const Report = () => {
     const params=useParams()
     const user = localStorage.getItem("user");
     const userobj = JSON.parse(localStorage.getItem('user'));
+    const ipoDetails = JSON.parse(localStorage.getItem('zionn-variables'));
     const [openlogout, setOpenlogout] = useState(false);
     const [isActive, setIsActive] = useState(false);
     const [vestingdetails, setVestingDetails] = useState()
     const [type,setType]=useState(1)
-
     let liquidity=params?.liquidity
     let capital=params?.capital
     let period=params?.period
@@ -115,9 +115,9 @@ const Report = () => {
                                         </div>
                                         <div className="row mb-5 mt-5">
                                             <div className="col-11">
-                                                {type==1&&<Table1 vestingdetails={vestingdetails}/>}
-                                                {type==2&&<Table2 vestingdetails={vestingdetails}/>}
-                                                {type==3&&<Table3 vestingdetails={vestingdetails}/>}
+                                                {type==1&&<Table1 ipoDetails={ipoDetails} vestingdetails={vestingdetails}/>}
+                                                {type==2&&<Table2 ipoDetails={ipoDetails} vestingdetails={vestingdetails}/>}
+                                                {type==3&&<Table3 ipoDetails={ipoDetails} vestingdetails={vestingdetails}/>}
                                             </div>
                                         </div>
                                         <div className="row">
