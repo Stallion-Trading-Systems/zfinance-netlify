@@ -36,7 +36,21 @@ const Report = () => {
         localStorage.removeItem("user");
         navigate("/auth");
     };
-    let date=new Date().toDateString().substring(4)
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+    let d=new Date()
+    let month=d.getMonth()+1
+    let year=d.getFullYear()
+    console.log(month,year);
+    month+=2
+    if(month>12){
+        month-=12
+        year++
+    }
+    let dateplus2=""+months[month-1]+" "+year
+    month=d.getMonth()+1
+    year=d.getFullYear()+(ipoDetails?.time_to_ipo/12)
+    let dateplusipo=""+months[month-1]+" "+year
     useEffect(() => {
         async function vestingdata() {
             let res = await api.getChartData({ email: userobj?.email })
@@ -115,9 +129,9 @@ const Report = () => {
                                         </div>
                                         <div className="row mb-5 mt-5">
                                             <div className="col-11">
-                                                {type==1&&<Table1 ipoDetails={ipoDetails} vestingdetails={vestingdetails}/>}
-                                                {type==2&&<Table2 ipoDetails={ipoDetails} vestingdetails={vestingdetails}/>}
-                                                {type==3&&<Table3 ipoDetails={ipoDetails} vestingdetails={vestingdetails}/>}
+                                                {type==1&&<Table1 dateplusipo={dateplusipo} dateplus2={dateplus2} ipoDetails={ipoDetails} vestingdetails={vestingdetails}/>}
+                                                {type==2&&<Table2 dateplusipo={dateplusipo} ipoDetails={ipoDetails} vestingdetails={vestingdetails}/>}
+                                                {type==3&&<Table3 dateplusipo={dateplusipo} ipoDetails={ipoDetails} vestingdetails={vestingdetails}/>}
                                             </div>
                                         </div>
                                         <div className="row">

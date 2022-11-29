@@ -10,6 +10,7 @@ const Table2 = (props) => {
     let date = new Date().toDateString().substring(4)
     const [exitPrice, setExitPrice] = useState()
     let c_name = vestingdetails?.c_name
+    let ipoDetails = props.ipoDetails
     useEffect(() => {
         setExitPrice(parseInt(vestingdetails?.fmp))
         async function checkBid() {
@@ -81,9 +82,9 @@ const Table2 = (props) => {
                                 </tr>
                                 <tr>
                                     <td style={{ border: "0px" }}>Date of exercise</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{date}</td>
-                                    <td>{date}</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>N/A</td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>Anytime</td>
+                                    <td>Anytime after exercise</td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{props?.dateplusipo}</td>
                                 </tr>
                                 <tr className='no-tbb' >
                                     <td style={{ border: "0px" }}></td>
@@ -167,13 +168,13 @@ const Table2 = (props) => {
                                 </tr>
                                 <tr>
                                     <td style={{ border: "0px" }}>Taxes  <Tooltip title={<React.Fragment>
-                   
-                   You are supposed to pay the differential b/w latest share price and strike price, as the government views this gap as an income. This income is taxed at your existing tax slab. There is a small subset of companies that are exempt from paying this tax. Please contact <a style={{color:"white"}} href='https://calendly.com/bhanu_zionn/intro' target="__blank">here</a> to learn more.</React.Fragment>} placement="right" arrow><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                                    </svg></Tooltip></td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(Math.ceil((vestingdetails?.fmp* vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
-                                    <td>{numFor.format(Math.ceil((vestingdetails?.fmp* vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
+
+                                        You are supposed to pay the differential b/w latest share price and strike price, as the government views this gap as an income. This income is taxed at your existing tax slab. There is a small subset of companies that are exempt from paying this tax. Please contact <a style={{ color: "white" }} href='https://calendly.com/bhanu_zionn/intro' target="__blank">here</a> to learn more.</React.Fragment>} placement="right" arrow><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                        </svg></Tooltip></td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
+                                    <td>{numFor.format(Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
                                     <td style={{ backgroundColor: "#fbf7ec" }}>0</td>
                                 </tr>
                                 <tr className='no-tbb' >
@@ -187,9 +188,9 @@ const Table2 = (props) => {
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                     </svg></Tooltip></td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp* vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
-                                    <td>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp* vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num )}</td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
+                                    <td>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num)}</td>
                                 </tr>
                                 <tr>
                                     <td className='bold-underline-advisory-css' style={{ border: "0px" }}>Your returns</td>
@@ -199,9 +200,9 @@ const Table2 = (props) => {
                                 </tr>
                                 <tr>
                                     <td style={{ border: "0px" }}>Exit Price</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(exitPrice* vestingdetails?.num)} </td>
-                                    <td>{numFor.format(exitPrice* vestingdetails?.num)}  </td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(exitPrice* vestingdetails?.num)}  </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(ipoDetails?.ipo_price * vestingdetails?.num)} </td>
+                                    <td>{numFor.format(exitPrice * vestingdetails?.num)}  </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(ipoDetails?.ipo_price * vestingdetails?.num)}  </td>
                                 </tr>
                                 <tr className='no-tbb' >
                                     <td style={{ border: "0px" }}></td>
@@ -211,9 +212,9 @@ const Table2 = (props) => {
                                 </tr>
                                 <tr>
                                     <td style={{ border: "0px" }}>Exercise Cost</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp* vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
-                                    <td>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp* vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num )}</td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
+                                    <td>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))}</td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(vestingdetails?.strike_price * vestingdetails?.num)}</td>
                                 </tr>
                                 <tr className='no-tbb' >
                                     <td style={{ border: "0px" }}></td>
@@ -223,24 +224,24 @@ const Table2 = (props) => {
                                 </tr>
                                 <tr  >
                                     <td style={{ border: "0px" }}>Taxes on sale <Tooltip title={<React.Fragment>Under Secondary sale: Assuming the price you get is the same as last round valuation, you shouldn't be paying any more taxes.
-Under Exercise and Hold: given there was tax paid upon exercise, plus time has lapsed since purchase, you'd be eligible for LTCG.
-Under Exercise at Exit: You'd be liable to pay taxes at your income tax slab. This is one of the most tax inefficient options.
-Please get in touch <a style={{color:"white"}} href='https://calendly.com/bhanu_zionn/intro' target="__blank">here</a> if you are interested in learning more about taxation. </React.Fragment>} placement="right" arrow><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                                    </svg></Tooltip></td>
-                                    <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}></td>
+                                        Under Exercise and Hold: given there was tax paid upon exercise, plus time has lapsed since purchase, you'd be eligible for LTCG.
+                                        Under Exercise at Exit: You'd be liable to pay taxes at your income tax slab. This is one of the most tax inefficient options.
+                                        Please get in touch <a style={{ color: "white" }} href='https://calendly.com/bhanu_zionn/intro' target="__blank">here</a> if you are interested in learning more about taxation. </React.Fragment>} placement="right" arrow><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                        </svg></Tooltip></td>
+                                    <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}>{numFor.format(((ipoDetails?.ipo_price - vestingdetails?.fmp) * vestingdetails?.num) * 0.1)}</td>
                                     <td>0</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}></td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(((ipoDetails?.ipo_price - vestingdetails?.strike_price) * vestingdetails?.num) * 0.1)}</td>
                                 </tr>
                                 <tr>
                                     <td style={{ border: "0px" }}>Net returns discounted to present value <Tooltip title="Time value of money is the most important aspect of investing. Money in the future has an opportunity cost, which we have pegged at 16% in our calculations (avg. return on a large cap index fund) to help you compare whether its worth the wait or you are better off liquidating your holdings earlier." placement="right" arrow><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                     </svg></Tooltip></td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(exitPrice - (vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp - vestingdetails?.strike_price * vestingdetails?.num) * 0.3)))} </td>
-                                    <td>{numFor.format(exitPrice - (vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp - vestingdetails?.strike_price * vestingdetails?.num) * 0.3)))} </td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(exitPrice - (vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp - vestingdetails?.strike_price * vestingdetails?.num) * 0.3)))} </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format((ipoDetails?.ipo_price * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))-(((ipoDetails?.ipo_price - vestingdetails?.fmp) * vestingdetails?.num) * 0.1))} </td>
+                                    <td>{numFor.format((exitPrice * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))-0)} </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format((ipoDetails?.ipo_price * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num)-(((ipoDetails?.ipo_price - vestingdetails?.strike_price) * vestingdetails?.num) * 0.1))} </td>
                                 </tr>
                                 <tr className=''>
                                     <td style={{ border: "0px" }}></td>
@@ -250,7 +251,7 @@ Please get in touch <a style={{color:"white"}} href='https://calendly.com/bhanu_
                                 </tr>
                                 <tr style={{ fontSize: "15px" }} className=''>
                                     <td style={{ border: "0px" }}></td>
-                                    <td> <NavLink style={{textDecoration:"none"}} to="/zadvisory"><Button name="go to zadvisory" /></NavLink></td>
+                                    <td> <NavLink style={{ textDecoration: "none" }} to="/zadvisory"><Button name="go to zadvisory" /></NavLink></td>
                                     <td> </td>
                                     <td > </td>
                                 </tr>
