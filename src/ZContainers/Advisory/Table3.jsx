@@ -231,7 +231,7 @@ const Table3 = (props) => {
                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                             <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                         </svg></Tooltip></td>
-                                    <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}>{numFor.format(((ipoDetails?.ipo_price - vestingdetails?.strike_price) * vestingdetails?.num) * 0.1)}</td>
+                                    <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}>{numFor.format(((ipoDetails?.ipo_price - vestingdetails?.strike_price) * vestingdetails?.num) * 0.3)}</td>
                                     <td>0</td>
                                     <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(((ipoDetails?.ipo_price - vestingdetails?.fmp) * vestingdetails?.num) * 0.1)}</td>
                                 </tr>
@@ -240,7 +240,7 @@ const Table3 = (props) => {
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                     </svg></Tooltip></td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format((ipoDetails?.ipo_price * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num)-(((ipoDetails?.ipo_price - vestingdetails?.strike_price) * vestingdetails?.num) * 0.1))}</td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format((ipoDetails?.ipo_price * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num)-(((ipoDetails?.ipo_price - vestingdetails?.strike_price) * vestingdetails?.num) * 0.3))}</td>
                                     <td>{numFor.format((exitPrice * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))-0)} </td>
                                     <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format((ipoDetails?.ipo_price * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))-(((ipoDetails?.ipo_price - vestingdetails?.fmp) * vestingdetails?.num) * 0.1))}  </td>
                                 </tr>

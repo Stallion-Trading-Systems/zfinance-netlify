@@ -52,7 +52,7 @@ const Table2 = (props) => {
                             <tbody>
                                 <tr className='no-tbb' >
                                     <td style={{ border: "0px" }}>Rationale</td>
-                                    <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}>Given you plan to leave the firm in near future, exercising now might suit you the best. For analsyt coverage and our recommendation,<br /> Visit here for zadvisory</td>
+                                    <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}>Given you plan to leave the firm in near future, exercising now might suit you the best. For analsyt coverage and our recommendation,<br /> Visit <NavLink style={{color:"black"}} to="/zadvisory">here</NavLink> for zadvisory</td>
                                     <td></td>
                                     <td style={{ backgroundColor: "#fbf7ec" }}></td>
                                 </tr>
@@ -232,7 +232,7 @@ const Table2 = (props) => {
                                         </svg></Tooltip></td>
                                     <td style={{ backgroundColor: "#fbf7ec", borderTop: "none", borderBottom: "none" }}>{numFor.format(((ipoDetails?.ipo_price - vestingdetails?.fmp) * vestingdetails?.num) * 0.1)}</td>
                                     <td>0</td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(((ipoDetails?.ipo_price - vestingdetails?.strike_price) * vestingdetails?.num) * 0.1)}</td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format(((ipoDetails?.ipo_price - vestingdetails?.strike_price) * vestingdetails?.num) * 0.3)}</td>
                                 </tr>
                                 <tr>
                                     <td style={{ border: "0px" }}>Net returns discounted to present value <Tooltip title="Time value of money is the most important aspect of investing. Money in the future has an opportunity cost, which we have pegged at 16% in our calculations (avg. return on a large cap index fund) to help you compare whether its worth the wait or you are better off liquidating your holdings earlier." placement="right" arrow><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
@@ -241,7 +241,7 @@ const Table2 = (props) => {
                                     </svg></Tooltip></td>
                                     <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format((ipoDetails?.ipo_price * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))-(((ipoDetails?.ipo_price - vestingdetails?.fmp) * vestingdetails?.num) * 0.1))} </td>
                                     <td>{numFor.format((exitPrice * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num + Math.ceil((vestingdetails?.fmp * vestingdetails?.num - vestingdetails?.strike_price * vestingdetails?.num) * 0.3))-0)} </td>
-                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format((ipoDetails?.ipo_price * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num)-(((ipoDetails?.ipo_price - vestingdetails?.strike_price) * vestingdetails?.num) * 0.1))} </td>
+                                    <td style={{ backgroundColor: "#fbf7ec" }}>{numFor.format((ipoDetails?.ipo_price * vestingdetails?.num)-(vestingdetails?.strike_price * vestingdetails?.num)-(((ipoDetails?.ipo_price - vestingdetails?.strike_price) * vestingdetails?.num) * 0.3))} </td>
                                 </tr>
                                 <tr className=''>
                                     <td style={{ border: "0px" }}></td>

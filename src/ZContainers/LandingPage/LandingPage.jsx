@@ -98,7 +98,7 @@ const LandingPage = () => {
                                         <div className="row" style={{marginBottom:"70px"}}>
                                         <LandingCard 
                                         title="Need to liquidate your holdings?"
-                                        des="We help startup employees sell their exiting stock to istituional investors. Best suited for those looking for early liquidity"
+                                        des="We help startup employees sell their exiting stock to institutional investors. Best suited for those looking for early liquidity."
                                         btntxt="liquidate"
                                         href="https://app.zionn.trade"
                                         />
