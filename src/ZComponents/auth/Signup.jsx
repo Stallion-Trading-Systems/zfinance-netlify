@@ -30,27 +30,27 @@ const Signup = () => {
   const [user, setUser] = useState(false);
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const responseGoogle = async (res) => {
-    console.log(res.profileObj.name);
-    let nm = res.profileObj.name;
-    let em = res.profileObj.email;
-    let user_token = await api.userSignUp({
-      name: nm,
-      email: em,
-      phone: undefined,
-      password: undefined,
-    });
-    console.log(user_token);
-    // storing user token in local storage
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ name: nm, email: em, token: user_token.data.token })
-    );
-    navigate("/onboarding");
-  };
-  const responseGoogleFail = (err) => {
-    console.log(err);
-  };
+  // const responseGoogle = async (res) => {
+  //   console.log(res.profileObj.name);
+  //   let nm = res.profileObj.name;
+  //   let em = res.profileObj.email;
+  //   let user_token = await api.userSignUp({
+  //     name: nm,
+  //     email: em,
+  //     phone: undefined,
+  //     password: undefined,
+  //   });
+  //   console.log(user_token.data.token);
+  //   // storing user token in local storage
+  //   localStorage.setItem(
+  //     "user",
+  //     JSON.stringify({ name: nm, email: em, token: user_token.data.token })
+  //   );
+  //   // navigate("/home");
+  // };
+  // const responseGoogleFail = (err) => {
+  //   console.log(err);
+  // };
   const [isActive, setIsActive] = useState(false);
   const handleClick = (e) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ const Signup = () => {
     e.preventDefault();
     let user_token = await api.userSignUp({ name, email, phone, password });
     // storing user token in local storage
-    console.log(user_token);
+    console.log(user_token.data.token);
     setUT(user_token.data.taken);
     if (user_token.data.message === "User already exit") {
       setError(true);
@@ -78,9 +78,14 @@ const Signup = () => {
       setError(false);
       setErroruae(false);
       setErrorotp(false);
-      setUser(true);
+      // setUser(true);
       setOtp("");
       setLoading(false);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ name: name, email: email, token:  user_token.data.token})
+      );
+      navigate("/home");
     }
 
   };
@@ -152,7 +157,7 @@ const Signup = () => {
             </div>
             <div className="row">
               <div className="form-css-su">
-                <div className="mob-v-only" >
+                {/* <div className="mob-v-only" >
                   <img className='img-slider' src={slider} alt="slider" />
                   <div className='txt-slider'>
                     <div class="ticker-wrapper-h">
@@ -164,7 +169,7 @@ const Signup = () => {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="container form-su">
                   {user == false ? (
                     <form id="form1" onSubmit={signupfun}>

@@ -132,7 +132,7 @@ const Signin = () => {
             <div className="row">
 
               <div className="form-css-su col">
-                <div className="mob-v-only" >
+                {/* <div className="mob-v-only" >
                   <img className='img-slider' src={slider} alt="slider" />
                   <div className='txt-slider'>
                     <div class="ticker-wrapper-h">
@@ -144,7 +144,7 @@ const Signin = () => {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="container form-si">
                   <form id="form1" onSubmit={signinfun}>
                     <div className="container">

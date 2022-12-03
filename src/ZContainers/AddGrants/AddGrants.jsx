@@ -938,7 +938,7 @@ const AddGrants = () => {
         setPage(x => (x + 1));
         let res = await api.addGrant(details);
 
-        console.log(res);
+        console.log("addgrants",res);
         if (p2) {
             navigate("/portfolio/p2")
         }
