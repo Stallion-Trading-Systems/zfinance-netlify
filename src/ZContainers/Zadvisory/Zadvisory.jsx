@@ -94,6 +94,12 @@ const Zadvisory = () => {
                                         <a style={{ textDecoration: "none" }} target="__blank" href="https://calendly.com/bhanu_zionn/intro"><Button name="book meeting" /></a>
                                     </div>
                                 </div>
+                                <div className="row mt-5">
+                                <div style={{position: "relative", paddingBottom: "62.5%", height: 0}}>
+                                    <iframe src="https://www.loom.com/embed/f2578af8b719473587f8f2f7c7670f2f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen 
+                                    style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
+                                        </iframe></div>
+                                </div>
                             </div>
 
                         </div>

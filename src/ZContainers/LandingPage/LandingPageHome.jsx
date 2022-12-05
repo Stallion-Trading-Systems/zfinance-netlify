@@ -122,6 +122,13 @@ const LandingPageHome = () => {
                                         <img src={imggraph} />
                                     </div>
                                 </div>
+                                <div className="row">
+                                        <div style={{ position: "relative", paddingBottom: "62.5%", height: 0 }}>
+                                            <iframe src="https://www.loom.com/embed/39334a9bdaf94ab19179d4388158c1b4" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen
+                                                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+                                            </iframe>
+                                        </div>
+                                    </div>
                             </div>
                             <FooterP/>
                         </div>

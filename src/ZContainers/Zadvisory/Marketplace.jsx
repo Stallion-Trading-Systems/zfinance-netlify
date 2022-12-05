@@ -101,6 +101,12 @@ const Marketplace = () => {
                                         <a style={{ textDecoration: "none" }} target="__blank" href="https://app.zionn.trade"><Button name="visit marketplace" /></a>
                                     </div>
                                 </div>
+                                <div className="row mt-5">
+                                <div style={{position: "relative", paddingBottom: "62.5%", height: 0}}>
+                                    <iframe src="https://www.loom.com/embed/6bfd39ac4b7b42b1a1651f8345cc19f0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen 
+                                    style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
+                                        </iframe></div>
+                                </div>
                             </div>
 
                         </div>
