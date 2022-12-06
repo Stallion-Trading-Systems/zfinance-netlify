@@ -81,17 +81,17 @@ const Marketplace = () => {
                                 <div className="row ">
                                     <div className="col-10">
                                         <p className='ppchirka-25px' style={{ fontWeight: "700", fontSize: "32px" }}>
-                                        Secondary sales are a fiarly new conept in India, with the process being convoluted, and confusing.
-                                        <br/>
-                                         Zionn’s ESOP Liquidation and Secondaries marketplace tries to bring together 100’s of qualified buyers and sellers to trade with each other in a transparent and unbiased way.
-                                            </p>
+                                            Secondary sales are a fiarly new concept in India, with the process being convoluted, and confusing.
+                                            <br />
+                                            Zionn’s ESOP Liquidation and Secondaries marketplace tries to bring together 100’s of qualified buyers and sellers to trade with each other in a transparent and unbiased way.
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="row mt-3">
                                     <div className="col-9">
                                         <p className='ppchirka-25px' style={{ fontWeight: "300" }}>
-                                        Given employee equity usually has a lot of T&C applied, the flow chart tries to help you understand the process, and once you are comfortbale you can visit our marketplace
-                                            </p>
+                                            Given employee equity usually has a lot of T&C applied, the flow chart tries to help you understand the process, and once you are comfortbale you can visit our marketplace
+                                        </p>
 
                                     </div>
                                 </div>
@@ -102,9 +102,9 @@ const Marketplace = () => {
                                     </div>
                                 </div>
                                 <div className="row mt-5">
-                                <div style={{position: "relative", paddingBottom: "62.5%", height: 0}}>
-                                    <iframe src="https://www.loom.com/embed/6bfd39ac4b7b42b1a1651f8345cc19f0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen 
-                                    style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
+                                    <div style={{ position: "relative", paddingBottom: "62.5%", height: 0 }}>
+                                        <iframe src="https://www.loom.com/embed/6bfd39ac4b7b42b1a1651f8345cc19f0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen
+                                            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
                                         </iframe></div>
                                 </div>
                             </div>
