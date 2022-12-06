@@ -336,7 +336,7 @@ export default function portfolioChart(props) {
             props.ptype&&
             <div className="custom-tooltip">
                 <p style={{ maxWidth: "250px", backgroundColor: "rgba(255, 255, 255, 0.5)", padding: "10px", fontSize: "12px" }} className="label">
-                  Total perceived equity value as of <strong>{label}</strong> should be <strong style={{color:"#000"}}>{payload[0]?.payload?.price.toFixed(2)}</strong>, of which <strong style={{color:"#000"}}>{payload[0]?.payload?.vp.toFixed(2)}</strong> should have been vested. color should be right.
+                  Total perceived equity value as of <strong>{label}</strong> should be <strong style={{color:"#000"}}>{payload[0]?.payload?.price.toFixed(2)}</strong>, of which <strong style={{color:"#000"}}>{payload[0]?.payload?.vp.toFixed(2)}</strong> should have been vested.
                 </p>
               </div>
           }
