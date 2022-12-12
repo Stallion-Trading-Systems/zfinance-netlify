@@ -53,10 +53,11 @@ const Report = () => {
     let dateplusipo=""+months[month-1]+" "+year
     useEffect(() => {
         async function vestingdata() {
-            let res = await api.getChartData({ email: userobj?.email })
+            // let res = await api.getChartData({ email: userobj?.email })
             // console.log(res.data.message);
+            setVestingDetails(JSON.parse(localStorage.getItem("addgrant-details"))?.details)
 
-            setVestingDetails(res.data.message)
+            // setVestingDetails(res.data.message)
             // console.log(chartdetails);
 
         }

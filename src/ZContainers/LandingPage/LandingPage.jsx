@@ -16,12 +16,12 @@ import FooterP from "../Footer/FooterP.jsx";
 const LandingPage = () => {
     const navigate = useNavigate();
     const user = localStorage.getItem("user");
-    const userobj = JSON.parse(localStorage.getItem('user'));
-    if (user === null) {
-        setTimeout(() => {
-            navigate("/");
-        }, 1000)
-    }
+    // const userobj = JSON.parse(localStorage.getItem('user'));
+    // if (user === null) {
+    //     setTimeout(() => {
+    //         navigate("/");
+    //     }, 1000)
+    // }
     let logOut = (e) => {
         e.preventDefault();
         localStorage.removeItem("user");
@@ -41,7 +41,7 @@ const LandingPage = () => {
 
     return (
         <>
-            {user && <>
+            <>
                 <div className="white-bg-css">
                     <Sidebar
                         className="side-bar z-s-i-css"
@@ -63,7 +63,7 @@ const LandingPage = () => {
                                             <button className="monkey-btn-css" onClick={() => { setOpenlogout(current => !current) }}><img className="logo-top-size " src={monkey} /></button>
                                             <div className={openlogout ? "dropdown-content-monkey monkey-click" : "dropdown-content-monkey"}>
                                                 <a style={{ textDecoration: "none" }} href="https://www.linkedin.com/company/zionn/" target="__blank"><Button name="contact" /></a>
-                                                <button
+                                                {/* <button
                                                     onPointerLeave={defaultClick}
                                                     onPointerDown={handleClick}
                                                     onPointerUp={handleClick}
@@ -72,7 +72,7 @@ const LandingPage = () => {
                                                 >
                                                     logout&nbsp;
                                                     <i class="bi bi-arrow-up-right"></i>
-                                                </button>
+                                                </button> */}
                                             </div>
                                         </div>
 
@@ -128,7 +128,7 @@ const LandingPage = () => {
                         </div>
                     </Sidebar>
                 </div>
-            </>}
+            </>
         </>
     );
 };

@@ -22,11 +22,11 @@ const PortfolioMain = () => {
     const [isActive, setIsActive] = useState(false);
     const [sensex, setSensex] = useState();
     const [selectt, setSelectt] = useState("nifty");
-    if (user === null) {
-        setTimeout(() => {
-            navigate("/signin");
-        }, 1000)
-    }
+    // if (user === null) {
+    //     setTimeout(() => {
+    //         navigate("/signin");
+    //     }, 1000)
+    // }
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -47,10 +47,10 @@ const PortfolioMain = () => {
 
 
         async function chartdata() {
-            let res = await api.getChartData({ email: userobj?.email })
+            // let res = await api.getChartData({ email: userobj?.email })
             // console.log(res.data.message);
-
-            setChartDetails(res.data.message)
+            // console.log(JSON.parse(localStorage.getItem("addgrant-details"))?.details);
+            setChartDetails(JSON.parse(localStorage.getItem("addgrant-details"))?.details)
             setcDetails([{
                 name: "Series_A",
                 date: "05-11-2000",
@@ -85,9 +85,18 @@ const PortfolioMain = () => {
         f()
         sensexdata()
     }, [chartdetails?.c_name])
+    let date=chartdetails?.vesting_start_date
+    // console.log(date);
+        let year=parseInt(date?.substring(0,4))
+        // console.log(year);
+        year-=2000
+        year*=12
+        year+=parseInt(date?.substring(5,7))
+        let vs=year
+        // console.log(vs);
     return (
         <>
-            {user && <>
+            <>
                 <div className="white-bg-css">
                     <Sidebar
                         className="side-bar z-s-i-css"
@@ -143,7 +152,7 @@ const PortfolioMain = () => {
                                             <div  >
 
                                                 <div>
-                                                    {chartdetails && <PostfolioChart ptype={true} data={cdetails} type={selectt} cd={chartdetails} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={chartdetails?.vs} />}
+                                                    {chartdetails && <PostfolioChart ptype={true} data={cdetails} type={selectt} cd={chartdetails} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={vs} />}
                                                 </div>
                                             </div>
 
@@ -202,7 +211,7 @@ const PortfolioMain = () => {
                         </div>
                     </Sidebar>
                 </div>
-            </>}
+            </>
         </>
 
     )

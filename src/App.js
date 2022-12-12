@@ -25,11 +25,11 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-        <Route exact path="/" element={<LandingPageHome />} />
+        {/* <Route exact path="/" element={<LandingPageHome />} /> */}
           <Route exact path="/home" element={<LandingPage />} />
           <Route exact path="/addgrant" element={<AddGrants />} />
-          <Route exact path="/signin" element={<Signin/>}/>
-          <Route exact path="/signup" element={<Signup/>}/>
+          {/* <Route exact path="/signin" element={<Signin/>}/> */}
+          {/* <Route exact path="/signup" element={<Signup/>}/> */}
           <Route exact path="/portfolio" element={<Portfolio/>}/>
           <Route exact path="/portfolio/:type" element={<PortfolioMain/>}/>
           <Route exact path="/advisory/report" element={<Report/>}/>
@@ -39,7 +39,7 @@ function App() {
           <Route exact path="/marketplace" element={<Marketplace/>}/>
           <Route exact path="/auth/resetpassword/:email" element={<ResetPassword/>} />
           <Route exact path="/auth/forgotpassword" element={<ForgotPassword />} />
-          <Route path="*" element={<Navigate replace to="/" />} />
+          <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>
       </BrowserRouter>
     </div>

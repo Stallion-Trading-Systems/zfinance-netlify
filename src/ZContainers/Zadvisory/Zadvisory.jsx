@@ -13,11 +13,11 @@ const Zadvisory = () => {
     const userobj = JSON.parse(localStorage.getItem('user'));
     const [openlogout, setOpenlogout] = useState(false);
     const [isActive, setIsActive] = useState(false);
-    if (user === null) {
-        setTimeout(() => {
-            navigate("/signin");
-        }, 1000)
-    }
+    // if (user === null) {
+    //     setTimeout(() => {
+    //         navigate("/signin");
+    //     }, 1000)
+    // }
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -35,7 +35,7 @@ const Zadvisory = () => {
 
     return (
         <>
-            {user && <>
+            <>
                 <div className="white-bg-css">
                     <Sidebar
                         className="side-bar z-s-i-css"
@@ -105,7 +105,7 @@ const Zadvisory = () => {
                         </div>
                     </Sidebar>
                 </div>
-            </>}
+            </>
         </>
 
     )

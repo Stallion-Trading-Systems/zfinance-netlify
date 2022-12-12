@@ -32,11 +32,11 @@ const Portfolio = () => {
   const defaultClick2 = (e) => {
     setIsActive2(false);
   };
-  if (user === null) {
-    setTimeout(() => {
-      navigate("/signin");
-    }, 1000)
-  }
+  // if (user === null) {
+  //   setTimeout(() => {
+  //     navigate("/signin");
+  //   }, 1000)
+  // }
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -77,10 +77,11 @@ const Portfolio = () => {
 
 
     async function chartdata() {
-      let res = await api.getChartData({ email: userobj?.email })
+      // let res = await api.getChartData({ email: userobj?.email })
       // console.log(res.data.message);
 
-      setChartDetails(res.data.message)
+      setChartDetails(JSON.parse(localStorage.getItem("addgrant-details"))?.details)
+
       setcDetails([{
         name: "Series_A",
         date: "05-11-2000",
@@ -117,9 +118,17 @@ const Portfolio = () => {
     sensexdata()
   }, [chartdetails?.c_name])
   // console.log(cdetails);
+  let date=chartdetails?.vesting_start_date
+    // console.log(date);
+        let year=parseInt(date?.substring(0,4))
+        // console.log(year);
+        year-=2000
+        year*=12
+        year+=parseInt(date?.substring(5,7))
+        let vs=year
   return (
     <>
-      {user && <>
+      <>
         <div className="white-bg-css">
           <Sidebar
             className="side-bar z-s-i-css"
@@ -181,7 +190,7 @@ const Portfolio = () => {
                         </div>
                         <div className="col-3">
                           <p className="pp-chirka mt-4" style={{ fontSize: "normal", fontWeight: "700", fontSize: "22px", lineHeight: "100%" }}>Vesting Start</p>
-                          <input className='new-input-css-2' style={{ width: "150px" }} type="text" value={chartdetails?.vesting_start_date} disabled />
+                          <input className='new-input-css-2' style={{ width: "150px" }} type="text" value={chartdetails?.vesting_start_date?.substring(0,10)} disabled />
                         </div>
                         {!checkc &&
                           <div className="col-3">
@@ -237,7 +246,7 @@ const Portfolio = () => {
                         </div>
 
                         <div style={{ marginTop: "90px" }} className="row">
-                          {chartdetails && <PostfolioChart data={cdetails} type={selectt} cd={chartdetails} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={chartdetails?.vs} />}
+                          {chartdetails && <PostfolioChart data={cdetails} type={selectt} cd={chartdetails} sensex={sensex} vd={chartdetails?.vesting_details} variables={variables} num={chartdetails?.num} vs={vs} />}
                         </div>
                       </div>
                       <div className="col-4"></div>
@@ -265,7 +274,7 @@ const Portfolio = () => {
             </div>
           </Sidebar>
         </div>
-      </>}
+      </>
     </>
 
   )

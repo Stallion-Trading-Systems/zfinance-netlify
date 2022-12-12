@@ -23,11 +23,11 @@ const AddGrants = () => {
     const navigate = useNavigate();
     const user = localStorage.getItem("user");
     const userobj = JSON.parse(localStorage.getItem('user'));
-    if (user === null) {
-        setTimeout(() => {
-            navigate("/signin");
-        }, 1000)
-    }
+    // if (user === null) {
+    //     setTimeout(() => {
+    //         navigate("/signin");
+    //     }, 1000)
+    // }
     const list = [
         {
             id: 1,
@@ -934,21 +934,39 @@ const AddGrants = () => {
     const selectChange = (e) => {
         console.log(e.target.value);
     };
-    const addGrant = async (e) => {
+    const addGrant = async(e) => {
         setPage(x => (x + 1));
-        let res = await api.addGrant(details);
+        // let res;
+        // if(details?.email)
+        // res = await api.addGrant(details);
 
-        console.log("addgrants",res);
+        // console.log("addgrants",res);
+        
+        localStorage.removeItem("addgrant-details");
+        localStorage.setItem(
+            "addgrant-details",
+            JSON.stringify({ details }))
+            // let date=details?.vesting_start_date
+            // let year=parseInt(date?.substring(0,4))
+            // // console.log(year);
+            // year-=2000
+            // year*=12
+            // year+=parseInt(date?.substring(5,7))
+            // setDetails({ ...details, "vs": year });
         if (p2) {
-            navigate("/portfolio/p2")
+            setTimeout(() => {
+                navigate("/portfolio/p2")
+            }, 1);
         }
         else if (p3) {
-            navigate("/portfolio/p3")
+            setTimeout(() => {
+                navigate("/portfolio/p3")
+            }, 1);
         }
         else {
-            if (p2) {
+            setTimeout(() => {
                 navigate("/portfolio/p1")
-            }
+            }, 1);
         }
     }
     const page1check = (e) => {
@@ -1052,7 +1070,7 @@ const AddGrants = () => {
     }));
     return (
         <>
-            {user && <>
+            <>
                 <div className="white-bg-css">
                     <Sidebar
                         className="side-bar z-s-i-css"
@@ -1075,6 +1093,7 @@ const AddGrants = () => {
                                             <div className={openlogout ? "dropdown-content-monkey monkey-click" : "dropdown-content-monkey"}>
                                                 <a style={{ textDecoration: "none" }} href="https://www.linkedin.com/company/zionn/" target="__blank"><Button name="contact" /></a>
                                                 <button
+                                                    style={{ display: "none" }}
                                                     onPointerLeave={defaultClick}
                                                     onPointerDown={handleClick}
                                                     onPointerUp={handleClick}
@@ -1419,7 +1438,7 @@ const AddGrants = () => {
                         </div>
                     </Sidebar>
                 </div>
-            </>}
+            </>
         </>
     );
 };

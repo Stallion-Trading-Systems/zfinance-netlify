@@ -19,11 +19,11 @@ const Advisory = () => {
     const [dataDetails, setDataDetails] = useState()
     const [period,setPeriod]=useState(2);
 
-    if (user === null) {
-        setTimeout(() => {
-            navigate("/signin");
-        }, 1000)
-    }
+    // if (user === null) {
+    //     setTimeout(() => {
+    //         navigate("/signin");
+    //     }, 1000)
+    // }
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -40,11 +40,11 @@ const Advisory = () => {
     };
     useEffect(() => {
         async function getdata() {
-            let res = await api.getChartData({ email: userobj?.email })
+            // let res = await api.getChartData({ email: userobj?.email })
             // console.log(res.data.message);
-            setDataDetails(res.data.message)
+            setDataDetails(JSON.parse(localStorage.getItem("addgrant-details"))?.details)
 
-            console.log(res.data.message);
+            // console.log(res.data.message);
         }
         getdata()
     }, [])
@@ -55,7 +55,7 @@ const Advisory = () => {
     }
     return (
         <>
-            {user && <>
+            <>
                 <div className="white-bg-css">
                     <Sidebar
                         className="side-bar z-s-i-css"
@@ -181,7 +181,7 @@ const Advisory = () => {
                         </div>
                     </Sidebar>
                 </div>
-            </>}
+            </>
         </>
 
     )

@@ -16,6 +16,7 @@ const LandingPageHome = () => {
     const navigate = useNavigate();
     const user = localStorage.getItem("user");
     const userobj = JSON.parse(localStorage.getItem('user'));
+    navigate("/home");
     if(user){
         setTimeout(() => {
             navigate("/home");
