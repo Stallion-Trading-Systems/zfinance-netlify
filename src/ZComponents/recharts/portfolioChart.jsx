@@ -247,7 +247,7 @@ export default function portfolioChart(props) {
       let imonth = i % 12
       let iyear = Math.floor(i / 12)
       let imd = month[imonth] + " " + iyear
-        newdata.push({ key: (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2, vp: variables?.ipo_price * num, price: variables?.ipo_price * num, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
+      newdata.push({ key: (parseInt(aajdate) + parseInt(variables?.time_to_ipo)) - 2, vp: variables?.ipo_price * num, price: variables?.ipo_price * num, name: newdata[newdata.length - 1]?.name, n: newdata[newdata.length - 1]?.n + 1, month: imonth, year: iyear, md: imd })
 
       for (let currkey = parseInt(aajdate) + parseInt(variables?.time_to_ipo) - 1; currkey < parseInt(aajdate) + parseInt(variables?.time_to_ipo) - 2; currkey++) {
         let i = currkey + 2
@@ -272,6 +272,22 @@ export default function portfolioChart(props) {
     sensex = sensex?.filter(value => { return value.index_name == props?.type })
     let onebyn = 0
     for (let i = 0; i < newdata.length; i++) {
+      if (cliff == 1) {
+        if (i + 12 < newdata.length && newdata[i + 12].vp != 0) {
+          for (let j = 0; j < sensex?.length; j++) {
+            if (newdata[i].key == sensex[j]?.key) {
+              onebyn += (1 / sensex[j]?.close_price)
+            }
+          }
+          // for (let j = 0; j < sensex?.length; j++) {
+          //   if (newdata[i].key == sensex[j]?.key) {
+          //     onebyn += (1 / sensex[j]?.close_price)
+          //     let finalsensex = onebyn * sensex[j]?.close_price * num * c
+          //     newdata[i].sensex = Math.floor(finalsensex)
+          //   }
+          // }
+        }
+      }
       if (newdata[i].vp == 0) continue;
       for (let j = 0; j < sensex?.length; j++) {
         if (newdata[i].key == sensex[j]?.key) {
@@ -333,12 +349,12 @@ export default function portfolioChart(props) {
             </>
           }
           {
-            props.ptype&&
+            props.ptype &&
             <div className="custom-tooltip">
-                <p style={{ maxWidth: "250px", backgroundColor: "rgba(255, 255, 255, 0.5)", padding: "10px", fontSize: "12px" }} className="label">
-                  Total perceived equity value as of <strong>{label}</strong> should be <strong style={{color:"#000"}}>{payload[0]?.payload?.price.toFixed(2)}</strong>, of which <strong style={{color:"#000"}}>{payload[0]?.payload?.vp.toFixed(2)}</strong> should have been vested.
-                </p>
-              </div>
+              <p style={{ maxWidth: "250px", backgroundColor: "rgba(255, 255, 255, 0.5)", padding: "10px", fontSize: "12px" }} className="label">
+                Total perceived equity value as of <strong>{label}</strong> should be <strong style={{ color: "#000" }}>{payload[0]?.payload?.price.toFixed(2)}</strong>, of which <strong style={{ color: "#000" }}>{payload[0]?.payload?.vp.toFixed(2)}</strong> should have been vested.
+              </p>
+            </div>
           }
         </>
 
@@ -351,7 +367,7 @@ export default function portfolioChart(props) {
   const numFor = Intl.NumberFormat('en-US');
   const finalvestedcomma = numFor.format(vestedfinal.toFixed(2));
   const numFor2 = Intl.NumberFormat('en-US');
-  const finalpricecomma= numFor2.format(finalprice.toFixed(2));
+  const finalpricecomma = numFor2.format(finalprice.toFixed(2));
   return (
     <div>
       <div style={{ backgroundColor: "#FEFCF7" }} className="col-11 p-5 ">
@@ -369,7 +385,7 @@ export default function portfolioChart(props) {
         >
           {/* <CartesianGrid strokeDasharray="3 3" /> */}
           <XAxis label={{ value: 'Timeline', position: "insideBottom", offset: -20 }} minTickGap={10} dataKey="md" />
-          <YAxis label={{ value: 'Total Equity Value (in ₹)', position: "insideLeft", angle: -90, dx: -65, dy:70}} tickFormatter={DataFormater} />
+          <YAxis label={{ value: 'Total Equity Value (in ₹)', position: "insideLeft", angle: -90, dx: -65, dy: 70 }} tickFormatter={DataFormater} />
           {/* domain={['dataMin', dataMax => (Math.ceil((dataMax * 1.1)))]}, */}
           <Tooltip content={<CustomTooltip />} />
           {/* <Area
